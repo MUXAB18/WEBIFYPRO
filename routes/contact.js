@@ -9,10 +9,17 @@ router.post('/', async (req, res) => {
         const newMessage = new Message(req.body);
         const savedMessage = await newMessage.save();
 
-        // Send notification
-        await sendEmail(
+        // Send email in background to Admin
+        sendEmail(
             'New Contact Message - Webify Pro',
-            `You have a new message!\n\nFrom: ${savedMessage.name}\nEmail: ${savedMessage.email}\nPhone: ${savedMessage.phone}\nSubject: ${savedMessage.subject}\nMessage: ${savedMessage.message}`
+            `New message!\n\nFrom: ${savedMessage.name}\nEmail: ${savedMessage.email}\nPhone: ${savedMessage.phone}\nSubject: ${savedMessage.subject}\nMessage: ${savedMessage.message}`
+        );
+
+        // Send confirmation email to the Customer
+        sendEmail(
+            'We Received Your Message - Webify Pro',
+            `Hi ${savedMessage.name},\n\nThank you for reaching out to Webify Pro!\n\nWe have received your message regarding "${savedMessage.subject}" and our team will get back to you within 2 hours.\n\nBest regards,\nWebify Pro Team`,
+            savedMessage.email
         );
 
         res.status(201).json(savedMessage);
