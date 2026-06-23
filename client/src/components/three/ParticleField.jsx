@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber';
 import { Stars } from '@react-three/drei';
 import * as THREE from 'three';
 
-function NebulaDust({ count = 2500 }) {
+function NebulaDust({ count = 800 }) {
   const mesh = useRef();
   const { positions, colors } = useMemo(() => {
     const positions = new Float32Array(count * 3);
@@ -68,13 +68,13 @@ export default function ParticleField() {
       <Stars
         radius={150}
         depth={60}
-        count={4000}
+        count={1000}
         factor={3}
         saturation={0.5}
         fade
         speed={0.4}
       />
-      <NebulaDust count={2500} />
+      <NebulaDust count={800} />
     </>
   );
 }

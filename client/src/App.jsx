@@ -4,7 +4,6 @@ import Hero from './components/Hero';
 import Footer from './components/Footer';
 import { PhysicsProvider } from './context/PhysicsContext';
 import CursorFX from './components/motion/CursorFX';
-import CursorTrail from './components/motion/CursorTrail';
 import MagneticCard from './components/motion/MagneticCard';
 
 import BackToTop from './components/BackToTop';
@@ -79,7 +78,6 @@ function App() {
 
         {/* Premium cursor effects — skip on touch/low-end */}
         {!isTouchDevice && !lowEnd && <CursorFX />}
-        {!isTouchDevice && !lowEnd && <CursorTrail />}
 
         {/* 3D Canvas — skip on very small/low-end to save GPU */}
         {!lowEnd && (

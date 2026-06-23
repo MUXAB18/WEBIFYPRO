@@ -94,7 +94,7 @@ export default function AIPlanet() {
     <group ref={groupRef} position={[2.5, 0, 0]}>
       {/* Core glowing sphere */}
       <mesh ref={sphereRef}>
-        <icosahedronGeometry args={[1.6, 6]} />
+        <icosahedronGeometry args={[1.6, 4]} />
         <MeshDistortMaterial
           color="#1a0a3e"
           emissive="#6366f1"
@@ -135,7 +135,7 @@ export default function AIPlanet() {
       <PulseRing radius={2.8} color="#a855f7" speed={1.4} />
 
       {/* Orbiting particles */}
-      <OrbitingParticles count={80} radius={3.0} />
+      <OrbitingParticles count={40} radius={3.0} />
 
       {/* Floating logo text */}
       <Float speed={1.5} rotationIntensity={0.1} floatIntensity={0.3}>
