@@ -1,0 +1,32 @@
+{
+  "name": "Webify Pro",
+  "short_name": "Webify Pro",
+  "description": "Best web design and digital marketing agency in Sialkot, Pakistan.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#010108",
+  "theme_color": "#6366f1",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/webifypro-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "screenshots": [
+    {
+      "src": "/favicon.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    }
+  ]
+}

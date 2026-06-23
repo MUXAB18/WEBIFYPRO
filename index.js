@@ -22,9 +22,12 @@ mongoose.connect(process.env.MONGODB_URI, {
 // Routes
 const orderRoutes = require('./routes/orders');
 const contactRoutes = require('./routes/contact');
+const reviewRoutes = require('./routes/reviews');
 
 app.use('/api/orders', orderRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/reviews', reviewRoutes);
+
 
 // Basic route
 app.get('/', (req, res) => {

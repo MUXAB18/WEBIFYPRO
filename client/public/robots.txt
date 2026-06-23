@@ -1,0 +1,21 @@
+# robots.txt for Webify Pro
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://www.webifypro.live/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
+
+# Popular Search Engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
