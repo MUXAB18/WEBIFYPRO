@@ -21,35 +21,29 @@ const Contact = () => {
     if (popupOpen || isSubmitting) return;
 
     setIsSubmitting(true);
-    setLoadingText('Authenticating...');
-    
-    setTimeout(() => setLoadingText('Encrypting transmission...'), 600);
-    setTimeout(() => setLoadingText('Routing through quantum relays...'), 1200);
 
-    setTimeout(() => {
-      // ── Step 1: Build WA URL ──
-      const snapshot = { ...formData };
-      const waMsg = buildContactWAMessage(snapshot);
-      const encoded = encodeURIComponent(waMsg);
-      const url = `https://wa.me/${WA_NUMBER}?text=${encoded}`;
-      setWaUrl(url);
+    // ── Step 1: Build WA URL ──
+    const snapshot = { ...formData };
+    const waMsg = buildContactWAMessage(snapshot);
+    const encoded = encodeURIComponent(waMsg);
+    const url = `https://wa.me/${WA_NUMBER}?text=${encoded}`;
+    setWaUrl(url);
 
-      // ── Step 2: Show popup immediately ──
-      setPopupOpen(true);
-      setFormData(INITIAL);
-      setIsSubmitting(false);
+    // ── Step 2: Show popup immediately ──
+    setPopupOpen(true);
+    setFormData(INITIAL);
+    setIsSubmitting(false);
 
-      // ── Step 3: Send email & DB in background (non-blocking) ──
-      sendContactEmail(snapshot).catch(err => console.warn('Email send failed:', err));
-      const apiUrl = import.meta.env.VITE_API_URL;
-      if (apiUrl) {
-        fetch(`${apiUrl}/api/contact`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(snapshot),
-        }).catch(err => console.warn('Backend sync error:', err));
-      }
-    }, 2000);
+    // ── Step 3: Send email & DB in background (non-blocking) ──
+    sendContactEmail(snapshot).catch(err => console.warn('Email send failed:', err));
+    const apiUrl = import.meta.env.VITE_API_URL;
+    if (apiUrl) {
+      fetch(`${apiUrl}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(snapshot),
+      }).catch(err => console.warn('Backend sync error:', err));
+    }
   };
 
   const contactInfo = [

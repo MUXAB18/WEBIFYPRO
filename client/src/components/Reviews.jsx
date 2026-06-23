@@ -269,39 +269,37 @@ const Reviews = () => {
     if (!customerName || !customerRole || !reviewText) return;
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      const colors = ['#00d4ff', '#ff006e', '#a855f7', '#06ffa5'];
-      const randomColor = colors[reviews.length % colors.length];
-      const parts = customerName.trim().split(' ');
-      const avatarInitials = parts.length > 1
-        ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
-        : parts[0].slice(0, 2).toUpperCase();
+    const colors = ['#00d4ff', '#ff006e', '#a855f7', '#06ffa5'];
+    const randomColor = colors[reviews.length % colors.length];
+    const parts = customerName.trim().split(' ');
+    const avatarInitials = parts.length > 1
+      ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+      : parts[0].slice(0, 2).toUpperCase();
 
-      const newReview = {
-        name: customerName,
-        role: customerRole,
-        review: reviewText,
-        avatar: avatarInitials,
-        color: randomColor,
-        glow: `${randomColor}1f`,
-        border: `${randomColor}40`,
-        rating: customerRating,
-        date: 'Just now',
-        verified: false,
-        helpful: 0,
-      };
+    const newReview = {
+      name: customerName,
+      role: customerRole,
+      review: reviewText,
+      avatar: avatarInitials,
+      color: randomColor,
+      glow: `${randomColor}1f`,
+      border: `${randomColor}40`,
+      rating: customerRating,
+      date: 'Just now',
+      verified: false,
+      helpful: 0,
+    };
 
-      const localRevs = JSON.parse(localStorage.getItem('webify_pro_reviews') || '[]');
-      localStorage.setItem('webify_pro_reviews', JSON.stringify([newReview, ...localRevs]));
+    const localRevs = JSON.parse(localStorage.getItem('webify_pro_reviews') || '[]');
+    localStorage.setItem('webify_pro_reviews', JSON.stringify([newReview, ...localRevs]));
 
-      setReviews([newReview, ...reviews]);
-      setIsSubmitting(false);
-      setSubmitSuccess(true);
-      setCustomerName('');
-      setCustomerRole('');
-      setCustomerRating(5);
-      setReviewText('');
-    }, 1000);
+    setReviews([newReview, ...reviews]);
+    setIsSubmitting(false);
+    setSubmitSuccess(true);
+    setCustomerName('');
+    setCustomerRole('');
+    setCustomerRating(5);
+    setReviewText('');
   };
 
   return (

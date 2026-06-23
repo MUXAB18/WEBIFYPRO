@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { EffectComposer, Bloom, Vignette, DepthOfField } from '@react-three/postprocessing';
+import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import ParticleField from './ParticleField';
 import AIPlanet from './AIPlanet';
 import ServiceOrbs from './ServiceOrbs';
@@ -101,7 +101,6 @@ export default function SpaceScene() {
       {!isMobile && (
         <EffectComposer>
           <Bloom intensity={2.0} luminanceThreshold={0.18} luminanceSmoothing={0.85} mipmapBlur />
-          <DepthOfField focusDistance={0.008} focalLength={0.22} bokehScale={3.5} />
           <Vignette eskil={false} offset={0.08} darkness={0.75} />
         </EffectComposer>
       )}

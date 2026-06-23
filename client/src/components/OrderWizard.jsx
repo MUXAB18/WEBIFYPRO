@@ -80,32 +80,26 @@ const OrderWizard = ({ onSuccess }) => {
 
   const handleSubmit = () => {
     setIsSubmitting(true);
-    setLoadingText('Encrypting payload...');
-    
-    setTimeout(() => setLoadingText('Connecting to secure servers...'), 600);
-    setTimeout(() => setLoadingText('Establishing secure link...'), 1200);
 
-    setTimeout(() => {
-      const snapshot = { ...form };
-      const waMsg = buildOrderWAMessage(snapshot);
-      const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMsg)}`;
-      setWaUrl(url);
-      setPopupOpen(true);
-      setForm(INITIAL);
-      setStep(0);
-      setIsSubmitting(false);
+    const snapshot = { ...form };
+    const waMsg = buildOrderWAMessage(snapshot);
+    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMsg)}`;
+    setWaUrl(url);
+    setPopupOpen(true);
+    setForm(INITIAL);
+    setStep(0);
+    setIsSubmitting(false);
 
-      sendOrderEmail(snapshot).catch(err => console.warn('Email fail:', err));
-      const apiUrl = import.meta.env.VITE_API_URL;
-      if (apiUrl) {
-        fetch(`${apiUrl}/api/orders`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(snapshot),
-        }).catch(() => { });
-      }
-      if (onSuccess) onSuccess();
-    }, 2000);
+    sendOrderEmail(snapshot).catch(err => console.warn('Email fail:', err));
+    const apiUrl = import.meta.env.VITE_API_URL;
+    if (apiUrl) {
+      fetch(`${apiUrl}/api/orders`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(snapshot),
+      }).catch(() => { });
+    }
+    if (onSuccess) onSuccess();
   };
 
   const selectedService = SERVICES.find(s => s.id === form.service);

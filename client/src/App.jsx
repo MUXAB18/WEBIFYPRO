@@ -1,11 +1,6 @@
 import React, { lazy, Suspense, useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Services from './components/Services';
-import Portfolio from './components/Portfolio';
-import Reviews from './components/Reviews';
-import OrderForm from './components/OrderForm';
-import Contact from './components/Contact';
 import Footer from './components/Footer';
 import { PhysicsProvider } from './context/PhysicsContext';
 import CursorFX from './components/motion/CursorFX';
@@ -16,11 +11,19 @@ import BackToTop from './components/BackToTop';
 import CookieBanner from './components/CookieBanner';
 import { MessageCircle } from 'lucide-react';
 import SEO from './seo/SEO';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const WA_URL = `https://wa.me/923708316591?text=${encodeURIComponent("Hello Webify Pro! I'd like to start a project with you.")}`;
 
 // Lazy-load heavy 3D scene
 const SpaceScene = lazy(() => import('./components/three/SpaceScene'));
+
+// Lazy-load below the fold components
+const Services = lazy(() => import('./components/Services'));
+const Portfolio = lazy(() => import('./components/Portfolio'));
+const Reviews = lazy(() => import('./components/Reviews'));
+const OrderForm = lazy(() => import('./components/OrderForm'));
+const Contact = lazy(() => import('./components/Contact'));
 
 // Detect low-end devices: older Android, low memory, reduced-motion preference
 function isLowEnd() {
@@ -81,9 +84,11 @@ function App() {
 
         {/* 3D Canvas — skip on very small/low-end to save GPU */}
         {!lowEnd && (
-          <Suspense fallback={null}>
-            <SpaceScene />
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={null}>
+              <SpaceScene />
+            </Suspense>
+          </ErrorBoundary>
         )}
 
         {/* Floating WhatsApp Button */}
@@ -130,13 +135,16 @@ function App() {
         <div style={{ position: 'relative', zIndex: 1 }}>
           <Navbar />
           <main>
-            <Hero lowEnd={lowEnd} />
-
-            <Services />
-            <Portfolio />
-            <Reviews />
-            <OrderForm />
-            <Contact />
+            <ErrorBoundary>
+              <Hero lowEnd={lowEnd} />
+              <Suspense fallback={<div style={{ minHeight: '100vh', background: 'transparent' }} />}>
+                <Services />
+                <Portfolio />
+                <Reviews />
+                <OrderForm />
+                <Contact />
+              </Suspense>
+            </ErrorBoundary>
           </main>
           <Footer />
         </div>
