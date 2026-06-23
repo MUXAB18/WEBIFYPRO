@@ -2,12 +2,27 @@ const express = require('express');
 const router = express.Router();
 const Review = require('../models/Review');
 
+let reviewsCache = {
+  data: null,
+  timestamp: 0
+};
+const CACHE_DURATION = 60000; // 60 seconds
+
 // GET all approved reviews
 router.get('/', async (req, res) => {
   try {
+    const now = Date.now();
+    if (reviewsCache.data && (now - reviewsCache.timestamp < CACHE_DURATION)) {
+      return res.json({ success: true, reviews: reviewsCache.data });
+    }
+
     const reviews = await Review.find({ approved: true })
       .sort({ createdAt: -1 })
       .limit(50);
+      
+    reviewsCache.data = reviews;
+    reviewsCache.timestamp = now;
+    
     res.json({ success: true, reviews });
   } catch (err) {
     console.error('Review fetch error:', err);
@@ -38,6 +53,7 @@ router.post('/', async (req, res) => {
     });
 
     await newReview.save();
+    reviewsCache.data = null; // Clear cache so new review appears immediately
     res.status(201).json({ success: true, review: newReview });
   } catch (err) {
     console.error('Review save error:', err);

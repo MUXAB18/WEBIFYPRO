@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const compression = require('compression');
 
 require('dotenv').config();
 
@@ -9,6 +10,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware - allow all origins (credentials:true + '*' is incompatible, so no credentials)
 app.use(cors());
+app.use(compression());
 app.use(express.json());
 
 // MongoDB Connection with timeouts so it fails fast instead of hanging
