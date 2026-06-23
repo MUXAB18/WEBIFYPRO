@@ -9,8 +9,8 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [isDark, setIsDark] = useState(() => {
-    // Default: light. Only go dark if user explicitly chose dark.
-    return localStorage.getItem('webify_theme') === 'dark';
+    // Default: dark. Only go light if user explicitly chose light.
+    return localStorage.getItem('webify_theme') !== 'light';
   });
 
   // Apply theme class on change

@@ -6,8 +6,8 @@
     <script>
       (function(){
         var t = localStorage.getItem('webify_theme');
-        // Default is light. Only skip light-mode class if user explicitly chose dark.
-        if (t !== 'dark') {
+        // Default is dark. Only add light-mode class if user explicitly chose light.
+        if (t === 'light') {
           document.documentElement.classList.add('light-mode');
         }
       })();
