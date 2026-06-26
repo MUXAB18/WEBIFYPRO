@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const compression = require('compression');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 
 require('dotenv').config();
 
@@ -10,8 +12,24 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware - allow all origins (credentials:true + '*' is incompatible, so no credentials)
 app.use(cors());
+app.use(helmet()); // Enforce HTTP security headers
 app.use(compression());
 app.use(express.json());
+
+// Global Rate Limiting: Max 200 requests per 15 minutes per IP
+const globalLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 200,
+    message: { error: 'Too many requests from this IP, please try again later.' }
+});
+app.use('/api', globalLimiter);
+
+// Strict Rate Limiting for forms: Max 10 requests per hour
+const formLimiter = rateLimit({
+    windowMs: 60 * 60 * 1000, // 1 hour
+    max: 10,
+    message: { error: 'Too many form submissions. Please try again later.' }
+});
 
 // MongoDB Connection with timeouts so it fails fast instead of hanging
 mongoose.connect(process.env.MONGODB_URI, {
@@ -21,14 +39,15 @@ mongoose.connect(process.env.MONGODB_URI, {
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log('MongoDB connection error:', err));
 
-// Routes
 const orderRoutes = require('./routes/orders');
 const contactRoutes = require('./routes/contact');
 const reviewRoutes = require('./routes/reviews');
+const adminRoutes = require('./routes/admin');
 
-app.use('/api/orders', orderRoutes);
-app.use('/api/contact', contactRoutes);
+app.use('/api/orders', formLimiter, orderRoutes);
+app.use('/api/contact', formLimiter, contactRoutes);
 app.use('/api/reviews', reviewRoutes);
+app.use('/api/admin', adminRoutes);
 
 
 // Basic route

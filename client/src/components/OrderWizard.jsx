@@ -11,7 +11,7 @@ import SubmissionPopup from './SubmissionPopup';
 const SERVICES = [
   { id: 'Web Development', icon: <Code2 size={28} />, color: '#00d4ff', glow: 'rgba(0,212,255,0.14)', label: 'Web Development', sub: 'React · Node.js · MERN' },
   { id: 'Digital Marketing', icon: <Megaphone size={28} />, color: '#ff006e', glow: 'rgba(255,0,110,0.14)', label: 'Digital Marketing', sub: 'Meta Ads · Facebook · SEO' },
-  { id: 'Mobile Application', icon: <Smartphone size={28} />, color: '#a855f7', glow: 'rgba(168,85,247,0.14)', label: 'Mobile App (Soon)', sub: 'Coming soon...' },
+  { id: 'Mobile Application', icon: <Smartphone size={28} />, color: '#a855f7', glow: 'rgba(168,85,247,0.14)', label: 'Mobile Application', sub: 'Coming Soon', disabled: true },
   { id: 'Social Media Management', icon: <Cpu size={28} />, color: '#06ffa5', glow: 'rgba(6,255,165,0.14)', label: 'Social Media', sub: 'Instagram · TikTok · Growth' },
 ];
 
@@ -229,17 +229,19 @@ const OrderWizard = ({ onSuccess }) => {
                   return (
                     <button
                       key={svc.id}
-                      onClick={() => set('service')(svc.id)}
+                      disabled={svc.disabled}
+                      onClick={() => !svc.disabled && set('service')(svc.id)}
                       style={{
                         padding: '18px 16px',
                         background: isActive ? `${svc.color}14` : 'var(--glass)',
                         border: `1.5px solid ${isActive ? svc.color : 'var(--border)'}`,
                         borderRadius: '14px',
-                        cursor: 'pointer',
+                        cursor: svc.disabled ? 'not-allowed' : 'pointer',
                         display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '8px',
                         textAlign: 'left',
                         transition: 'all 0.25s ease',
                         boxShadow: isActive ? `0 0 20px ${svc.glow}` : 'none',
+                        opacity: svc.disabled ? 0.5 : 1,
                       }}
                       className="wizard-service-btn"
                     >
@@ -545,12 +547,11 @@ const OrderWizard = ({ onSuccess }) => {
           isOpen={true}
           onClose={() => {
             setPopupOpen(false);
-            setStep(1);
+            setStep(0);
           }}
           waUrl={waUrl}
           title="Order Received! 🚀"
           subtitle="Your order has been submitted. We'll be in touch soon. Click below to continue on WhatsApp."
-          countdownSec={4}
         />
       )}
 

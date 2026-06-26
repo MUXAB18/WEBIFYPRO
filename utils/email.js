@@ -1,22 +1,26 @@
-const { Resend } = require('resend');
+const nodemailer = require('nodemailer');
 
-const sendEmail = async (subject, text, to = process.env.EMAIL_USER) => {
+const sendEmail = async (subject, html, to = process.env.EMAIL_USER) => {
     try {
-        const resend = new Resend(process.env.RESEND_API_KEY);
-
-        // When domain is verified, the admin can set EMAIL_FROM in their env to e.g. hello@webifypro.com
-        const fromEmail = process.env.EMAIL_FROM || 'Webify Pro <onboarding@resend.dev>';
-
-        await resend.emails.send({
-            from: fromEmail,
-            to: to,
-            subject: subject,
-            text: text
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
         });
 
-        console.log(`Email sent successfully to ${to} via Resend!`);
+        const mailOptions = {
+            from: `"Webify Pro" <${process.env.EMAIL_USER}>`,
+            to: to,
+            subject: subject,
+            html: html
+        };
+
+        const info = await transporter.sendMail(mailOptions);
+        console.log(`Email sent successfully to ${to} via Nodemailer! MessageID: ${info.messageId}`);
     } catch (error) {
-        console.error(`Error sending email to ${to} via Resend:`, error.message);
+        console.error(`Error sending email to ${to} via Nodemailer:`, error.message);
         // We do not throw the error so DB saves still succeed
     }
 };

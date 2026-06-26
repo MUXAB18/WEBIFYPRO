@@ -338,7 +338,6 @@ const Contact = () => {
         waUrl={waUrl}
         title="Message Sent! ✨"
         subtitle="Thanks for reaching out! We'll respond within 2 hours. Click below to continue chatting on WhatsApp."
-        countdownSec={4}
       />
     </>
   );

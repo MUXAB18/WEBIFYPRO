@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
 const sendEmail = require('../utils/email');
+const emailTemplates = require('../utils/emailTemplates');
 
 // POST a new order
 router.post('/', async (req, res) => {
@@ -12,13 +13,13 @@ router.post('/', async (req, res) => {
         // Send email in background to Admin
         sendEmail(
             'New Order Received - Webify Pro',
-            `New order!\n\nService: ${savedOrder.service}\nCustomer: ${savedOrder.customerName}\nEmail: ${savedOrder.customerEmail}\nPhone: ${savedOrder.customerPhone}\nDetails: ${savedOrder.details}`
+            emailTemplates.adminNewOrder(savedOrder)
         );
 
         // Send confirmation email to the Customer
         sendEmail(
             'Order Confirmation - Webify Pro',
-            `Hi ${savedOrder.customerName},\n\nThank you for placing your order with Webify Pro!\n\nHere are your order details:\n- Service: ${savedOrder.service}\n- Phone: ${savedOrder.customerPhone}\n- Details: ${savedOrder.details}\n\nWe have received your order and will contact you shortly.\n\nBest regards,\nWebify Pro Team`,
+            emailTemplates.customerOrderConfirmation(savedOrder),
             savedOrder.customerEmail
         );
 

@@ -16,18 +16,14 @@ const SubmissionPopup = ({
   onClose,
   waUrl,
   title = 'Message Sent!',
-  subtitle = "We've received your message. Opening WhatsApp now…",
-  countdownSec = 4,
+  subtitle = "We've received your message. You can also chat with us directly on WhatsApp."
 }) => {
-  const [countdown, setCountdown] = useState(countdownSec);
   const [particles, setParticles] = useState([]);
-  const timerRef = useRef(null);
   const openedRef = useRef(false);
 
   // Generate confetti particles once on open
   useEffect(() => {
     if (!isOpen) {
-      setCountdown(countdownSec);
       openedRef.current = false;
       return;
     }
@@ -43,36 +39,10 @@ const SubmissionPopup = ({
       shape: i % 3 === 0 ? 'circle' : i % 3 === 1 ? 'square' : 'diamond',
     }));
     setParticles(newParticles);
-    setCountdown(countdownSec);
     openedRef.current = false;
-  }, [isOpen, countdownSec]);
-
-  // Countdown timer
-  useEffect(() => {
-    if (!isOpen) return;
-    timerRef.current = setInterval(() => {
-      setCountdown(prev => {
-        if (prev <= 1) {
-          clearInterval(timerRef.current);
-          // Auto-open WhatsApp when countdown hits 0
-          if (!openedRef.current && waUrl) {
-            openedRef.current = true;
-            const newWin = window.open(waUrl, '_blank');
-            if (!newWin || newWin.closed || typeof newWin.closed === 'undefined') {
-              window.location.href = waUrl;
-            }
-          }
-          onClose();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-    return () => clearInterval(timerRef.current);
-  }, [isOpen, waUrl, onClose]);
+  }, [isOpen]);
 
   const handleWhatsApp = () => {
-    clearInterval(timerRef.current);
     openedRef.current = true;
     if (waUrl) {
       const newWin = window.open(waUrl, '_blank');
@@ -84,13 +54,10 @@ const SubmissionPopup = ({
   };
 
   const handleClose = () => {
-    clearInterval(timerRef.current);
     onClose();
   };
 
   if (!isOpen) return null;
-
-  const progress = ((countdownSec - countdown) / countdownSec) * 100;
 
   return (
     <>
@@ -244,38 +211,24 @@ const SubmissionPopup = ({
           ))}
         </div>
 
-        {/* Beautiful Countdown Timer */}
-        <div className="popup-timer-box" style={{
-          background: 'rgba(37,211,102,0.08)', border: '1px solid rgba(37,211,102,0.25)',
-          borderRadius: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px',
-          animation: 'pulseBg 2s infinite alternate'
-        }}>
-          <div className="popup-timer-label" style={{ color: '#06ffa5', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            Auto-Redirecting to WhatsApp
-          </div>
-          <div className="popup-timer-value" style={{
-            fontWeight: '900', color: '#fff', lineHeight: '1',
-            fontFamily: 'Outfit, sans-serif', textShadow: '0 0 20px rgba(37,211,102,0.5)'
-          }}>
-            00:0{countdown}
-          </div>
-        </div>
-
         {/* Manual WhatsApp CTA button */}
         <button
           onClick={handleWhatsApp}
           className="popup-wa-btn"
           style={{
             width: '100%',
-            background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
+            background: 'linear-gradient(135deg, rgba(37,211,102,0.15), rgba(37,211,102,0.05))',
+            border: '1px solid rgba(37,211,102,0.4)',
             borderRadius: '12px', fontWeight: '700', color: '#fff',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
             cursor: 'pointer', transition: 'all 0.3s ease',
             fontFamily: 'Outfit, sans-serif',
+            boxShadow: '0 8px 24px rgba(37,211,102,0.2)',
+            marginBottom: '16px'
           }}
         >
           <MessageCircle size={18} color="#25d366" />
-          Open Manually Now
+          Continue to WhatsApp
         </button>
 
         {/* Dismiss link */}
@@ -292,22 +245,7 @@ const SubmissionPopup = ({
           Dismiss
         </button>
 
-        {/* Progress bar */}
-        <div style={{
-          position: 'absolute', bottom: 0, left: 0, right: 0,
-          height: '3px',
-          background: 'rgba(255,255,255,0.06)',
-          borderRadius: '0 0 28px 28px',
-          overflow: 'hidden',
-        }}>
-          <div style={{
-            height: '100%',
-            width: `${progress}%`,
-            background: 'linear-gradient(90deg, #6366f1, #00d4ff)',
-            transition: 'width 1s linear',
-            boxShadow: '0 0 8px rgba(0,212,255,0.6)',
-          }} />
-        </div>
+
       </div>
 
       <style>{`
@@ -352,19 +290,13 @@ const SubmissionPopup = ({
         .popup-title { font-size: 1.7rem; }
         .popup-subtitle { font-size: 0.92rem; }
         .popup-badge { padding: 6px 14px; font-size: 0.78rem; }
-        .popup-timer-box { padding: 16px; margin-top: 10px; margin-bottom: 20px; }
-        .popup-timer-label { font-size: 0.82rem; }
-        .popup-timer-value { font-size: 3.2rem; }
-        .popup-wa-btn { padding: 14px 24px; font-size: 0.95rem; margin-bottom: 12px; }
+        .popup-wa-btn { padding: 14px 24px; font-size: 0.95rem; }
 
         /* Mobile Responsive */
         @media (max-width: 480px) {
           .popup-title { font-size: 1.4rem !important; }
           .popup-subtitle { font-size: 0.85rem !important; margin-bottom: 16px !important; }
           .popup-badge { padding: 4px 10px !important; font-size: 0.7rem !important; }
-          .popup-timer-box { padding: 12px !important; margin-top: 4px !important; margin-bottom: 16px !important; border-radius: 12px !important; }
-          .popup-timer-label { font-size: 0.7rem !important; }
-          .popup-timer-value { font-size: 2.6rem !important; }
           .popup-wa-btn { padding: 12px 18px !important; font-size: 0.85rem !important; }
         }
       `}</style>

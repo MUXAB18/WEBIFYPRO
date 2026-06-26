@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { X, Send, Bot, RotateCcw, MessageCircle } from 'lucide-react';
+import { X, Send, Sparkles, RotateCcw, MessageCircle } from 'lucide-react';
 
 const WA_NUMBER = '923708316591';
-const BOT_NAME  = 'Webify Bot';
-const TYPING_DELAY_MIN = 700;
+const BOT_NAME  = 'Webify AI';
+const TYPING_DELAY_MIN = 600;
 const TYPING_DELAY_MAX = 1400;
 
 // ─────────────────────────────────────────────
@@ -95,7 +95,7 @@ const FALLBACK = {
 
 const WELCOME = {
   id: 'welcome',
-  text: "👋 Hi there! I'm **Webify Bot**, your virtual assistant at **Webify Pro**.\n\nI can answer questions about our services, timeline, and more — instantly!\n\nHow can I help you today?",
+  text: "👋 Hi there! I'm **Webify AI**, your intelligent assistant at **Webify Pro**.\n\nI can answer questions about our services, timeline, and more — instantly!\n\nHow can I help you today?",
   quickReplies: ['💻 Website Development', '📢 Digital Marketing', '📞 Contact Us'],
 
   sender: 'bot',
@@ -257,7 +257,7 @@ export default function ChatBot() {
         {/* Header */}
         <div className="cb-header">
           <div className="cb-avatar">
-            <Bot size={20} color="#fff" />
+            <Sparkles size={20} color="#fff" />
             <span className="cb-avatar-dot" />
           </div>
           <div className="cb-header-info">
@@ -279,9 +279,9 @@ export default function ChatBot() {
         {/* Messages */}
         <div className="cb-messages" role="log" aria-live="polite">
           {messages.map((msg) => (
-            <div key={msg.id} className={`cb-msg-row ${msg.sender}`}>
+            <div key={msg.id} className={`cb-msg-row ${msg.sender} cb-msg-animate`}>
               {msg.sender === 'bot' && (
-                <div className="cb-bot-avatar"><Bot size={13} /></div>
+                <div className="cb-bot-avatar"><Sparkles size={14} /></div>
               )}
               <div className="cb-msg-col">
                 <div
@@ -305,8 +305,8 @@ export default function ChatBot() {
 
           {/* Typing indicator */}
           {typing && (
-            <div className="cb-msg-row bot">
-              <div className="cb-bot-avatar"><Bot size={13} /></div>
+            <div className="cb-msg-row bot cb-msg-animate">
+              <div className="cb-bot-avatar"><Sparkles size={14} /></div>
               <div className="cb-bubble cb-bubble-bot cb-typing">
                 <span /><span /><span />
               </div>
@@ -367,7 +367,7 @@ export default function ChatBot() {
           aria-expanded={isOpen}
         >
           <span className={`cb-fab-icon ${isOpen ? 'cb-fab-icon-open' : ''}`}>
-            {isOpen ? <X size={22} /> : <Bot size={22} />}
+            {isOpen ? <X size={22} /> : <Sparkles size={24} />}
           </span>
           {!isOpen && unread > 0 && (
             <span className="cb-unread-badge">{unread}</span>
@@ -534,6 +534,13 @@ export default function ChatBot() {
         /* ── Message rows ── */
         .cb-msg-row {
           display: flex; gap: 8px; align-items: flex-end;
+        }
+        .cb-msg-animate {
+          animation: cb-msg-enter 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        @keyframes cb-msg-enter {
+          from { opacity: 0; transform: translateY(10px) scale(0.95); }
+          to   { opacity: 1; transform: translateY(0) scale(1); }
         }
         .cb-msg-row.user { flex-direction: row-reverse; }
         .cb-msg-col { display: flex; flex-direction: column; max-width: 82%; }
