@@ -61,12 +61,10 @@ app.get('/version', (req, res) => {
 });
 
 
-// Start server locally (Vercel will export the app directly)
-if (process.env.NODE_ENV !== 'production') {
-    app.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT}`);
-    });
-}
+// Start server (Required for Render)
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
 
-// Export for Vercel Serverless
+// Export for Vercel Serverless (if ever used)
 module.exports = app;
