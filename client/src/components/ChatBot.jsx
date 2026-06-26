@@ -116,7 +116,7 @@ function matchKB(input) {
     '💰 pricing': 'price', '💰 website pricing': 'price', '💰 app pricing': 'price',
     '💰 marketing pricing': 'price', '💰 smm pricing': 'price', '💰 get custom quote': 'price',
     '📞 contact us': 'contact', '📞 talk to a human': 'contact', '📞 call us': 'contact',
-    '⭐ reviews': 'reviews', '🗂 view portfolio': 'reviews',
+    '⭐ reviews': 'reviews',
     '🛒 order now': 'order', '📝 fill order form': 'order', '🛒 get started': 'order',
     '🔁 start over': '__reset__',
     '💬 chat on whatsapp': '__whatsapp__', '💬 open whatsapp': '__whatsapp__',
