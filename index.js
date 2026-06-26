@@ -24,10 +24,10 @@ const globalLimiter = rateLimit({
 });
 app.use('/api', globalLimiter);
 
-// Strict Rate Limiting for forms: Max 10 requests per hour
+// Strict Rate Limiting for forms: Max 1000 requests per hour
 const formLimiter = rateLimit({
     windowMs: 60 * 60 * 1000, // 1 hour
-    max: 10,
+    max: 1000,
     message: { error: 'Too many form submissions. Please try again later.' }
 });
 
