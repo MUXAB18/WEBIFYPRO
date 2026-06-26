@@ -455,12 +455,15 @@ html.light-mode #back-to-top-btn {
   box-shadow: 0 4px 18px rgba(0,0,0,0.12) !important;
 }
 
-/* ── 16. WHATSAPP BUTTON ── */
+/* ── 16. WHATSAPP BUTTON & WIDGET ── */
 html.light-mode .floating-wa-btn {
   background: rgba(255,255,255,0.97) !important;
   box-shadow: 0 4px 18px rgba(0,0,0,0.14) !important;
 }
 html.light-mode .floating-wa-text { color: #25d366 !important; }
+html.light-mode .wa-fab-btn {
+  box-shadow: 0 8px 28px rgba(37,211,102,0.35), 0 2px 8px rgba(0,0,0,0.15) !important;
+}
 
 /* ── 17. THEME TOGGLE BUTTON ── */
 html.light-mode .theme-toggle-btn {

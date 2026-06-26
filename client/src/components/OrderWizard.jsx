@@ -11,7 +11,7 @@ import SubmissionPopup from './SubmissionPopup';
 const SERVICES = [
   { id: 'Web Development', icon: <Code2 size={28} />, color: '#00d4ff', glow: 'rgba(0,212,255,0.14)', label: 'Web Development', sub: 'React · Node.js · MERN' },
   { id: 'Digital Marketing', icon: <Megaphone size={28} />, color: '#ff006e', glow: 'rgba(255,0,110,0.14)', label: 'Digital Marketing', sub: 'Meta Ads · Facebook · SEO' },
-  { id: 'Mobile Application', icon: <Smartphone size={28} />, color: '#a855f7', glow: 'rgba(168,85,247,0.14)', label: 'Mobile Application', sub: 'Flutter · Dart · Firebase' },
+  { id: 'Mobile Application', icon: <Smartphone size={28} />, color: '#a855f7', glow: 'rgba(168,85,247,0.14)', label: 'Mobile App (Soon)', sub: 'Coming soon...' },
   { id: 'Social Media Management', icon: <Cpu size={28} />, color: '#06ffa5', glow: 'rgba(6,255,165,0.14)', label: 'Social Media', sub: 'Instagram · TikTok · Growth' },
 ];
 

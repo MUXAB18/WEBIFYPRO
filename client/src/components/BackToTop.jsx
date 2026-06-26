@@ -25,11 +25,12 @@ const BackToTop = () => {
         id="back-to-top-btn"
         style={{
           position: 'fixed',
-          bottom: '24px',
+          bottom: '96px',
           left: '24px',
           zIndex: 998,
           width: '48px',
           height: '48px',
+
           borderRadius: '50%',
           background: 'rgba(3,7,18,0.82)',
           border: '1.5px solid rgba(99,102,241,0.5)',

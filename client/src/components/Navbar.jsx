@@ -50,7 +50,7 @@ const Navbar = () => {
   const navLinks = [
     { href: '#home', label: 'Home', id: 'home' },
     { href: '#services', label: 'Services', id: 'services' },
-    { href: '#portfolio', label: 'Portfolio', id: 'portfolio' },
+    { href: '#portfolio', label: 'Our Services', id: 'portfolio' },
     { href: '#reviews', label: 'Reviews', id: 'reviews' },
     { href: '#order', label: 'Order Now', id: 'order' },
   ];

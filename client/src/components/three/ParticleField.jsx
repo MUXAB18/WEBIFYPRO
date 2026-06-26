@@ -3,7 +3,8 @@ import { useFrame } from '@react-three/fiber';
 import { Stars } from '@react-three/drei';
 import * as THREE from 'three';
 
-function NebulaDust({ count = 800 }) {
+// Reduced count: 400 (was 800) — half the GPU vertex load
+function NebulaDust({ count = 400 }) {
   const mesh = useRef();
   const { positions, colors } = useMemo(() => {
     const positions = new Float32Array(count * 3);
@@ -33,8 +34,8 @@ function NebulaDust({ count = 800 }) {
 
   useFrame((state) => {
     if (mesh.current) {
-      mesh.current.rotation.y = state.clock.elapsedTime * 0.015;
-      mesh.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.008) * 0.05;
+      // Slower rotation = less per-frame work perceived by GPU
+      mesh.current.rotation.y = state.clock.elapsedTime * 0.008;
     }
   });
 
@@ -54,7 +55,7 @@ function NebulaDust({ count = 800 }) {
         size={0.18}
         vertexColors
         transparent
-        opacity={0.7}
+        opacity={0.6}
         sizeAttenuation
         depthWrite={false}
       />
@@ -65,16 +66,17 @@ function NebulaDust({ count = 800 }) {
 export default function ParticleField() {
   return (
     <>
+      {/* Reduced count 1000→500 and depth 60→40 */}
       <Stars
         radius={150}
-        depth={60}
-        count={1000}
+        depth={40}
+        count={500}
         factor={3}
         saturation={0.5}
         fade
-        speed={0.4}
+        speed={0.3}
       />
-      <NebulaDust count={800} />
+      <NebulaDust count={400} />
     </>
   );
 }

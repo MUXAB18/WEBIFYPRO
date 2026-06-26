@@ -33,18 +33,18 @@ const projects = [
     duration: 'Ongoing',
   },
   {
-    title: 'MOBILE APP DEVELOPMENT',
+    title: 'MOBILE APP DEV (SOON)',
     category: 'Mobile Application',
     image: '/images/app-dev-ui.jpg',
     link: '#',
     liveUrl: null,
-    tags: ['Flutter', 'Dart', 'Firebase'],
+    tags: ['Coming Soon'],
     color: '#a855f7',
     glow: 'rgba(168,85,247,0.18)',
-    desc: 'Cross-platform iOS & Android apps that delight users on every device. Smooth animations, native performance, Firebase backend.',
-    tech: ['Flutter', 'Dart', 'Firebase', 'REST API'],
-    client: 'Startups & SMEs',
-    duration: '4–8 weeks',
+    desc: 'Our mobile app development services are launching very soon. Stay tuned for premium cross-platform iOS and Android applications.',
+    tech: ['iOS', 'Android', 'Cross-Platform'],
+    client: 'Coming Soon',
+    duration: 'TBD',
   },
 ];
 
@@ -77,17 +77,17 @@ const Portfolio = () => {
             border: '1px solid rgba(168,85,247,0.3)', color: '#a855f7',
             fontSize: '0.76rem', fontWeight: '700', letterSpacing: '0.12em',
             textTransform: 'uppercase', marginBottom: '18px', background: 'rgba(168,85,247,0.07)',
-          }}>◎ Galaxy Portfolio</div>
+          }}>◎ Our Services</div>
 
           <h2 className="outfit" style={{ fontSize: 'clamp(1.8rem, 5vw, 2.8rem)', fontWeight: '800', marginBottom: '14px', color: '#fff' }}>
             Featured{' '}
             <span style={{
               background: 'linear-gradient(135deg, #a855f7, #00d4ff)',
               backgroundClip: 'text', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-            }}>Projects</span>
+            }}>Services</span>
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.5)', maxWidth: '560px', margin: '0 auto 36px', lineHeight: '1.7', fontSize: '0.95rem' }}>
-            Explore our latest work. Click any card to see the full project details.
+            Explore our core services. Click any card to see full details.
           </p>
 
           {/* Filter tabs */}

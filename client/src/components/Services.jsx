@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Code2, Megaphone, Cpu, Smartphone, X, Check, MessageCircle } from 'lucide-react';
+import { Code2, Megaphone, Cpu, X, Check, MessageCircle } from 'lucide-react';
+
 import MagneticCard from './motion/MagneticCard';
 import ScrollReveal from './motion/ScrollReveal';
 
@@ -36,23 +37,6 @@ const services = [
       'High-ROI Copywriting & Creative Design',
       'Pixel Tracking & Conversions API Setup',
       'Weekly In-Depth Performance Audits'
-    ]
-  },
-  {
-    icon: <Smartphone size={26} />,
-    title: 'Mobile Application',
-    desc: 'Performance-driven cross-platform mobile apps built with Flutter for both iOS and Android — concept to App Store.',
-    color: '#a855f7',
-    glow: 'rgba(168,85,247,0.12)',
-    border: 'rgba(168,85,247,0.25)',
-    tag: 'Flutter · Dart · Firebase',
-    bulletPoints: [
-      'Cross-Platform iOS & Android App',
-      'Interactive, Native Fluid UI/UX',
-      'Firebase Cloud Infrastructure Sync',
-      'Push Notifications & App Settings',
-      'App Store & Play Store Submissions',
-      'Custom REST API & Web Server Integrations'
     ]
   },
   {

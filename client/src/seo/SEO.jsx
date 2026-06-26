@@ -10,7 +10,7 @@ import { Helmet } from 'react-helmet-async';
  */
 const SEO = ({
   title = 'Webify Pro | Web Development & Digital Marketing',
-  description = 'Looking for the best web designer in Sialkot? Webify Pro offers expert web development, digital marketing, SEO, and app development in Sialkot, Pakistan. Get a stunning website today!',
+  description = 'Looking for the best web designer in Sialkot? Webify Pro offers expert web development, digital marketing, and SEO in Sialkot, Pakistan. Get a stunning website today!',
   keywords = [
     // ── High-value local SEO keywords ──────────────────────────────────────
     'best web designer in sialkot',
@@ -38,8 +38,6 @@ const SEO = ({
     'Node.js developer sialkot',
     'ecommerce website sialkot',
     'ecommerce development sialkot',
-    'mobile app development sialkot',
-    'app developer sialkot',
     // ── Broader Pakistan keywords ──────────────────────────────────────────
     'web designer pakistan',
     'web development pakistan',
@@ -115,14 +113,6 @@ const SEO = ({
           '@type': 'Offer',
           itemOffered: {
             '@type': 'Service',
-            name: 'Mobile App Development',
-            description: 'Custom mobile app development for iOS and Android platforms.',
-          },
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
             name: 'E-commerce Development',
             description: 'Full-featured online store development with payment gateway integration.',
           },
@@ -151,7 +141,6 @@ const SEO = ({
       'Digital Marketing',
       'SEO',
       'Social Media Marketing',
-      'Mobile App Development',
       'E-commerce Development',
     ],
   };

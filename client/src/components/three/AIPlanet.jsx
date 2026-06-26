@@ -1,45 +1,41 @@
 import React, { useRef, useEffect, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Text, Float, MeshDistortMaterial } from '@react-three/drei';
+import { Text, Float } from '@react-three/drei';
 import * as THREE from 'three';
 import gsap from 'gsap';
 
-function PulseRing({ radius, color, speed = 1 }) {
+// Simple pulse ring — no individual useFrame, driven by parent
+function PulseRing({ radius, color, phaseOffset = 0 }) {
   const ref = useRef();
-  useFrame((state) => {
-    if (ref.current) {
-      const t = state.clock.elapsedTime * speed;
-      ref.current.scale.setScalar(1 + Math.sin(t) * 0.08);
-      ref.current.material.opacity = 0.3 + Math.sin(t) * 0.2;
-    }
-  });
+  // Store ref for parent to update
+  ref._phaseOffset = phaseOffset;
+  ref._color = color;
   return (
     <mesh ref={ref} rotation={[Math.PI / 2, 0, 0]}>
-      <torusGeometry args={[radius, 0.02, 8, 80]} />
-      <meshBasicMaterial color={color} transparent opacity={0.4} depthWrite={false} />
+      {/* Reduced segments 80→32 — saves ~60% vertex count */}
+      <torusGeometry args={[radius, 0.02, 6, 32]} />
+      <meshBasicMaterial color={color} transparent opacity={0.3} depthWrite={false} />
     </mesh>
   );
 }
 
-function OrbitingParticles({ count = 60, radius = 2.8 }) {
+function OrbitingParticles({ count = 40, radius = 2.8 }) {
   const ref = useRef();
-  const { positions, sizes } = useMemo(() => {
+  const { positions } = useMemo(() => {
     const positions = new Float32Array(count * 3);
-    const sizes = new Float32Array(count);
     for (let i = 0; i < count; i++) {
       const angle = (i / count) * Math.PI * 2;
       const jitter = (Math.random() - 0.5) * 0.6;
       positions[i * 3] = Math.cos(angle) * (radius + jitter);
       positions[i * 3 + 1] = (Math.random() - 0.5) * 0.4;
       positions[i * 3 + 2] = Math.sin(angle) * (radius + jitter);
-      sizes[i] = Math.random() * 0.06 + 0.02;
     }
-    return { positions, sizes };
+    return { positions };
   }, [count, radius]);
 
   useFrame((state) => {
     if (ref.current) {
-      ref.current.rotation.y = state.clock.elapsedTime * 0.3;
+      ref.current.rotation.y = state.clock.elapsedTime * 0.25;
     }
   });
 
@@ -47,9 +43,8 @@ function OrbitingParticles({ count = 60, radius = 2.8 }) {
     <points ref={ref}>
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
-        <bufferAttribute attach="attributes-size" args={[sizes, 1]} />
       </bufferGeometry>
-      <pointsMaterial color="#00d4ff" size={0.05} transparent opacity={0.8} sizeAttenuation depthWrite={false} />
+      <pointsMaterial color="#00d4ff" size={0.05} transparent opacity={0.7} sizeAttenuation depthWrite={false} />
     </points>
   );
 }
@@ -59,6 +54,9 @@ export default function AIPlanet() {
   const sphereRef = useRef();
   const wireRef = useRef();
   const glowRef = useRef();
+  const ring1Ref = useRef();
+  const ring2Ref = useRef();
+  const ring3Ref = useRef();
 
   useEffect(() => {
     if (groupRef.current) {
@@ -72,73 +70,99 @@ export default function AIPlanet() {
     }
   }, []);
 
+  // Single combined useFrame — was 5 separate (PulseRing x3 + OrbitingParticles + AIPlanet)
   useFrame((state) => {
     const t = state.clock.elapsedTime;
+
     if (sphereRef.current) {
-      sphereRef.current.rotation.y = t * 0.12;
-      sphereRef.current.rotation.x = Math.sin(t * 0.07) * 0.15;
+      sphereRef.current.rotation.y = t * 0.10;
+      sphereRef.current.rotation.x = Math.sin(t * 0.07) * 0.12;
     }
     if (wireRef.current) {
-      wireRef.current.rotation.y = -t * 0.08;
-      wireRef.current.rotation.z = t * 0.05;
+      wireRef.current.rotation.y = -t * 0.06;
+      wireRef.current.rotation.z = t * 0.04;
     }
     if (glowRef.current) {
-      glowRef.current.material.opacity = 0.12 + Math.sin(t * 1.2) * 0.04;
+      glowRef.current.material.opacity = 0.10 + Math.sin(t * 1.0) * 0.03;
     }
     if (groupRef.current) {
-      groupRef.current.position.y = Math.sin(t * 0.4) * 0.15;
+      groupRef.current.position.y = Math.sin(t * 0.35) * 0.12;
+    }
+    // Pulse rings driven from here — no child useFrame overhead
+    if (ring1Ref.current) {
+      const s1 = 1 + Math.sin(t * 1.0) * 0.07;
+      ring1Ref.current.scale.setScalar(s1);
+      ring1Ref.current.material.opacity = 0.25 + Math.sin(t * 1.0) * 0.15;
+    }
+    if (ring2Ref.current) {
+      const s2 = 1 + Math.sin(t * 0.7 + 1) * 0.07;
+      ring2Ref.current.scale.setScalar(s2);
+      ring2Ref.current.material.opacity = 0.25 + Math.sin(t * 0.7 + 1) * 0.15;
+    }
+    if (ring3Ref.current) {
+      const s3 = 1 + Math.sin(t * 1.3 + 2) * 0.07;
+      ring3Ref.current.scale.setScalar(s3);
+      ring3Ref.current.material.opacity = 0.25 + Math.sin(t * 1.3 + 2) * 0.15;
     }
   });
 
   return (
     <group ref={groupRef} position={[2.5, 0, 0]}>
-      {/* Core glowing sphere */}
+      {/* Core sphere — meshStandardMaterial replaces MeshDistortMaterial (huge GPU saving) */}
       <mesh ref={sphereRef}>
-        <icosahedronGeometry args={[1.6, 4]} />
-        <MeshDistortMaterial
+        {/* Reduced detail: icosahedron detail 4→2 */}
+        <icosahedronGeometry args={[1.6, 2]} />
+        <meshStandardMaterial
           color="#1a0a3e"
           emissive="#6366f1"
-          emissiveIntensity={0.8}
-          distort={0.25}
-          speed={1.5}
-          roughness={0.1}
-          metalness={0.8}
+          emissiveIntensity={0.7}
+          roughness={0.2}
+          metalness={0.7}
         />
       </mesh>
 
       {/* Wireframe overlay */}
       <mesh ref={wireRef}>
-        <icosahedronGeometry args={[1.65, 3]} />
+        <icosahedronGeometry args={[1.65, 2]} />
         <meshBasicMaterial
           color="#00d4ff"
           wireframe
           transparent
-          opacity={0.15}
+          opacity={0.12}
         />
       </mesh>
 
-      {/* Outer glow shell */}
+      {/* Outer glow shell — reduced segments 32x32 → 16x16 */}
       <mesh ref={glowRef}>
-        <sphereGeometry args={[2.2, 32, 32]} />
+        <sphereGeometry args={[2.2, 16, 16]} />
         <meshBasicMaterial
           color="#6366f1"
           transparent
-          opacity={0.12}
+          opacity={0.10}
           side={THREE.BackSide}
           depthWrite={false}
         />
       </mesh>
 
-      {/* Pulse rings */}
-      <PulseRing radius={2.0} color="#6366f1" speed={1.0} />
-      <PulseRing radius={2.4} color="#00d4ff" speed={0.7} />
-      <PulseRing radius={2.8} color="#a855f7" speed={1.4} />
+      {/* Pulse rings — controlled by parent useFrame above */}
+      <mesh ref={ring1Ref} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[2.0, 0.02, 6, 32]} />
+        <meshBasicMaterial color="#6366f1" transparent opacity={0.3} depthWrite={false} />
+      </mesh>
+      <mesh ref={ring2Ref} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[2.4, 0.02, 6, 32]} />
+        <meshBasicMaterial color="#00d4ff" transparent opacity={0.3} depthWrite={false} />
+      </mesh>
+      <mesh ref={ring3Ref} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[2.8, 0.02, 6, 32]} />
+        <meshBasicMaterial color="#a855f7" transparent opacity={0.3} depthWrite={false} />
+      </mesh>
 
       {/* Orbiting particles */}
-      <OrbitingParticles count={40} radius={3.0} />
+      <OrbitingParticles count={30} radius={3.0} />
 
       {/* Floating logo text */}
-      <Float speed={1.5} rotationIntensity={0.1} floatIntensity={0.3}>
+      <Float speed={1.2} rotationIntensity={0.08} floatIntensity={0.25}>
         <Text
           position={[0, 2.6, 0]}
           fontSize={0.35}
@@ -153,9 +177,9 @@ export default function AIPlanet() {
         </Text>
       </Float>
 
-      {/* Point light for local glow */}
-      <pointLight color="#6366f1" intensity={8} distance={8} />
-      <pointLight color="#00d4ff" intensity={4} distance={6} position={[2, 1, 2]} />
+      {/* Reduced to 1 local point light — was 2 */}
+      <pointLight color="#6366f1" intensity={6} distance={8} />
     </group>
   );
 }
+

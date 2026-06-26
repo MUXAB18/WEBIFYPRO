@@ -8,13 +8,14 @@ import MagneticCard from './components/motion/MagneticCard';
 
 import BackToTop from './components/BackToTop';
 import CookieBanner from './components/CookieBanner';
-import { MessageCircle } from 'lucide-react';
+import WhatsAppWidget from './components/WhatsAppWidget';
+import ChatBot from './components/ChatBot';
 import SEO from './seo/SEO';
 import ErrorBoundary from './components/ErrorBoundary';
 
-const WA_URL = `https://wa.me/923708316591?text=${encodeURIComponent("Hello Webify Pro! I'd like to start a project with you.")}`;
 
 import Services from './components/Services';
+import TechStrip from './components/TechStrip';
 import Portfolio from './components/Portfolio';
 import Reviews from './components/Reviews';
 import OrderForm from './components/OrderForm';
@@ -51,25 +52,7 @@ function App() {
     return () => mq.removeEventListener('change', handler);
   }, []);
 
-  const waButtonStyle = {
-    display: 'flex',
-    flexDirection: 'row-reverse',
-    alignItems: 'center',
-    gap: '8px',
-    padding: '12px',
-    borderRadius: '50px',
-    background: 'var(--surface-card, rgba(3,7,18,0.82))',
-    border: '1.5px solid #25d366',
-    color: '#25d366',
-    boxShadow: '0 8px 32px rgba(0,0,0,0.5), 0 0 16px rgba(37,211,102,0.35)',
-    backdropFilter: 'blur(10px)',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    width: '48px',
-    height: '48px',
-    overflow: 'hidden',
-    boxSizing: 'border-box',
-  };
+
 
   return (
     <PhysicsProvider>
@@ -88,39 +71,9 @@ function App() {
           </ErrorBoundary>
         )}
 
-        {/* Floating WhatsApp Button */}
-        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 999 }}>
-          <MagneticCard
-            tiltStrength={isTouchDevice ? 0 : 15}
-            scaleHover={1.06}
-            zDepth={10}
-            glowColor="#25d366"
-            data-cursor-color="#25d366"
-          >
-            <div
-              onClick={() => window.open(WA_URL, '_blank')}
-              style={waButtonStyle}
-              className="floating-wa-btn"
-              role="button"
-              aria-label="Chat on WhatsApp"
-            >
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '22px', height: '22px', flexShrink: 0 }}>
-                <MessageCircle size={20} />
-              </div>
-              <span className="floating-wa-text" style={{
-                fontSize: '0.78rem',
-                fontWeight: '700',
-                whiteSpace: 'nowrap',
-                fontFamily: 'Outfit, sans-serif',
-                opacity: 0,
-                transform: 'translateX(10px)',
-                transition: 'all 0.3s ease',
-              }}>
-                Chat on WhatsApp
-              </span>
-            </div>
-          </MagneticCard>
-        </div>
+        {/* WhatsApp Chat Widget */}
+        <WhatsAppWidget />
+        <ChatBot />
 
         {/* Back to top (bottom-left) */}
         <BackToTop />
@@ -134,6 +87,7 @@ function App() {
           <main>
             <ErrorBoundary>
               <Hero lowEnd={lowEnd} />
+              <TechStrip />
               <Services />
               <Portfolio />
               <Reviews />
@@ -145,17 +99,6 @@ function App() {
         </div>
 
         <style>{`
-          /* WA button expand on hover — desktop only */
-          @media (hover: hover) {
-            .floating-wa-btn:hover {
-              width: 178px !important;
-              box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 24px rgba(37,211,102,0.5) !important;
-            }
-            .floating-wa-btn:hover .floating-wa-text {
-              opacity: 1 !important;
-              transform: translateX(0) !important;
-            }
-          }
           /* Smooth theme colour transitions — but keep interactions snappy */
           html:not(.theme-switching) body,
           html:not(.theme-switching) section,

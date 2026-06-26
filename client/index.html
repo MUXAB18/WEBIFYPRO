@@ -1,93 +1,99 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <!-- Apply saved theme BEFORE first paint to prevent flash -->
-    <script>
-      (function(){
-        var t = localStorage.getItem('webify_theme');
-        // Default is dark. Only add light-mode class if user explicitly chose light.
-        if (t === 'light') {
-          document.documentElement.classList.add('light-mode');
-        }
-      })();
-    </script>
 
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
-    <link rel="manifest" href="/manifest.json" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+  <meta charset="UTF-8" />
+  <!-- Apply saved theme BEFORE first paint to prevent flash -->
+  <script>
+    (function () {
+      var t = localStorage.getItem('webify_theme');
+      // Default is dark. Only add light-mode class if user explicitly chose light.
+      if (t === 'light') {
+        document.documentElement.classList.add('light-mode');
+      }
+    })();
+  </script>
 
-    
-    <!-- Primary Meta Tags -->
-    <title>Webify Pro | Web Development &amp; Digital Marketing</title>
-    <meta name="title" content="Webify Pro | Web Development &amp; Digital Marketing" />
-    <meta name="description" content="Looking for the best web designer in Sialkot? Webify Pro offers expert web development, digital marketing, SEO, and app development in Sialkot, Pakistan. Get a stunning website today!" />
-    <meta name="keywords" content="best web designer in sialkot, best web developer in sialkot, web design sialkot, web designer sialkot, web developer sialkot, website design sialkot, website development sialkot, web design company sialkot, web development company sialkot, affordable web design sialkot, professional web designer sialkot, digital marketing sialkot, digital marketing agency sialkot, social media marketing sialkot, SEO services sialkot, SEO agency sialkot, google ads sialkot, facebook ads sialkot, MERN stack developer sialkot, React developer sialkot, Node.js developer sialkot, ecommerce website sialkot, ecommerce development sialkot, mobile app development sialkot, app developer sialkot, web designer pakistan, web development pakistan, best web design pakistan, freelance web developer pakistan, Webify Pro, webifypro, webify pro sialkot" />
-    <meta name="author" content="Webify Pro — Musab Iftikhar" />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta name="googlebot" content="index, follow" />
-    <meta name="language" content="English" />
-    <meta name="revisit-after" content="3 days" />
-    <meta name="rating" content="general" />
-    <meta name="category" content="Web Design, Digital Marketing" />
-    
-    <!-- Geo Tags -->
-    <meta name="geo.region" content="PK-PB" />
-    <meta name="geo.placename" content="Sialkot, Punjab, Pakistan" />
-    <meta name="geo.position" content="32.4945;74.5229" />
-    <meta name="ICBM" content="32.4945, 74.5229" />
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.webifypro.live/" />
-    <meta property="og:title" content="Webify Pro | Web Development &amp; Digital Marketing" />
-    <meta property="og:description" content="Looking for the best web designer in Sialkot? Webify Pro offers expert web development, digital marketing, SEO, and app development in Sialkot, Pakistan. Get a stunning website today!" />
-    <meta property="og:image" content="https://www.webifypro.live/favicon.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Webify Pro — Best Web Designer in Sialkot" />
-    <meta property="og:site_name" content="Webify Pro" />
-    <meta property="og:locale" content="en_US" />
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@webifypro" />
-    <meta name="twitter:url" content="https://www.webifypro.live/" />
-    <meta name="twitter:title" content="Webify Pro | Web Development &amp; Digital Marketing" />
-    <meta name="twitter:description" content="Looking for the best web designer in Sialkot? Webify Pro offers expert web development, digital marketing, SEO, and app development in Sialkot, Pakistan. Get a stunning website today!" />
-    <meta name="twitter:image" content="https://www.webifypro.live/favicon.png" />
-    <meta name="twitter:image:alt" content="Webify Pro — Best Web Designer in Sialkot" />
-    
-    <!-- Mobile / Theme -->
-    <meta name="theme-color" content="#6366f1" />
-    <meta name="msapplication-TileColor" content="#6366f1" />
-    <meta name="apple-mobile-web-app-title" content="Webify Pro" />
-    <meta name="application-name" content="Webify Pro" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.webifypro.live/" />
-    
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MPMS9983');</script>
-    <!-- End Google Tag Manager -->
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZ6BCCFB89"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-PZ6BCCFB89');
-    </script>
-    
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4371702225315385" crossorigin="anonymous"></script>
-    
-    <!-- Schema.org JSON-LD LocalBusiness -->
-    <script type="application/ld+json">
+
+  <!-- Primary Meta Tags -->
+  <title>Webify Pro | Web Development &amp; Digital Marketing</title>
+  <meta name="title" content="Webify Pro | Web Development &amp; Digital Marketing" />
+  <meta name="description"
+    content="Looking for the best web designer in Sialkot? Webify Pro offers expert web development, digital marketing, SEO, and app development in Sialkot, Pakistan. Get a stunning website today!" />
+  <meta name="keywords"
+    content="best web designer in sialkot, best web developer in sialkot, web design sialkot, web designer sialkot, web developer sialkot, website design sialkot, website development sialkot, web design company sialkot, web development company sialkot, affordable web design sialkot, professional web designer sialkot, digital marketing sialkot, digital marketing agency sialkot, social media marketing sialkot, SEO services sialkot, SEO agency sialkot, google ads sialkot, facebook ads sialkot, MERN stack developer sialkot, React developer sialkot, Node.js developer sialkot, ecommerce website sialkot, ecommerce development sialkot, mobile app development sialkot, app developer sialkot, web designer pakistan, web development pakistan, best web design pakistan, freelance web developer pakistan, Webify Pro, webifypro, webify pro sialkot" />
+  <meta name="author" content="Webify Pro — Musab Iftikhar" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="googlebot" content="index, follow" />
+  <meta name="language" content="English" />
+  <meta name="revisit-after" content="3 days" />
+  <meta name="rating" content="general" />
+  <meta name="category" content="Web Design, Digital Marketing" />
+
+  <!-- Geo Tags -->
+  <meta name="geo.region" content="PK-PB" />
+  <meta name="geo.placename" content="Sialkot, Punjab, Pakistan" />
+  <meta name="geo.position" content="32.4945;74.5229" />
+  <meta name="ICBM" content="32.4945, 74.5229" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.webifypro.live/" />
+  <meta property="og:title" content="Webify Pro | Web Development &amp; Digital Marketing" />
+  <meta property="og:description"
+    content="Looking for the best web designer in Sialkot? Webify Pro offers expert web development, digital marketing, SEO, and app development in Sialkot, Pakistan. Get a stunning website today!" />
+  <meta property="og:image" content="https://www.webifypro.live/favicon.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Webify Pro — Best Web Designer in Sialkot" />
+  <meta property="og:site_name" content="Webify Pro" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@webifypro" />
+  <meta name="twitter:url" content="https://www.webifypro.live/" />
+  <meta name="twitter:title" content="Webify Pro | Web Development &amp; Digital Marketing" />
+  <meta name="twitter:description"
+    content="Looking for the best web designer in Sialkot? Webify Pro offers expert web development, digital marketing, SEO, and app development in Sialkot, Pakistan. Get a stunning website today!" />
+  <meta name="twitter:image" content="https://www.webifypro.live/favicon.png" />
+  <meta name="twitter:image:alt" content="Webify Pro — Best Web Designer in Sialkot" />
+
+  <!-- Mobile / Theme -->
+  <meta name="theme-color" content="#6366f1" />
+  <meta name="msapplication-TileColor" content="#6366f1" />
+  <meta name="apple-mobile-web-app-title" content="Webify Pro" />
+  <meta name="application-name" content="Webify Pro" />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://www.webifypro.live/" />
+
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-MPMS9983');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZ6BCCFB89"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-PZ6BCCFB89');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4371702225315385"
+    crossorigin="anonymous"></script>
+
+  <!-- Schema.org JSON-LD LocalBusiness -->
+  <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": ["LocalBusiness", "ProfessionalService"],
@@ -188,8 +194,8 @@
     }
     </script>
 
-    <!-- Schema.org JSON-LD FAQPage -->
-    <script type="application/ld+json">
+  <!-- Schema.org JSON-LD FAQPage -->
+  <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
@@ -229,13 +235,16 @@
       ]
     }
     </script>
-  </head>
-  <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPMS9983" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-    
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+</head>
+
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPMS9983" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>

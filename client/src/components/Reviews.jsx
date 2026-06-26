@@ -32,8 +32,8 @@ const reviewsData = [
   },
   {
     name: 'Ahmed Raza',
-    role: 'Startup Founder',
-    review: "The mobile app they built for us exceeded every expectation. Flutter-based, buttery smooth, and deployed to both stores on time. The team is incredibly professional.",
+    role: 'E-commerce Store Owner',
+    review: "Webify Pro built our complete e-commerce website with payment integration and product management. Sales doubled within the first month. Incredibly fast, beautiful design, and top-tier support!",
     avatar: 'AR',
     color: '#a855f7',
     glow: 'rgba(168,85,247,0.12)',
