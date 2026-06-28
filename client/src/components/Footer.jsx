@@ -147,6 +147,7 @@ const Footer = () => (
     <div style={{
       borderTop: '1px solid rgba(255,255,255,0.06)',
       paddingTop: '24px',
+      position: 'relative',
       display: 'flex', justifyContent: 'space-between', alignItems: 'center',
       flexWrap: 'wrap', gap: '12px',
       color: 'rgba(255,255,255,0.5)', fontSize: '0.83rem',
@@ -160,6 +161,21 @@ const Footer = () => (
           fontWeight: '600',
         }}>Musab Iftikhar</span>
       </p>
+
+      {/* Secret Admin Access Button */}
+      <a 
+        href="/admin/login" 
+        style={{
+          position: 'absolute',
+          bottom: '-15px',
+          right: '0',
+          width: '40px',
+          height: '40px',
+          opacity: 0,
+          zIndex: 99
+        }}
+        aria-label="Admin Login"
+      />
     </div>
 
     <style>{`
