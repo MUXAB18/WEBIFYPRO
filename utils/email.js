@@ -6,9 +6,8 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const sendEmail = async (subject, html, to = process.env.ADMIN_EMAIL || process.env.EMAIL_USER) => {
     try {
         const response = await resend.emails.send({
-            // NOTE: If you haven't verified a custom domain on Resend, 
-            // you must use 'onboarding@resend.dev' as the from address.
-            from: 'Webify Pro <onboarding@resend.dev>',
+            // Sending from the verified custom domain
+            from: 'Webify Pro <info@webifypro.live>',
             to: [to],
             subject: subject,
             html: html
