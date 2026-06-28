@@ -7,7 +7,7 @@ const sendEmail = async (subject, html, to = process.env.ADMIN_EMAIL || process.
     try {
         const response = await resend.emails.send({
             // Sending from the verified custom domain
-            from: 'Webify Pro <info@webifypro.live>',
+            from: 'Webify Pro <info@order.webifypro.live>',
             to: [to],
             subject: subject,
             html: html
