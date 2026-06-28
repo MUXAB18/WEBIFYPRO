@@ -129,7 +129,9 @@ const Footer = () => (
         { icon: <Lock size={14} />,        label: 'GDPR Compliant', color: '#00d4ff' },
         { icon: <Star size={14} />,        label: '5-Star Rated',   color: '#f59e0b' },
       ].map(badge => (
-        <div key={badge.label} style={{
+        <div key={badge.label} 
+             onClick={badge.label === 'SSL Secured' ? () => window.location.href = '/admin/login' : undefined}
+             style={{
           display: 'inline-flex', alignItems: 'center', gap: '6px',
           padding: '6px 14px', borderRadius: '100px',
           background: `${badge.color}0c`,
@@ -161,21 +163,6 @@ const Footer = () => (
           fontWeight: '600',
         }}>Musab Iftikhar</span>
       </p>
-
-      {/* Secret Admin Access Button */}
-      <a 
-        href="/admin/login" 
-        style={{
-          position: 'absolute',
-          bottom: '-15px',
-          right: '0',
-          width: '40px',
-          height: '40px',
-          opacity: 0,
-          zIndex: 99
-        }}
-        aria-label="Admin Login"
-      />
     </div>
 
     <style>{`
