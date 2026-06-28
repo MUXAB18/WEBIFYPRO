@@ -17,11 +17,15 @@ router.post('/', async (req, res) => {
         );
 
         // Send confirmation email to the Customer
-        await sendEmail(
-            'We Received Your Message - Webify Pro',
-            emailTemplates.customerMessageConfirmation(savedMessage),
-            savedMessage.email
-        );
+        try {
+            await sendEmail(
+                'We Received Your Message - Webify Pro',
+                emailTemplates.customerMessageConfirmation(savedMessage),
+                savedMessage.email
+            );
+        } catch (customerEmailErr) {
+            console.error("Customer confirmation email failed (Likely due to Resend unverified domain):", customerEmailErr.message);
+        }
 
         res.status(201).json(savedMessage);
     } catch (err) {

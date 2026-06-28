@@ -10,18 +10,22 @@ router.post('/', async (req, res) => {
         const newOrder = new Order(req.body);
         const savedOrder = await newOrder.save();
 
-        // Send email in background to Admin
-        sendEmail(
+        // Send email to Admin
+        await sendEmail(
             'New Order Received - Webify Pro',
             emailTemplates.adminNewOrder(savedOrder)
         );
 
         // Send confirmation email to the Customer
-        sendEmail(
-            'Order Confirmation - Webify Pro',
-            emailTemplates.customerOrderConfirmation(savedOrder),
-            savedOrder.customerEmail
-        );
+        try {
+            await sendEmail(
+                'Order Confirmation - Webify Pro',
+                emailTemplates.customerOrderConfirmation(savedOrder),
+                savedOrder.customerEmail
+            );
+        } catch (customerEmailErr) {
+            console.error("Customer confirmation email failed (Likely due to Resend unverified domain):", customerEmailErr.message);
+        }
 
         res.status(201).json(savedOrder);
     } catch (err) {
