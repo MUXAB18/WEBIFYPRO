@@ -1,4 +1,5 @@
 import { Rocket, Github, Linkedin, Facebook, Mail, MessageCircle, ChevronRight, ShieldCheck, Lock, Star } from 'lucide-react';
+import AdBanner from './AdBanner';
 
 const Footer = () => (
   <footer style={{
@@ -110,6 +111,8 @@ const Footer = () => (
       </div>
     </div>
 
+    {/* Google AdSense Banner */}
+    <AdBanner />
 
     {/* Trust Badges */}
     <div style={{
