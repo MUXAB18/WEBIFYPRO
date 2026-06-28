@@ -12,14 +12,14 @@ router.post('/', async (req, res) => {
 
         // Send email to Admin
         await sendEmail(
-            'New Contact Message - Webify Pro',
+            `New Contact Message from ${savedMessage.name} - Webify Pro`,
             emailTemplates.adminNewMessage(savedMessage)
         );
 
         // Send confirmation email to the Customer
         try {
             await sendEmail(
-                'We Received Your Message - Webify Pro',
+                `We Received Your Message - Webify Pro (Ref: ${savedMessage._id.toString().slice(-6)})`,
                 emailTemplates.customerMessageConfirmation(savedMessage),
                 savedMessage.email
             );
