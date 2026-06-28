@@ -112,9 +112,10 @@ const OrderWizard = ({ onSuccess }) => {
     color: 'var(--input-text)',
     outline: 'none',
     fontFamily: "'Courier New', monospace",
-    fontSize: '15px',
+    fontSize: '16px',
     transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
     boxSizing: 'border-box',
+    maxWidth: '100%',
   };
 
   const labelStyle = {

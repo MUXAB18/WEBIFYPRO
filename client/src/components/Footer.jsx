@@ -1,6 +1,5 @@
 import { Rocket, Github, Linkedin, Facebook, Mail, MessageCircle, ChevronRight, ShieldCheck, Lock, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import AdBanner from './AdBanner';
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -9,7 +8,7 @@ const Footer = () => {
   <footer style={{
     position: 'relative', zIndex: 2,
     padding: '60px 6% 28px',
-    marginTop: '40px',
+    marginTop: '10px',
     background: 'rgba(3,7,18,0.92)',
     backdropFilter: 'blur(20px)',
     WebkitBackdropFilter: 'blur(20px)',
@@ -114,10 +113,6 @@ const Footer = () => {
         </ul>
       </div>
     </div>
-
-    {/* Google AdSense Banner */}
-    <AdBanner />
-
     {/* Trust Badges */}
     <div style={{
       borderTop: '1px solid rgba(255,255,255,0.06)',
