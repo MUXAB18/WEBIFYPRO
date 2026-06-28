@@ -17,7 +17,7 @@ const sendEmail = async (subject, html, to = process.env.ADMIN_EMAIL || process.
         console.log(`Email sent successfully to ${to} via Resend! ID: ${data.id}`);
     } catch (error) {
         console.error(`Error sending email to ${to} via Resend:`, error.message);
-        // We do not throw the error so DB saves still succeed
+        throw error;
     }
 };
 

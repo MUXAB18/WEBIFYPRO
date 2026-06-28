@@ -10,14 +10,14 @@ router.post('/', async (req, res) => {
         const newMessage = new Message(req.body);
         const savedMessage = await newMessage.save();
 
-        // Send email in background to Admin
-        sendEmail(
+        // Send email to Admin
+        await sendEmail(
             'New Contact Message - Webify Pro',
             emailTemplates.adminNewMessage(savedMessage)
         );
 
         // Send confirmation email to the Customer
-        sendEmail(
+        await sendEmail(
             'We Received Your Message - Webify Pro',
             emailTemplates.customerMessageConfirmation(savedMessage),
             savedMessage.email
