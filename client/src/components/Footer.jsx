@@ -1,7 +1,11 @@
 import { Rocket, Github, Linkedin, Facebook, Mail, MessageCircle, ChevronRight, ShieldCheck, Lock, Star } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import AdBanner from './AdBanner';
 
-const Footer = () => (
+const Footer = () => {
+  const navigate = useNavigate();
+
+  return (
   <footer style={{
     position: 'relative', zIndex: 2,
     padding: '60px 6% 28px',
@@ -130,8 +134,9 @@ const Footer = () => (
         { icon: <Star size={14} />,        label: '5-Star Rated',   color: '#f59e0b' },
       ].map(badge => (
         <div key={badge.label} 
-             onClick={badge.label === 'SSL Secured' ? () => window.location.href = '/admin/login' : undefined}
+             onClick={badge.label === 'SSL Secured' ? () => navigate('/admin/login') : undefined}
              style={{
+          cursor: badge.label === 'SSL Secured' ? 'pointer' : 'default',
           display: 'inline-flex', alignItems: 'center', gap: '6px',
           padding: '6px 14px', borderRadius: '100px',
           background: `${badge.color}0c`,
@@ -199,6 +204,7 @@ const Footer = () => (
       }
     `}</style>
   </footer>
-);
+  );
+};
 
 export default Footer;
