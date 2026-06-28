@@ -15,13 +15,13 @@ const AdBanner = () => {
   }, []);
 
   return (
-    <div style={{ width: '100%', margin: '30px 0', textAlign: 'center', overflow: 'hidden' }}>
+    <div style={{ width: '100%', margin: '30px 0', textAlign: 'center', overflow: 'hidden', minHeight: '50px', maxHeight: '120px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       {/* WebifyPro-AutoAds */}
       <ins className="adsbygoogle"
-           style={{ display: 'block' }}
+           style={{ display: 'inline-block', width: '100%', height: '100px' }}
            data-ad-client="ca-pub-4371702225315385"
            data-ad-slot="2955354445"
-           data-ad-format="auto"
+           data-ad-format="horizontal"
            data-full-width-responsive="true"></ins>
     </div>
   );
