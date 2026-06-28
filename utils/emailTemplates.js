@@ -34,7 +34,7 @@ const getBaseTemplate = (title, content, isAdmin = false) => `
             <td align="center" style="background-color: #f8fafc; padding: 20px; border-top: 1px solid #e2e8f0; font-size: 13px; color: #64748b;">
               <p style="margin: 0 0 10px 0;">This is an automated message from Webify Pro.</p>
               <p style="margin: 0 0 10px 0;">&copy; ${new Date().getFullYear()} Webify Pro. All rights reserved.</p>
-              <a href="https://webify-pro.com" style="color: #6366f1; text-decoration: none; font-weight: 600;">Visit Website</a>
+              <a href="https://webifypro.live" style="color: #6366f1; text-decoration: none; font-weight: 600;">Visit Website</a>
             </td>
           </tr>
         </table>
@@ -72,7 +72,7 @@ module.exports = {
     <p style="margin-bottom: 30px;">We'll be in touch with you shortly to discuss the next steps!</p>
     
     <div style="text-align: center;">
-      <a href="https://webify-pro.com" style="display: inline-block; padding: 14px 28px; background-color: #6366f1; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: bold;">Visit Our Website</a>
+      <a href="https://webifypro.live" style="display: inline-block; padding: 14px 28px; background-color: #6366f1; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: bold;">Visit Our Website</a>
     </div>
   `),
 
@@ -96,7 +96,7 @@ module.exports = {
     <p style="margin-bottom: 30px;">We pride ourselves on quick communication, so you can expect to hear back from us within the next 2 hours.</p>
     
     <div style="text-align: center;">
-      <a href="https://webify-pro.com" style="display: inline-block; padding: 14px 28px; background-color: #6366f1; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: bold;">Explore Our Services</a>
+      <a href="https://webifypro.live" style="display: inline-block; padding: 14px 28px; background-color: #6366f1; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: bold;">Explore Our Services</a>
     </div>
   `)
 };
