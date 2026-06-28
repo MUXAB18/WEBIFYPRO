@@ -108,6 +108,11 @@ button { cursor: pointer; border: none; outline: none; font-family: inherit; }
 img { display: block; max-width: 100%; height: auto; }
 canvas { display: block; }
 
+/* Prevent iOS Auto-Zoom on form fields */
+input, textarea, select {
+  font-size: 16px !important;
+}
+
 /* ═══════════════════════════════════════════════════════════
    APP / SECTIONS
    ════════════════════════════════════════════════════════ */
