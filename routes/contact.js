@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
 
         // Send email to Admin
         await sendEmail(
-            `New Contact Message from ${savedMessage.name} - Webify Pro`,
+            `New Contact Message from ${savedMessage.name} (Ref: ${savedMessage._id.toString().slice(-6)}) - Webify Pro`,
             emailTemplates.adminNewMessage(savedMessage)
         );
 

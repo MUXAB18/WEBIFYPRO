@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
 
         // Send email to Admin
         await sendEmail(
-            `New Order Received from ${savedOrder.customerName} - Webify Pro`,
+            `New Order Received from ${savedOrder.customerName} (Order #${savedOrder._id.toString().slice(-6)}) - Webify Pro`,
             emailTemplates.adminNewOrder(savedOrder)
         );
 
