@@ -30,7 +30,8 @@ export default function AdminLogin() {
         setError(data.error || 'Invalid credentials');
       }
     } catch (err) {
-      setError('Server error. Try again later.');
+      console.error("Login fetch error:", err);
+      setError('Connection failed. Restart your local dev server, or check VITE_API_URL if deployed.');
     } finally {
       setIsLoading(false);
     }

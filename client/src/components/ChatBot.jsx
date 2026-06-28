@@ -719,7 +719,7 @@ export default function ChatBot() {
         /* ══════════════ MOBILE ══════════════ */
         @media (max-width: 480px) {
           .cb-window {
-            width: calc(100vw - 16px);
+            width: calc(100% - 16px);
             left: 8px; bottom: 88px;
             max-height: 70vh;
             backdrop-filter: none;
