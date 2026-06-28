@@ -90,15 +90,13 @@ const OrderWizard = ({ onSuccess }) => {
     setStep(0);
     setIsSubmitting(false);
 
-    sendOrderEmail(snapshot).catch(err => console.warn('Email fail:', err));
-    const apiUrl = import.meta.env.VITE_API_URL;
-    if (apiUrl) {
-      fetch(`${apiUrl}/api/orders`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(snapshot),
-      }).catch(() => { });
-    }
+    // Web3Forms removed since backend handles emails now
+    const apiUrl = import.meta.env.VITE_API_URL || '';
+    fetch(`${apiUrl}/api/orders`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(snapshot),
+    }).catch(() => { });
     if (onSuccess) onSuccess();
   };
 

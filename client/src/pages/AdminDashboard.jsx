@@ -22,7 +22,8 @@ export default function AdminDashboard() {
 
   const fetchProjects = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/projects`, {
+const apiUrl = import.meta.env.VITE_API_URL || '';
+      const res = await fetch(`${apiUrl}/api/admin/projects`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.status === 401 || res.status === 403) {
@@ -41,7 +42,8 @@ export default function AdminDashboard() {
 
   const updateProject = async (id, updates) => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/projects/${id}`, {
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      const res = await fetch(`${apiUrl}/api/admin/projects/${id}`, {
         method: 'PUT',
         headers: { 
           'Content-Type': 'application/json',
@@ -220,7 +222,8 @@ function ProjectDetail({ project, token, onUpdate, refreshProjects, onDelete }) 
     e.preventDefault();
     if (!newTask.trim()) return;
     try {
-      await fetch(`${import.meta.env.VITE_API_URL}/api/admin/projects/${project._id}/tasks`, {
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      await fetch(`${apiUrl}/api/admin/projects/${project._id}/tasks`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ name: newTask })
@@ -232,7 +235,8 @@ function ProjectDetail({ project, token, onUpdate, refreshProjects, onDelete }) 
 
   const toggleTask = async (taskId, currentStatus) => {
     try {
-      await fetch(`${import.meta.env.VITE_API_URL}/api/admin/projects/${project._id}/tasks/${taskId}`, {
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      await fetch(`${apiUrl}/api/admin/projects/${project._id}/tasks/${taskId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ completed: !currentStatus })
@@ -243,7 +247,8 @@ function ProjectDetail({ project, token, onUpdate, refreshProjects, onDelete }) 
 
   const deleteTask = async (taskId) => {
     try {
-      await fetch(`${import.meta.env.VITE_API_URL}/api/admin/projects/${project._id}/tasks/${taskId}`, {
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      await fetch(`${apiUrl}/api/admin/projects/${project._id}/tasks/${taskId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -253,7 +258,8 @@ function ProjectDetail({ project, token, onUpdate, refreshProjects, onDelete }) 
 
   const deleteEntireProject = async () => {
     try {
-      await fetch(`${import.meta.env.VITE_API_URL}/api/admin/projects/${project._id}`, {
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      await fetch(`${apiUrl}/api/admin/projects/${project._id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
