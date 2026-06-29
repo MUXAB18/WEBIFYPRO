@@ -163,7 +163,10 @@ function ServiceCard({ service, onSelect }) {
           <span>Learn more</span>
           <span className="arrow-line" style={{
             display: 'inline-block', width: '22px', height: '1px',
-            background: service.color, transition: 'width 0.3s ease',
+            background: service.color,
+            transformOrigin: 'left center',
+            transition: 'transform 0.3s ease',
+            willChange: 'transform',
           }} />
         </div>
       </div>
@@ -424,12 +427,12 @@ const Services = () => {
         }
         .service-card-3d:hover .scan-line { animation: scan 3.5s ease-in-out; opacity: 1; }
         @keyframes scan {
-          0% { top: -5%; opacity: 0; }
-          20% { opacity: 0.6; }
-          100% { top: 110%; opacity: 0; }
+          0%   { transform: translateY(-5%); opacity: 0; }
+          20%  { opacity: 0.6; }
+          100% { transform: translateY(110%); opacity: 0; }
         }
         .service-card-3d:hover { box-shadow: 0 24px 50px rgba(0,0,0,0.5); }
-        .service-card-3d:hover .arrow-line { width: 38px !important; }
+        .service-card-3d:hover .arrow-line { transform: scaleX(1.73) !important; }
         
         @keyframes modalFadeIn {
           from { opacity: 0; }

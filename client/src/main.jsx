@@ -14,10 +14,22 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-createRoot(document.getElementById('root')).render(
+const root = createRoot(document.getElementById('root'));
+root.render(
   <StrictMode>
     <HelmetProvider>
       <App />
     </HelmetProvider>
   </StrictMode>,
-)
+);
+
+// Remove app shell after React's first paint
+// Double rAF: first frame = React DOM commit, second = browser paint
+requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
+    const shell = document.getElementById('app-shell');
+    if (!shell) return;
+    shell.classList.add('fade-out');
+    shell.addEventListener('transitionend', () => shell.remove(), { once: true });
+  });
+});

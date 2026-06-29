@@ -269,15 +269,16 @@ export default function AdminDashboard() {
         .project-list::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.4); border-radius: 4px; }
         
         .main-content {
-          margin-left: 0;
-          transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          transform: translateX(0);
+          transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          will-change: transform;
         }
 
         .sidebar-drawer.closed { transform: translateX(-100%); }
         .sidebar-drawer.open { transform: translateX(0); }
 
         @media (min-width: 769px) {
-          .main-content.expanded { margin-left: 280px; }
+          .main-content.expanded { transform: translateX(280px); }
         }
 
         @media (max-width: 768px) {
@@ -514,8 +515,11 @@ function ProjectDetail({ project, token, onUpdate, refreshProjects, onDelete }) 
                 <div style={{ 
                   height: '100%', 
                   background: 'linear-gradient(90deg, #6366f1, #a855f7)', 
-                  width: `${(project.tasks.filter(t => t.completed).length / project.tasks.length) * 100}%`,
-                  transition: 'width 0.4s ease'
+                  width: '100%',
+                  transformOrigin: 'left center',
+                  transform: `scaleX(${(project.tasks.filter(t => t.completed).length / project.tasks.length)})`,
+                  transition: 'transform 0.4s ease',
+                  willChange: 'transform'
                 }} />
               </div>
               <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.5)', fontWeight: '600' }}>

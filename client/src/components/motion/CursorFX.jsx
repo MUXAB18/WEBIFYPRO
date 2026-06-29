@@ -159,8 +159,8 @@ export default function CursorFX() {
           position: 'fixed', top: 0, left: 0, zIndex: 99998,
           width: '30px', height: '30px', borderRadius: '50%',
           border: '1.5px solid #6366f1',
-          pointerEvents: 'none', willChange: 'transform',
-          transition: 'width 0.25s cubic-bezier(0.4,0,0.2,1), height 0.25s cubic-bezier(0.4,0,0.2,1), background 0.25s ease, border-color 0.2s ease',
+          transition: 'background 0.25s ease, border-color 0.2s ease',
+          willChange: 'transform',
         }}
       />
 

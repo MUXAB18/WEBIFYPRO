@@ -2,17 +2,19 @@ import React, { lazy, Suspense, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import ServiceMarquee from './components/ServiceMarquee';
-import Footer from './components/Footer';
 import { PhysicsProvider } from './context/PhysicsContext';
 import CursorFX from './components/motion/CursorFX';
 
-import BackToTop from './components/BackToTop';
-import CookieBanner from './components/CookieBanner';
-import ChatBot from './components/ChatBot';
-import WhatsAppWidget from './components/WhatsAppWidget';
 import SEO from './seo/SEO';
 import ErrorBoundary from './components/ErrorBoundary';
+
+// Lazy load heavy/below-fold components to drastically reduce initial JS payload
+const ServiceMarquee = lazy(() => import('./components/ServiceMarquee'));
+const Footer = lazy(() => import('./components/Footer'));
+const BackToTop = lazy(() => import('./components/BackToTop'));
+const CookieBanner = lazy(() => import('./components/CookieBanner'));
+const ChatBot = lazy(() => import('./components/ChatBot'));
+const WhatsAppWidget = lazy(() => import('./components/WhatsAppWidget'));
 
 // Lazy load heavy components to drastically reduce initial JS payload
 const Services = lazy(() => import('./components/Services'));
@@ -58,7 +60,7 @@ function MainPage({ lowEnd, isTouchDevice }) {
       <SEO 
         title="Webify Pro | Web Development & Digital Marketing"
         description="Premium React, MERN stack web development and growth-driven digital marketing agency. We build fast, high-converting digital experiences."
-        keywords={['web development', 'digital marketing', 'react agency', 'MERN stack', 'seo services', 'webify pro']}
+        keywords={['web design Sialkot', 'web developer Pakistan', 'MERN stack developer', 'digital marketing Sialkot', 'Webify Pro']}
       />
 
       <PhysicsProvider>
@@ -75,17 +77,19 @@ function MainPage({ lowEnd, isTouchDevice }) {
           </ErrorBoundary>
         )}
 
-        {/* New Popup WhatsApp Widget */}
-        <WhatsAppWidget isTouchDevice={isTouchDevice} />
+        <Suspense fallback={null}>
+          {/* New Popup WhatsApp Widget */}
+          <WhatsAppWidget isTouchDevice={isTouchDevice} />
 
-        {/* Back to top (bottom-left) */}
-        <BackToTop />
+          {/* Back to top (bottom-left) */}
+          <BackToTop />
 
-        {/* GDPR Cookie Banner */}
-        <CookieBanner />
+          {/* GDPR Cookie Banner */}
+          <CookieBanner />
 
-        {/* AI ChatBot */}
-        <ChatBot />
+          {/* AI ChatBot */}
+          <ChatBot />
+        </Suspense>
 
         {/* Page content */}
         <div style={{ position: 'relative', zIndex: 1 }}>
@@ -93,9 +97,8 @@ function MainPage({ lowEnd, isTouchDevice }) {
           <main>
             <ErrorBoundary>
               <Hero lowEnd={lowEnd} />
-              <ServiceMarquee />
-              
               <Suspense fallback={<div style={{ minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#a5b4fc' }}>Loading...</div>}>
+                <ServiceMarquee />
                 <Services />
                 <Portfolio />
                 <Reviews />
@@ -104,7 +107,9 @@ function MainPage({ lowEnd, isTouchDevice }) {
               </Suspense>
             </ErrorBoundary>
           </main>
-          <Footer />
+          <Suspense fallback={null}>
+            <Footer />
+          </Suspense>
         </div>
       </PhysicsProvider>
     </>

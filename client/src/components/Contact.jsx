@@ -306,8 +306,8 @@ const Contact = () => {
           to { transform: rotate(360deg); }
         }
         @keyframes loadingSweep {
-          0% { left: -30%; }
-          100% { left: 100%; }
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(400%); }
         }
         @keyframes fadeInUp {
           from { opacity: 0; transform: translateY(6px); }

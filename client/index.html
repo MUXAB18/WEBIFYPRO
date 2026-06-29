@@ -14,20 +14,24 @@
     })();
   </script>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap">
+  
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
   <link rel="manifest" href="/manifest.json" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary Meta Tags -->
   <title>Webify Pro | Web Development &amp; Digital Marketing</title>
   <meta name="title" content="Webify Pro | Web Development &amp; Digital Marketing" />
   <meta name="description"
     content="Looking for the best web designer in Sialkot? Webify Pro offers expert web development, digital marketing, SEO, and app development in Sialkot, Pakistan. Get a stunning website today!" />
-  <meta name="keywords"
-    content="best web designer in sialkot, best web developer in sialkot, web design sialkot, web designer sialkot, web developer sialkot, website design sialkot, website development sialkot, web design company sialkot, web development company sialkot, affordable web design sialkot, professional web designer sialkot, digital marketing sialkot, digital marketing agency sialkot, social media marketing sialkot, SEO services sialkot, SEO agency sialkot, google ads sialkot, facebook ads sialkot, MERN stack developer sialkot, React developer sialkot, Node.js developer sialkot, ecommerce website sialkot, ecommerce development sialkot, mobile app development sialkot, app developer sialkot, web designer pakistan, web development pakistan, best web design pakistan, freelance web developer pakistan, Webify Pro, webifypro, webify pro sialkot" />
+  <meta name="keywords" content="web design Sialkot, web developer Pakistan, MERN stack developer, digital marketing Sialkot, Webify Pro" />
   <meta name="author" content="Webify Pro — Musab Iftikhar" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <meta name="googlebot" content="index, follow" />
@@ -74,9 +78,7 @@
   <!-- Canonical URL -->
   <link rel="canonical" href="https://www.webifypro.live/" />
 
-  <!-- Google Tag Manager -->
-  <script>(function (w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-MPMS9983');</script>
-  <!-- End Google Tag Manager -->
+
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZ6BCCFB89"></script>
@@ -242,8 +244,85 @@
       style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
 
+  <!-- App Shell — visible instantly, before JS loads -->
+  <style>
+    #app-shell {
+      position: fixed; inset: 0; z-index: 99999;
+      background: #010108;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 32px;
+      transition: opacity 0.35s ease;
+    }
+    #app-shell.fade-out { opacity: 0; pointer-events: none; }
+    #app-shell-logo {
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+    }
+    #app-shell-spinner {
+      width: 56px; height: 56px; border-radius: 50%;
+      border: 3px solid rgba(99,102,241,0.2);
+      border-top-color: #6366f1;
+      animation: shell-spin 0.75s linear infinite;
+    }
+    #app-shell-wordmark {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 1.1rem; font-weight: 700; letter-spacing: 0.04em;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    #app-shell-bars {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      width: min(340px, 80vw);
+    }
+    .shell-bar {
+      height: 10px; border-radius: 6px;
+      background: linear-gradient(90deg,
+        rgba(99,102,241,0.12) 25%,
+        rgba(99,102,241,0.28) 50%,
+        rgba(99,102,241,0.12) 75%
+      );
+      background-size: 200% 100%;
+      animation: shell-shimmer 1.4s ease-in-out infinite;
+    }
+    .shell-bar:nth-child(1) { width: 100%; animation-delay: 0s; }
+    .shell-bar:nth-child(2) { width: 75%;  animation-delay: 0.15s; }
+    .shell-bar:nth-child(3) { width: 55%;  animation-delay: 0.3s; }
+    @keyframes shell-spin {
+      to { transform: rotate(360deg); }
+    }
+    @keyframes shell-shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+  </style>
+
+  <div id="app-shell">
+    <div id="app-shell-logo">
+      <div id="app-shell-spinner"></div>
+      <div id="app-shell-wordmark">Webify Pro</div>
+    </div>
+    <div id="app-shell-bars">
+      <div class="shell-bar"></div>
+      <div class="shell-bar"></div>
+      <div class="shell-bar"></div>
+    </div>
+  </div>
+  <!-- End App Shell -->
+
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
+
+  <!-- Google Tag Manager (deferred) -->
+  <script>
+    window.addEventListener('load', function () {
+      var script = document.createElement('script');
+      script.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-MPMS9983';
+      script.async = true;
+      document.head.appendChild(script);
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    });
+  </script>
+  <!-- End Google Tag Manager (deferred) -->
 </body>
 
 </html>

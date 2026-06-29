@@ -156,17 +156,23 @@ const Portfolio = () => {
 
               {/* Image */}
               <div style={{ height: '55%', overflow: 'hidden', position: 'relative' }}>
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  loading="lazy"
-                  style={{
-                    width: '100%', height: '100%', objectFit: 'cover',
-                    transition: 'transform 0.6s ease, filter 0.4s ease',
-                    filter: 'brightness(0.65)',
-                  }}
-                  className="galaxy-img"
-                />
+                <picture>
+                  <source srcSet={project.image.replace(/\.(png|jpe?g)$/i, '.webp')} type="image/webp" />
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    loading="lazy"
+                    width="800"
+                    height="600"
+                    style={{
+                      width: '100%', height: '100%', objectFit: 'cover',
+                      aspectRatio: '800 / 600',
+                      transition: 'transform 0.6s ease, filter 0.4s ease',
+                      filter: 'brightness(0.65)',
+                    }}
+                    className="galaxy-img"
+                  />
+                </picture>
                 <div style={{
                   position: 'absolute', bottom: 0, left: 0, right: 0, height: '60%',
                   background: 'linear-gradient(to top, rgba(5,5,20,0.95), transparent)',
@@ -240,11 +246,17 @@ const Portfolio = () => {
           }}>
             {/* Full-width image header */}
             <div style={{ position: 'relative', height: '280px', overflow: 'hidden', borderRadius: '28px 28px 0 0' }}>
-              <img
-                src={lightboxProject.image}
-                alt={lightboxProject.title}
-                style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.7)' }}
-              />
+              <picture>
+                <source srcSet={lightboxProject.image.replace(/\.(png|jpe?g)$/i, '.webp')} type="image/webp" />
+                <img
+                  src={lightboxProject.image}
+                  alt={lightboxProject.title}
+                  loading="lazy"
+                  width="1200"
+                  height="675"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', aspectRatio: '16 / 9', filter: 'brightness(0.7)' }}
+                />
+              </picture>
               <div style={{
                 position: 'absolute', inset: 0,
                 background: `linear-gradient(to bottom, transparent 30%, rgba(8,8,24,0.98) 100%)`,
