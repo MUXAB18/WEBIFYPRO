@@ -117,8 +117,8 @@ const WhatsAppWidget = memo(function WhatsAppWidget({ isTouchDevice }) {
       {/* Floating Button */}
       <MagneticCard
         tiltStrength={isTouchDevice ? 0 : 15}
-        scaleHover={1.06}
-        zDepth={10}
+        scaleHover={isTouchDevice ? 1 : 1.06}
+        zDepth={isTouchDevice ? 0 : 10}
         glowColor="#25d366"
         data-cursor-color="#25d366"
       >
@@ -127,7 +127,8 @@ const WhatsAppWidget = memo(function WhatsAppWidget({ isTouchDevice }) {
           {!isOpen && (
             <div className="wa-pulse-ring" style={{
               position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-              borderRadius: '50%', background: 'rgba(37, 211, 102, 0.4)', zIndex: -1
+              borderRadius: '50%', background: 'rgba(37, 211, 102, 0.4)', zIndex: -1,
+              pointerEvents: 'none'
             }} />
           )}
           

@@ -88,22 +88,18 @@ const Navbar = () => {
           textDecoration: 'none',
           cursor: 'pointer',
         }}>
-          <div style={{ position: 'relative' }}>
-            <Rocket
-              size={30}
-              color="#6366f1"
+          <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+            <img 
+              src="/webifypro-logo.png" 
+              alt="Webify Pro Logo" 
               style={{
-                filter: 'drop-shadow(0 0 8px rgba(99,102,241,0.8))',
+                width: '38px',
+                height: '38px',
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 0 8px rgba(99,102,241,0.5))',
                 animation: 'logo-float 3s ease-in-out infinite',
-              }}
+              }} 
             />
-            <div style={{
-              position: 'absolute',
-              inset: '-4px',
-              borderRadius: '50%',
-              background: 'radial-gradient(circle, rgba(99,102,241,0.2) 0%, transparent 70%)',
-              animation: 'logo-pulse 3s ease-in-out infinite',
-            }} />
           </div>
           <span className="outfit" style={{
             fontSize: '1.5rem',
@@ -274,7 +270,7 @@ const Navbar = () => {
             <a href="#home" onClick={() => setIsMenuOpen(false)} style={{
               display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none',
             }}>
-              <Rocket size={28} color="#6366f1" style={{ filter: 'drop-shadow(0 0 6px rgba(99,102,241,0.9))' }} />
+              <img src="/webifypro-logo.png" alt="Webify Pro Logo" style={{ width: '32px', height: '32px', objectFit: 'contain', filter: 'drop-shadow(0 0 6px rgba(99,102,241,0.6))' }} />
               <span className="outfit" style={{ fontSize: '1.4rem', fontWeight: '900', color: '#fff', letterSpacing: '-0.5px' }}>
                 WEBIFY <span style={{
                   background: 'linear-gradient(135deg, #6366f1, #00d4ff)',

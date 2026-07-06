@@ -161,6 +161,7 @@ export default function CursorFX() {
           border: '1.5px solid #6366f1',
           transition: 'background 0.25s ease, border-color 0.2s ease',
           willChange: 'transform',
+          pointerEvents: 'none',
         }}
       />
 
