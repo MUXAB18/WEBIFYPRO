@@ -372,6 +372,16 @@ button, a {
     bottom: 20px !important;
     left: 16px !important;
   }
+
+  /* ── Apple/Google UX: 44px minimum touch targets ── */
+  button, 
+  .nav-link,
+  .mobile-nav-link,
+  .footer-link,
+  .social-link,
+  .theme-toggle-btn {
+    min-height: 44px;
+  }
 }
 
 @media (max-width: 480px) {

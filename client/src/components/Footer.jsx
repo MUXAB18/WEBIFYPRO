@@ -23,7 +23,7 @@ const Footer = () => {
       {/* Brand */}
       <div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '18px' }}>
-          <img src="/webifypro_new.png" alt="Webify Pro Logo" style={{ width: '54px', height: '54px', objectFit: 'contain', filter: 'drop-shadow(0 0 10px rgba(37,99,235,0.7))' }} />
+          <img src="/webifypro_logo_small.png" alt="Webify Pro Logo" loading="lazy" width="54" height="54" style={{ width: '54px', height: '54px', objectFit: 'contain', filter: 'drop-shadow(0 0 10px rgba(37,99,235,0.7))' }} />
           <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
             <div style={{ display: 'flex', alignItems: 'baseline' }}>
               <span className="outfit" style={{ fontSize: '1.5rem', fontWeight: '800', color: '#ffffff', letterSpacing: '-0.5px' }}>webify</span>
@@ -75,9 +75,8 @@ const Footer = () => {
           {[
             { href: '#home', label: 'Home' },
             { href: '#services', label: 'Services' },
-            { href: '#portfolio', label: 'Portfolio' },
             { href: '#order', label: 'Order Now' },
-            { href: '#contact', label: 'Contact' },
+            { href: '#contact', label: 'Start a Project' },
           ].map(link => (
             <li key={link.label}>
               <a href={link.href} className="footer-link" style={{

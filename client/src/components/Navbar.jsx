@@ -33,7 +33,7 @@ const Navbar = () => {
       setIsScrolled(window.scrollY > 20);
 
       // Active section tracking
-      const sections = ['home', 'services', 'portfolio', 'reviews', 'order', 'contact'];
+      const sections = ['home', 'services', 'process', 'reviews', 'order', 'contact'];
       const scrollPos = window.scrollY + window.innerHeight * 0.4;
       for (const id of sections.reverse()) {
         const el = document.getElementById(id);
@@ -50,7 +50,7 @@ const Navbar = () => {
   const navLinks = [
     { href: '#home', label: 'Home', id: 'home' },
     { href: '#services', label: 'Services', id: 'services' },
-    { href: '#portfolio', label: 'Our Services', id: 'portfolio' },
+    { href: '#process', label: 'Process', id: 'process' },
     { href: '#reviews', label: 'Reviews', id: 'reviews' },
     { href: '#order', label: 'Order Now', id: 'order' },
   ];
@@ -81,7 +81,7 @@ const Navbar = () => {
         transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
       }}>
         {/* Logo */}
-        <a href="#home" style={{
+        <a href="#home" aria-label="Webify Pro Home" style={{
           display: 'flex',
           alignItems: 'center',
           gap: '12px',
@@ -89,7 +89,9 @@ const Navbar = () => {
           cursor: 'pointer',
         }}>
           <img
-            src="/webifypro_new.png"
+            src="/webifypro_logo_small.png"
+            width="52"
+            height="52"
             alt="Webify Pro Logo"
             style={{
               width: '52px',
@@ -188,7 +190,7 @@ const Navbar = () => {
                 }}
                 className="nav-cta"
               >
-                Contact Us
+                Start a Project
               </a>
             </MagneticCard>
           </li>
@@ -216,8 +218,10 @@ const Navbar = () => {
             </button>
 
             {/* Mobile hamburger */}
-            <div
+            <button
               className="mobile-menu-btn"
+              aria-label="Open mobile menu"
+              aria-expanded={isMenuOpen}
               onClick={() => setIsMenuOpen(true)}
               style={{
                 cursor: 'pointer', zIndex: 101,
@@ -228,7 +232,7 @@ const Navbar = () => {
               }}
             >
               <Menu size={26} strokeWidth={2.5} />
-            </div>
+            </button>
           </div>
 
         {/* Scroll Progress Bar */}
@@ -277,10 +281,10 @@ const Navbar = () => {
             background: 'rgba(30,111,234,0.06)',
             flexShrink: 0,
           }}>
-            <a href="#home" onClick={() => setIsMenuOpen(false)} style={{
+            <a href="#home" aria-label="Webify Pro Home" onClick={() => setIsMenuOpen(false)} style={{
               display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none',
             }}>
-              <img src="/webifypro_new.png" alt="Webify Pro Logo" style={{ width: '48px', height: '48px', objectFit: 'contain', filter: 'drop-shadow(0 0 10px rgba(37,99,235,0.7))' }} />
+              <img src="/webifypro_logo_small.png" width="48" height="48" alt="Webify Pro Logo" style={{ width: '48px', height: '48px', objectFit: 'contain', filter: 'drop-shadow(0 0 10px rgba(37,99,235,0.7))' }} />
               <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
                 <div style={{ display: 'flex', alignItems: 'baseline' }}>
                   <span className="outfit" style={{ fontSize: '1.4rem', fontWeight: '800', color: '#fff', letterSpacing: '-0.5px' }}>webify</span>
@@ -291,9 +295,10 @@ const Navbar = () => {
             </a>
             <button
               onClick={() => setIsMenuOpen(false)}
+              aria-label="Close mobile menu"
               style={{
                 background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.18)',
-                borderRadius: '10px', width: '42px', height: '42px',
+                borderRadius: '10px', width: '44px', height: '44px',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 cursor: 'pointer', color: '#fff', flexShrink: 0,
               }}
@@ -304,7 +309,7 @@ const Navbar = () => {
 
           {/* Nav links */}
           <div style={{ display: 'flex', flexDirection: 'column', padding: '28px 6%', gap: '10px', flex: 1 }}>
-            {[...navLinks, { href: '#contact', label: 'Contact Us', id: 'contact' }].map((link, idx) => {
+            {[...navLinks, { href: '#contact', label: 'Start a Project', id: 'contact' }].map((link, idx) => {
               const isActive = activeSection === link.id;
               return (
                 <a

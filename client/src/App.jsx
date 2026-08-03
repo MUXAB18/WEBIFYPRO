@@ -10,6 +10,10 @@ import ErrorBoundary from './components/ErrorBoundary';
 
 // Lazy load heavy/below-fold components to drastically reduce initial JS payload
 const ServiceMarquee = lazy(() => import('./components/ServiceMarquee'));
+const ClientLogoMarquee = lazy(() => import('./components/ClientLogoMarquee'));
+const Process = lazy(() => import('./components/Process'));
+const FAQ = lazy(() => import('./components/FAQ'));
+const OrderForm = lazy(() => import('./components/OrderForm'));
 const Footer = lazy(() => import('./components/Footer'));
 const BackToTop = lazy(() => import('./components/BackToTop'));
 const CookieBanner = lazy(() => import('./components/CookieBanner'));
@@ -17,9 +21,7 @@ const ChatBot = lazy(() => import('./components/ChatBot'));
 
 // Lazy load heavy components to drastically reduce initial JS payload
 const Services = lazy(() => import('./components/Services'));
-const Portfolio = lazy(() => import('./components/Portfolio'));
 const Reviews = lazy(() => import('./components/Reviews'));
-const OrderForm = lazy(() => import('./components/OrderForm'));
 const Contact = lazy(() => import('./components/Contact'));
 
 const AdminLogin = lazy(() => import('./pages/AdminLogin'));
@@ -95,11 +97,13 @@ function MainPage({ lowEnd, isTouchDevice }) {
               <Hero lowEnd={lowEnd} />
               <Suspense fallback={<div style={{ minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#a5b4fc' }}>Loading...</div>}>
                 <ServiceMarquee />
+                <ClientLogoMarquee />
                 <Services />
-                <Portfolio />
+                <Process />
                 <Reviews />
                 <OrderForm />
                 <Contact />
+                <FAQ />
               </Suspense>
             </ErrorBoundary>
           </main>

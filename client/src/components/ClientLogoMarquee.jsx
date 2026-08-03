@@ -26,8 +26,8 @@ const ClientLogoMarquee = () => {
         position: 'relative',
         zIndex: 2,
         overflow: 'hidden',
-        padding: '0 0 8px',
-        marginBottom: '-20px',
+        padding: '40px 0 20px',
+        marginBottom: '20px',
       }}
     >
       {/* Header label */}

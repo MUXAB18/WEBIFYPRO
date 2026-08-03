@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ChevronRight, Globe, Zap } from 'lucide-react';
+import { ChevronRight, Globe, MessageCircle, Phone } from 'lucide-react';
 import gsap from 'gsap';
 import GlitchText from './motion/GlitchText';
 import ParallaxLayer from './motion/ParallaxLayer';
@@ -58,7 +58,7 @@ function CountUpStat({ target, suffix, label }) {
   );
 }
 
-const Hero = () => {
+const Hero = ({ lowEnd }) => {
   const headRef = useRef();
   const subRef = useRef();
   const ctaRef = useRef();
@@ -84,35 +84,39 @@ const Hero = () => {
       overflow: 'hidden',
       padding: '120px 6% 60px',
     }}>
-      {/* Gradient orbs background */}
-      <div style={{
-        position: 'absolute',
-        top: '15%',
-        right: '10%',
-        width: '500px',
-        height: '500px',
-        borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(30,111,234,0.15) 0%, transparent 70%)',
-        filter: 'blur(80px)',
-        animation: 'float-orb 20s ease-in-out infinite',
-        zIndex: 0,
-      }} />
-      <div style={{
-        position: 'absolute',
-        bottom: '10%',
-        left: '5%',
-        width: '400px',
-        height: '400px',
-        borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(0,212,255,0.12) 0%, transparent 70%)',
-        filter: 'blur(70px)',
-        animation: 'float-orb 25s ease-in-out infinite reverse',
-        zIndex: 0,
-      }} />
+      {/* Gradient orbs background - disabled on low-end devices */}
+      {!lowEnd && (
+        <>
+          <div style={{
+            position: 'absolute',
+            top: '15%',
+            right: '10%',
+            width: '500px',
+            height: '500px',
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(30,111,234,0.15) 0%, transparent 70%)',
+            filter: 'blur(80px)',
+            animation: 'float-orb 20s ease-in-out infinite',
+            zIndex: 0,
+          }} />
+          <div style={{
+            position: 'absolute',
+            bottom: '10%',
+            left: '5%',
+            width: '400px',
+            height: '400px',
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(0,212,255,0.12) 0%, transparent 70%)',
+            filter: 'blur(70px)',
+            animation: 'float-orb 25s ease-in-out infinite reverse',
+            zIndex: 0,
+          }} />
+        </>
+      )}
 
       <div className="hero-container" style={{ maxWidth: '800px', width: '100%', position: 'relative', zIndex: 2, textAlign: 'center' }}>
         <ParallaxLayer depth={3}>
-          {/* Badge */}
+          {/* Badge - Credibility Signal */}
           <div ref={badgeRef} className="hero-badge" style={{
             display: 'inline-flex', alignItems: 'center', gap: '10px',
             padding: '10px 22px', borderRadius: '100px',
@@ -130,18 +134,18 @@ const Hero = () => {
               boxShadow: '0 0 12px #06ffa5, 0 0 24px rgba(6,255,165,0.4)',
               animation: 'pulse-dot 2s infinite',
             }} />
-            <span style={{ letterSpacing: '0.02em' }}>Available for New Projects</span>
+            <span style={{ letterSpacing: '0.02em' }}>50+ Projects Delivered • 5+ Years in Business</span>
           </div>
 
-          {/* Heading */}
+          {/* Heading - Benefit-Led, Not Buzzwords */}
           <h1 ref={headRef} className="outfit" style={{
             fontSize: 'clamp(1.75rem, 5.5vw, 4.5rem)',
             lineHeight: '1.15', fontWeight: '900',
-            marginBottom: '20px', opacity: 0,
+            marginBottom: '24px', opacity: 0,
             textShadow: '0 0 60px rgba(0,212,255,0.25)',
             letterSpacing: '-0.02em',
           }}>
-            Building Digital{' '}
+            Get More Customers{' '}
             <br />
             <GlitchText interval={6}>
               <span style={{
@@ -152,7 +156,7 @@ const Hero = () => {
                 animation: 'gradient-shift 4s ease infinite',
                 display: 'inline-block',
                 position: 'relative',
-              }}>Masterpieces</span>
+              }}>With a Website</span>
             </GlitchText>{' '}
             <br />
             <span style={{ 
@@ -160,10 +164,10 @@ const Hero = () => {
               backgroundClip: 'text',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
-            }}>That Drive Results</span>
+            }}>That Actually Works</span>
           </h1>
 
-          {/* Subtext */}
+          {/* Subtext - Clear Value Proposition */}
           <p ref={subRef} className="hero-sub" style={{
             fontSize: 'clamp(0.9rem, 1.6vw, 1.15rem)',
             color: 'rgba(255,255,255,0.72)',
@@ -173,19 +177,12 @@ const Hero = () => {
             opacity: 0,
             margin: '0 auto 36px',
           }}>
-            Elevate your brand with <strong style={{ color: '#00d4ff', fontWeight: '600' }}>high-performance web development</strong> and strategic digital marketing.
-            We turn your vision into a powerful online presence —{' '}
-            <span style={{ 
-              background: 'linear-gradient(135deg, #00d4ff, #06ffa5)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              fontWeight: '700',
-            }}>from Pakistan to the world</span>.
+            Fast, mobile-friendly websites + digital marketing that brings real leads.
+            Based in <strong style={{ color: '#00c8ff', fontWeight: '600' }}>Sialkot, Pakistan</strong> — serving businesses worldwide since 2019.
           </p>
         </ParallaxLayer>
 
-        {/* CTAs */}
+        {/* CTAs - Clear Next Steps */}
         <ParallaxLayer depth={4}>
           <div ref={ctaRef} style={{ 
             display: 'flex', 
@@ -203,9 +200,16 @@ const Hero = () => {
               data-cursor-color="#00d4ff"
               style={{ display: 'inline-block' }}
             >
-              <a href="#order" className="hero-cta-primary">
-                <Zap size={18} />
-                Start Your Project
+              <a 
+                href="#contact" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="hero-cta-primary"
+              >
+                <MessageCircle size={18} />
+                Get Free Consultation
                 <ChevronRight size={18} />
               </a>
             </MagneticCard>
@@ -218,15 +222,20 @@ const Hero = () => {
               data-cursor-color="#6366f1"
               style={{ display: 'inline-block' }}
             >
-              <a href="#portfolio" className="hero-cta-secondary">
-                <Globe size={18} />
-                View Our Work
+              <a 
+                href="https://wa.me/923708316591" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hero-cta-secondary"
+              >
+                <Phone size={18} />
+                Call / WhatsApp
               </a>
             </MagneticCard>
           </div>
         </ParallaxLayer>
 
-        {/* Stats with animated counters */}
+        {/* Stats - Trust Signals with Real Numbers */}
         <ParallaxLayer depth={5}>
           <div ref={statsRef} className="hero-stats" style={{
             display: 'flex', 
@@ -244,9 +253,9 @@ const Hero = () => {
             boxShadow: '0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.05)',
           }}>
             {[
-              { target: 50, suffix: '+', label: 'Projects Launched' },
+              { target: 50, suffix: '+', label: 'Projects Delivered' },
               { target: 100, suffix: '%', label: 'Client Satisfaction' },
-              { target: 24, suffix: '/7', label: 'Support Available' },
+              { target: 5, suffix: '+', label: 'Years in Business' },
             ].map(stat => (
               <CountUpStat key={stat.label} target={stat.target} suffix={stat.suffix} label={stat.label} />
             ))}
@@ -467,14 +476,14 @@ const Hero = () => {
         }
         
         html.light-mode .hero-cta-secondary {
-          background: rgba(0,0,0,0.04);
-          border-color: rgba(0,0,0,0.1);
-          color: rgba(0,0,0,0.85);
+          background: rgba(0,0,0,0.03) !important;
+          border-color: rgba(0,0,0,0.1) !important;
+          color: rgba(13,14,26,0.85) !important;
         }
         html.light-mode .hero-cta-secondary:hover {
-          background: rgba(99,102,241,0.08);
-          border-color: rgba(99,102,241,0.3);
-          color: #000;
+          background: rgba(30,111,234,0.1) !important;
+          border-color: rgba(30,111,234,0.5) !important;
+          color: #1E6FEA !important;
         }
         html.light-mode .hero-stats {
           background: rgba(255,255,255,0.6);

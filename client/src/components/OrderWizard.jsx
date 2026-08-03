@@ -481,7 +481,7 @@ const OrderWizard = ({ onSuccess }) => {
                 ) : (
                   <>
                     <Send size={18} />
-                    <span>Launch Mission</span>
+                    <span>Submit Request</span>
                     <Zap size={16} />
                   </>
                 )}

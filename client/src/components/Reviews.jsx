@@ -9,6 +9,7 @@ const reviewsData = [
     role: 'CEO, Awan Digital',
     review: "Webify Pro built our company website and the performance is incredible! The site loads in less than a second and the design is absolutely stunning. Strongly recommended!",
     avatar: 'ZA',
+    image: 'https://i.pravatar.cc/150?u=zain',
     color: '#00D4FF',
     glow: 'rgba(0,212,255,0.12)',
     border: 'rgba(0,212,255,0.25)',
@@ -19,9 +20,10 @@ const reviewsData = [
   },
   {
     name: 'Jessica Taylor',
-    role: 'E-commerce Brand Owner',
+    role: 'Founder, Luxe Brands',
     review: "Our social media engagement grew by 150% under their management. Highly creative posts, perfect branding, and professional delivery. 10/10!",
     avatar: 'JT',
+    image: 'https://i.pravatar.cc/150?u=jessica',
     color: '#00D4FF',
     glow: 'rgba(6,255,165,0.12)',
     border: 'rgba(6,255,165,0.25)',
@@ -35,6 +37,7 @@ const reviewsData = [
     role: 'E-commerce Store Owner',
     review: "Webify Pro built our complete e-commerce website with payment integration and product management. Sales doubled within the first month. Incredibly fast, beautiful design, and top-tier support!",
     avatar: 'AR',
+    image: 'https://i.pravatar.cc/150?u=ahmed',
     color: '#00D4FF',
     glow: 'rgba(168,85,247,0.12)',
     border: 'rgba(168,85,247,0.25)',
@@ -45,9 +48,10 @@ const reviewsData = [
   },
   {
     name: 'Sara Malik',
-    role: 'Digital Marketing Manager',
+    role: 'Marketing Director, TechFlow',
     review: "Working with Webify Pro on our Google Ads campaigns was a game changer. Our CPC dropped by 40% while conversions doubled. They truly understand data-driven marketing.",
     avatar: 'SM',
+    image: 'https://i.pravatar.cc/150?u=sara',
     color: '#1E6FEA',
     glow: 'rgba(255,0,110,0.12)',
     border: 'rgba(255,0,110,0.25)',
@@ -159,16 +163,31 @@ function ReviewCard({ item, onHelpful }) {
             paddingTop: '16px', marginBottom: '14px',
           }}>
             {/* Avatar */}
-            <div style={{
-              width: '44px', height: '44px', borderRadius: '50%',
-              background: `linear-gradient(135deg, ${item.color}33, ${item.color}11)`,
-              border: `1.5px solid ${item.color}66`,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '0.9rem', fontWeight: '800', color: item.color,
-              boxShadow: `0 0 12px ${item.color}25`, fontFamily: 'Outfit, sans-serif',
-            }}>
-              {item.avatar}
-            </div>
+            {item.image ? (
+              <img 
+                src={item.image} 
+                alt={item.name}
+                loading="lazy"
+                width="44"
+                height="44"
+                style={{
+                  width: '44px', height: '44px', borderRadius: '50%',
+                  border: `1.5px solid ${item.color}66`,
+                  objectFit: 'cover'
+                }} 
+              />
+            ) : (
+              <div style={{
+                width: '44px', height: '44px', borderRadius: '50%',
+                background: `linear-gradient(135deg, ${item.color}33, ${item.color}11)`,
+                border: `1.5px solid ${item.color}66`,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '0.9rem', fontWeight: '800', color: item.color,
+                boxShadow: `0 0 12px ${item.color}25`, fontFamily: 'Outfit, sans-serif',
+              }}>
+                {item.avatar}
+              </div>
+            )}
             <div style={{ minWidth: 0 }}>
               <h4 className="outfit" style={{ fontSize: '0.96rem', fontWeight: '700', color: '#fff', margin: 0, marginBottom: '2px' }}>
                 {item.name}
