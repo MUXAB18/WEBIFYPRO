@@ -9,10 +9,10 @@ import { sendOrderEmail, buildOrderWAMessage, WA_NUMBER } from '../config/emailj
 import SubmissionPopup from './SubmissionPopup';
 
 const SERVICES = [
-  { id: 'Web Development', icon: <Code2 size={28} />, color: '#00d4ff', glow: 'rgba(0,212,255,0.14)', label: 'Web Development', sub: 'React · Node.js · MERN' },
-  { id: 'Digital Marketing', icon: <Megaphone size={28} />, color: '#ff006e', glow: 'rgba(255,0,110,0.14)', label: 'Digital Marketing', sub: 'Meta Ads · Facebook · SEO' },
-  { id: 'Mobile Application', icon: <Smartphone size={28} />, color: '#a855f7', glow: 'rgba(168,85,247,0.14)', label: 'Mobile Application', sub: 'Coming Soon', disabled: true },
-  { id: 'Social Media Management', icon: <Cpu size={28} />, color: '#06ffa5', glow: 'rgba(6,255,165,0.14)', label: 'Social Media', sub: 'Instagram · TikTok · Growth' },
+  { id: 'Web Development', icon: <Code2 size={28} />, color: '#00D4FF', glow: 'rgba(0,212,255,0.14)', label: 'Web Development', sub: 'React · Node.js · MERN' },
+  { id: 'Digital Marketing', icon: <Megaphone size={28} />, color: '#1E6FEA', glow: 'rgba(255,0,110,0.14)', label: 'Digital Marketing', sub: 'Meta Ads · Facebook · SEO' },
+  { id: 'Mobile Application', icon: <Smartphone size={28} />, color: '#00D4FF', glow: 'rgba(168,85,247,0.14)', label: 'Mobile Application', sub: 'Coming Soon', disabled: true },
+  { id: 'Social Media Management', icon: <Cpu size={28} />, color: '#00D4FF', glow: 'rgba(6,255,165,0.14)', label: 'Social Media', sub: 'Instagram · TikTok · Growth' },
 ];
 
 const BUDGETS = [
@@ -142,7 +142,7 @@ const OrderWizard = ({ onSuccess }) => {
         {/* Grid overlay decoration */}
         <div style={{
           position: 'absolute', inset: 0, borderRadius: '28px', zIndex: 0, pointerEvents: 'none',
-          backgroundImage: 'linear-gradient(rgba(99,102,241,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,0.025) 1px,transparent 1px)',
+          backgroundImage: 'linear-gradient(rgba(30,111,234,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(30,111,234,0.025) 1px,transparent 1px)',
           backgroundSize: '30px 30px',
         }} />
 
@@ -150,7 +150,7 @@ const OrderWizard = ({ onSuccess }) => {
         <div style={{ position: 'relative', zIndex: 1, padding: '28px 32px 0' }}>
           {/* Terminal dots */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '24px' }}>
-            {['#ff006e', '#06ffa5', '#00d4ff'].map((c, i) => (
+            {['#1E6FEA', '#00D4FF', '#00D4FF'].map((c, i) => (
               <div key={i} style={{ width: '10px', height: '10px', borderRadius: '50%', background: c, opacity: 0.8 }} />
             ))}
             <span style={{ marginLeft: '6px', fontSize: '0.72rem', fontFamily: 'monospace', color: 'var(--text-faint)' }}>
@@ -171,7 +171,7 @@ const OrderWizard = ({ onSuccess }) => {
                       position: 'absolute', left: 0, top: '14px',
                       width: '100%', height: '2px',
                       background: done || active
-                        ? 'linear-gradient(90deg, #6366f1, rgba(99,102,241,0.3))'
+                        ? 'linear-gradient(90deg, #1E6FEA, rgba(30,111,234,0.3))'
                         : 'var(--border)',
                       zIndex: 0,
                       transform: 'translateX(-50%)',
@@ -181,16 +181,16 @@ const OrderWizard = ({ onSuccess }) => {
                   {/* Circle */}
                   <div style={{
                     width: '28px', height: '28px', borderRadius: '50%',
-                    background: done ? '#6366f1' : active ? 'rgba(99,102,241,0.2)' : 'var(--glass)',
-                    border: `2px solid ${done ? '#6366f1' : active ? '#6366f1' : 'var(--border)'}`,
+                    background: done ? '#1E6FEA' : active ? 'rgba(30,111,234,0.2)' : 'var(--glass)',
+                    border: `2px solid ${done ? '#1E6FEA' : active ? '#1E6FEA' : 'var(--border)'}`,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     zIndex: 1, position: 'relative',
                     transition: 'all 0.4s ease',
-                    boxShadow: active ? '0 0 16px rgba(99,102,241,0.5)' : 'none',
+                    boxShadow: active ? '0 0 16px rgba(30,111,234,0.5)' : 'none',
                   }}>
                     {done
                       ? <CheckCircle size={14} color="#fff" />
-                      : <span style={{ fontSize: '0.7rem', fontWeight: '700', color: active ? '#6366f1' : 'var(--text-faint)' }}>{i + 1}</span>
+                      : <span style={{ fontSize: '0.7rem', fontWeight: '700', color: active ? '#1E6FEA' : 'var(--text-faint)' }}>{i + 1}</span>
                     }
                   </div>
                   <span style={{
@@ -341,10 +341,10 @@ const OrderWizard = ({ onSuccess }) => {
                         style={{
                           padding: '14px 16px', textAlign: 'left',
                           background: active ? 'var(--primary-dim)' : 'var(--glass)',
-                          border: `1.5px solid ${active ? '#6366f1' : 'var(--border)'}`,
+                          border: `1.5px solid ${active ? '#1E6FEA' : 'var(--border)'}`,
                           borderRadius: '12px', cursor: 'pointer',
                           transition: 'all 0.22s ease',
-                          boxShadow: active ? '0 0 16px rgba(99,102,241,0.3)' : 'none',
+                          boxShadow: active ? '0 0 16px rgba(30,111,234,0.3)' : 'none',
                         }}
                         className="wizard-option-btn"
                       >
@@ -353,10 +353,10 @@ const OrderWizard = ({ onSuccess }) => {
                             {b.label}
                           </div>
                           {active && (
-                            <CheckCircle size={15} color="#6366f1" style={{ animation: 'popIn 0.3s cubic-bezier(0.16,1,0.3,1) forwards' }} />
+                            <CheckCircle size={15} color="#1E6FEA" style={{ animation: 'popIn 0.3s cubic-bezier(0.16,1,0.3,1) forwards' }} />
                           )}
                         </div>
-                        <div style={{ fontSize: '0.68rem', color: active ? '#6366f1' : 'var(--text-faint)', fontFamily: 'monospace' }}>
+                        <div style={{ fontSize: '0.68rem', color: active ? '#1E6FEA' : 'var(--text-faint)', fontFamily: 'monospace' }}>
                           {b.price}
                         </div>
                       </button>
@@ -379,18 +379,18 @@ const OrderWizard = ({ onSuccess }) => {
                         style={{
                           padding: '10px 16px', flex: 1, minWidth: '80px',
                           background: active ? 'var(--primary-dim)' : 'var(--glass)',
-                          border: `1.5px solid ${active ? '#6366f1' : 'var(--border)'}`,
+                          border: `1.5px solid ${active ? '#1E6FEA' : 'var(--border)'}`,
                           borderRadius: '10px', cursor: 'pointer',
                           transition: 'all 0.22s ease', textAlign: 'center',
-                          boxShadow: active ? '0 0 14px rgba(99,102,241,0.25)' : 'none',
+                          boxShadow: active ? '0 0 14px rgba(30,111,234,0.25)' : 'none',
                         }}
                         className="wizard-option-btn"
                       >
                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '6px' }}>
-                          {active && <CheckCircle size={13} color="#6366f1" style={{ animation: 'popIn 0.3s cubic-bezier(0.16,1,0.3,1) forwards' }} />}
+                          {active && <CheckCircle size={13} color="#1E6FEA" style={{ animation: 'popIn 0.3s cubic-bezier(0.16,1,0.3,1) forwards' }} />}
                           <div style={{ fontSize: '0.78rem', fontWeight: '700', color: active ? 'var(--text)' : 'var(--text-muted)', fontFamily: 'Outfit, sans-serif' }}>{t.label}</div>
                         </div>
-                        <div style={{ fontSize: '0.64rem', color: active ? '#6366f1' : 'var(--text-faint)', marginTop: '2px' }}>{t.desc}</div>
+                        <div style={{ fontSize: '0.64rem', color: active ? '#1E6FEA' : 'var(--text-faint)', marginTop: '2px' }}>{t.desc}</div>
                       </button>
                     );
                   })}
@@ -430,7 +430,7 @@ const OrderWizard = ({ onSuccess }) => {
                     display: 'flex', gap: '12px',
                     marginBottom: '12px', alignItems: row.multiline ? 'flex-start' : 'center',
                   }}>
-                    <span style={{ fontSize: '0.7rem', color: 'rgba(99,102,241,0.7)', fontFamily: 'monospace', minWidth: '70px', paddingTop: row.multiline ? '2px' : 0 }}>
+                    <span style={{ fontSize: '0.7rem', color: 'rgba(30,111,234,0.7)', fontFamily: 'monospace', minWidth: '70px', paddingTop: row.multiline ? '2px' : 0 }}>
                       {row.label}
                     </span>
                     <span style={{
@@ -452,12 +452,12 @@ const OrderWizard = ({ onSuccess }) => {
                 className="launch-btn"
                 style={{
                   width: '100%', padding: '16px', marginBottom: '12px',
-                  background: isSubmitting ? 'rgba(255,255,255,0.05)' : 'linear-gradient(135deg, #6366f1, #a855f7)',
+                  background: isSubmitting ? 'rgba(255,255,255,0.05)' : 'linear-gradient(135deg, #1E6FEA, #00D4FF)',
                   borderRadius: '12px', fontWeight: '700', fontSize: '1rem',
-                  color: isSubmitting ? '#00d4ff' : 'white', border: isSubmitting ? '1px solid rgba(0,212,255,0.3)' : 'none',
+                  color: isSubmitting ? '#00D4FF' : 'white', border: isSubmitting ? '1px solid rgba(0,212,255,0.3)' : 'none',
                   cursor: isSubmitting ? 'default' : 'pointer',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
-                  boxShadow: isSubmitting ? 'none' : '0 8px 30px rgba(99,102,241,0.45)',
+                  boxShadow: isSubmitting ? 'none' : '0 8px 30px rgba(30,111,234,0.45)',
                   transition: 'all 0.3s ease',
                   fontFamily: 'Outfit, sans-serif',
                   position: 'relative', overflow: 'hidden'
@@ -521,14 +521,14 @@ const OrderWizard = ({ onSuccess }) => {
               style={{
                 padding: '11px 26px', borderRadius: '100px',
                 background: canProceed()
-                  ? 'linear-gradient(135deg, #6366f1, #a855f7)'
+                  ? 'linear-gradient(135deg, #1E6FEA, #00D4FF)'
                   : 'rgba(255,255,255,0.05)',
                 border: 'none',
                 color: canProceed() ? '#fff' : 'rgba(255,255,255,0.2)',
                 cursor: canProceed() ? 'pointer' : 'not-allowed',
                 fontWeight: '700', fontSize: '0.85rem',
                 display: 'flex', alignItems: 'center', gap: '6px',
-                boxShadow: canProceed() ? '0 4px 16px rgba(99,102,241,0.4)' : 'none',
+                boxShadow: canProceed() ? '0 4px 16px rgba(30,111,234,0.4)' : 'none',
                 transition: 'all 0.3s ease',
                 fontFamily: 'Outfit, sans-serif',
               }}
@@ -573,14 +573,14 @@ const OrderWizard = ({ onSuccess }) => {
         .wizard-input { background: var(--input-bg) !important; border-color: var(--input-border) !important; color: var(--input-text) !important; }
         .wizard-input::placeholder { color: var(--input-placeholder) !important; }
         .wizard-input:focus {
-          border-color: rgba(99,102,241,0.7) !important;
-          box-shadow: 0 0 20px rgba(99,102,241,0.2) !important;
+          border-color: rgba(30,111,234,0.7) !important;
+          box-shadow: 0 0 20px rgba(30,111,234,0.2) !important;
         }
         .wizard-service-btn:hover { border-color: rgba(255,255,255,0.2) !important; background: rgba(255,255,255,0.05) !important; }
-        .wizard-option-btn:hover { border-color: rgba(99,102,241,0.4) !important; background: rgba(99,102,241,0.07) !important; }
+        .wizard-option-btn:hover { border-color: rgba(30,111,234,0.4) !important; background: rgba(30,111,234,0.07) !important; }
         .wizard-nav-btn:not(:disabled):hover { background: rgba(255,255,255,0.1) !important; color: #fff !important; }
-        .wizard-next-btn:not(:disabled):hover { box-shadow: 0 6px 22px rgba(99,102,241,0.55) !important; transform: translateY(-1px); }
-        .launch-btn:not(:disabled):hover { box-shadow: 0 16px 40px rgba(99,102,241,0.5) !important; transform: translateY(-2px); }
+        .wizard-next-btn:not(:disabled):hover { box-shadow: 0 6px 22px rgba(30,111,234,0.55) !important; transform: translateY(-1px); }
+        .launch-btn:not(:disabled):hover { box-shadow: 0 16px 40px rgba(30,111,234,0.5) !important; transform: translateY(-2px); }
         @keyframes loadingSweep {
           0% { transform: translateX(-100%); }
           100% { transform: translateX(400%); }

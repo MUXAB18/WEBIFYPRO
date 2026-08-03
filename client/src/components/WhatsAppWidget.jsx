@@ -36,7 +36,7 @@ const WhatsAppWidget = memo(function WhatsAppWidget({ isTouchDevice }) {
   };
 
   return (
-    <div ref={widgetRef} style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 9999 }}>
+    <div ref={widgetRef} style={{ position: 'fixed', bottom: '24px', left: '24px', zIndex: 9999 }}>
       
       {/* Menu Popup */}
       <div 
@@ -44,7 +44,7 @@ const WhatsAppWidget = memo(function WhatsAppWidget({ isTouchDevice }) {
         style={{
           position: 'absolute',
           bottom: '100%',
-          right: '0',
+          left: '0',
           marginBottom: '16px',
           width: '280px',
           background: 'rgba(5, 7, 20, 0.95)',
@@ -58,7 +58,7 @@ const WhatsAppWidget = memo(function WhatsAppWidget({ isTouchDevice }) {
           transform: isOpen ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.95)',
           pointerEvents: isOpen ? 'auto' : 'none',
           transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-          transformOrigin: 'bottom right'
+          transformOrigin: 'bottom left'
         }}
       >
         {/* Header */}

@@ -52,10 +52,10 @@ export default function AdminLogin() {
         background: 'rgba(255,255,255,0.03)',
         backdropFilter: 'blur(30px)',
         WebkitBackdropFilter: 'blur(30px)',
-        border: '1px solid rgba(99,102,241,0.2)',
+        border: '1px solid rgba(30,111,234,0.2)',
         borderRadius: '24px',
         padding: '40px',
-        boxShadow: '0 24px 64px rgba(0,0,0,0.4), inset 0 0 40px rgba(99,102,241,0.05)',
+        boxShadow: '0 24px 64px rgba(0,0,0,0.4), inset 0 0 40px rgba(30,111,234,0.05)',
         textAlign: 'center',
         position: 'relative',
         overflow: 'hidden'
@@ -68,7 +68,7 @@ export default function AdminLogin() {
           transform: 'translateX(-50%)',
           width: '150px',
           height: '150px',
-          background: 'rgba(99,102,241,0.4)',
+          background: 'rgba(30,111,234,0.4)',
           filter: 'blur(60px)',
           borderRadius: '50%',
           zIndex: 0
@@ -78,13 +78,13 @@ export default function AdminLogin() {
           <div style={{
             width: '64px',
             height: '64px',
-            background: 'linear-gradient(135deg, #6366f1, #a855f7)',
+            background: 'linear-gradient(135deg, #1E6FEA, #00D4FF)',
             borderRadius: '16px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             margin: '0 auto 24px',
-            boxShadow: '0 12px 32px rgba(99,102,241,0.4)'
+            boxShadow: '0 12px 32px rgba(30,111,234,0.4)'
           }}>
             <Shield size={32} color="#fff" />
           </div>
@@ -130,7 +130,7 @@ export default function AdminLogin() {
                   outline: 'none',
                   transition: 'border-color 0.3s'
                 }}
-                onFocus={e => e.target.style.borderColor = 'rgba(99,102,241,0.6)'}
+                onFocus={e => e.target.style.borderColor = 'rgba(30,111,234,0.6)'}
                 onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.1)'}
               />
             </div>
@@ -157,7 +157,7 @@ export default function AdminLogin() {
                   outline: 'none',
                   transition: 'border-color 0.3s'
                 }}
-                onFocus={e => e.target.style.borderColor = 'rgba(99,102,241,0.6)'}
+                onFocus={e => e.target.style.borderColor = 'rgba(30,111,234,0.6)'}
                 onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.1)'}
               />
             </div>
@@ -182,7 +182,7 @@ export default function AdminLogin() {
                 marginTop: '8px',
                 width: '100%',
                 padding: '16px',
-                background: isLoading ? 'rgba(99,102,241,0.5)' : 'linear-gradient(135deg, #6366f1, #a855f7)',
+                background: isLoading ? 'rgba(30,111,234,0.5)' : 'linear-gradient(135deg, #1E6FEA, #00D4FF)',
                 color: '#fff',
                 border: 'none',
                 borderRadius: '14px',
@@ -194,7 +194,7 @@ export default function AdminLogin() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '8px',
-                boxShadow: isLoading ? 'none' : '0 8px 24px rgba(99,102,241,0.4)',
+                boxShadow: isLoading ? 'none' : '0 8px 24px rgba(30,111,234,0.4)',
                 transition: 'all 0.3s ease'
               }}
               onMouseEnter={e => !isLoading && (e.target.style.transform = 'translateY(-2px)')}

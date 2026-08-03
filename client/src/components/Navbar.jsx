@@ -66,7 +66,7 @@ const Navbar = () => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: isScrolled ? '14px 5%' : '22px 5%',
+        padding: isScrolled ? '10px 5%' : '16px 5%',
         background: isScrolled
           ? 'rgba(3, 7, 18, 0.80)'
           : 'rgba(3, 7, 18, 0.80)',
@@ -76,7 +76,7 @@ const Navbar = () => {
           ? '1px solid rgba(255, 255, 255, 0.1)'
           : '1px solid rgba(255, 255, 255, 0.04)',
         boxShadow: isScrolled
-          ? '0 8px 32px rgba(0, 0, 0, 0.6), inset 0 -1px 0 rgba(99,102,241,0.12)'
+          ? '0 8px 32px rgba(0, 0, 0, 0.6), inset 0 -1px 0 rgba(30,111,234,0.12)'
           : 'none',
         transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
       }}>
@@ -84,37 +84,47 @@ const Navbar = () => {
         <a href="#home" style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '10px',
+          gap: '12px',
           textDecoration: 'none',
           cursor: 'pointer',
         }}>
-          <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-            <img 
-              src="/webifypro-logo.png" 
-              alt="Webify Pro Logo" 
-              style={{
-                width: '38px',
-                height: '38px',
-                objectFit: 'contain',
-                filter: 'drop-shadow(0 0 8px rgba(99,102,241,0.5))',
-                animation: 'logo-float 3s ease-in-out infinite',
-              }} 
-            />
+          <img
+            src="/webifypro_new.png"
+            alt="Webify Pro Logo"
+            style={{
+              width: '52px',
+              height: '52px',
+              objectFit: 'contain',
+              filter: 'drop-shadow(0 0 10px rgba(37,99,235,0.7))',
+            }}
+          />
+          <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '0px' }}>
+              <span className="outfit" style={{
+                fontSize: '1.5rem',
+                fontWeight: '800',
+                color: '#ffffff',
+                letterSpacing: '-0.5px',
+              }}>webify</span>
+              <span className="outfit" style={{
+                fontSize: '1.5rem',
+                fontWeight: '800',
+                background: 'linear-gradient(135deg, #0B3D91 0%, #1E6FEA 50%, #00D4FF 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                letterSpacing: '-0.5px',
+              }}>pro</span>
+            </div>
+            <span style={{
+              fontSize: '0.6rem',
+              fontWeight: '600',
+              letterSpacing: '0.18em',
+              color: 'rgba(255,255,255,0.45)',
+              textTransform: 'uppercase',
+              marginTop: '2px',
+            }}>Design • Develop • Grow</span>
           </div>
-          <span className="outfit" style={{
-            fontSize: '1.5rem',
-            fontWeight: '900',
-            letterSpacing: '-0.6px',
-            textTransform: 'uppercase',
-            color: '#ffffff',
-          }}>
-            WEBIFY <span style={{
-              background: 'linear-gradient(135deg, #6366f1, #00d4ff)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}>PRO</span>
-          </span>
         </a>
 
         {/* Desktop nav links */}
@@ -135,7 +145,7 @@ const Navbar = () => {
                 style={{
                   padding: '8px 15px',
                   borderRadius: '8px',
-                  color: activeSection === link.id ? '#00d4ff' : 'rgba(255, 255, 255, 0.92)',
+                  color: activeSection === link.id ? '#00D4FF' : 'rgba(255, 255, 255, 0.92)',
                   background: activeSection === link.id ? 'rgba(0, 212, 255, 0.1)' : 'transparent',
                   border: activeSection === link.id ? '1px solid rgba(0, 212, 255, 0.28)' : '1px solid transparent',
                   fontSize: '0.9rem',
@@ -156,8 +166,8 @@ const Navbar = () => {
               tiltStrength={8}
               scaleHover={1.06}
               zDepth={10}
-              glowColor="#a855f7"
-              data-cursor-color="#a855f7"
+              glowColor="#00D4FF"
+              data-cursor-color="#00D4FF"
               style={{ display: 'inline-block' }}
             >
               <a
@@ -166,12 +176,12 @@ const Navbar = () => {
                 style={{
                   padding: '10px 22px',
                   borderRadius: '100px',
-                  background: 'linear-gradient(135deg, #6366f1, #a855f7)',
+                  background: 'linear-gradient(135deg, #1E6FEA, #00D4FF)',
                   color: 'white',
                   fontWeight: '700',
                   fontSize: '0.9rem',
                   textDecoration: 'none',
-                  boxShadow: '0 4px 15px rgba(99,102,241,0.35)',
+                  boxShadow: '0 4px 15px rgba(30,111,234,0.35)',
                   transition: 'all 0.3s ease',
                   whiteSpace: 'nowrap',
                   display: 'block',
@@ -193,12 +203,12 @@ const Navbar = () => {
               id="theme-toggle-btn"
               style={{
                 width: '40px', height: '40px', borderRadius: '10px',
-                background: 'rgba(99,102,241,0.12)',
-                border: '1px solid rgba(99,102,241,0.3)',
-                color: isDark ? '#f59e0b' : '#6366f1',
+                background: 'rgba(30,111,234,0.12)',
+                border: '1px solid rgba(30,111,234,0.3)',
+                color: isDark ? '#f59e0b' : '#1E6FEA',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 cursor: 'pointer', transition: 'all 0.3s ease',
-                boxShadow: '0 0 10px rgba(99,102,241,0.2)',
+                boxShadow: '0 0 10px rgba(30,111,234,0.2)',
               }}
               className="theme-toggle-btn"
             >
@@ -213,8 +223,8 @@ const Navbar = () => {
                 cursor: 'pointer', zIndex: 101,
                 display: 'none', alignItems: 'center', justifyContent: 'center',
                 width: '44px', height: '44px', borderRadius: '10px',
-                background: 'rgba(99,102,241,0.18)', border: '1px solid rgba(99,102,241,0.4)',
-                color: '#ffffff', boxShadow: '0 0 14px rgba(99,102,241,0.3)',
+                background: 'rgba(30,111,234,0.18)', border: '1px solid rgba(30,111,234,0.4)',
+                color: '#ffffff', boxShadow: '0 0 14px rgba(30,111,234,0.3)',
               }}
             >
               <Menu size={26} strokeWidth={2.5} />
@@ -230,11 +240,11 @@ const Navbar = () => {
             left: 0,
             width: '100%',
             height: '2.5px',
-            background: 'linear-gradient(90deg, #6366f1, #00d4ff, #a855f7)',
+            background: 'linear-gradient(90deg, #1E6FEA, #00D4FF, #00D4FF)',
             transformOrigin: '0% 50%',
             transform: `scaleX(${scrollProgress})`,
             opacity: isScrolled ? 1 : 0,
-            boxShadow: isScrolled ? '0 0 12px rgba(0, 212, 255, 0.7), 0 0 6px rgba(99, 102, 241, 0.5)' : 'none',
+            boxShadow: isScrolled ? '0 0 12px rgba(0, 212, 255, 0.7), 0 0 6px rgba(30, 111, 234, 0.5)' : 'none',
             transition: 'opacity 0.3s ease, transform 0.1s ease-out',
             willChange: 'transform',
           }}
@@ -263,20 +273,21 @@ const Navbar = () => {
           <div style={{
             display: 'flex', justifyContent: 'space-between', alignItems: 'center',
             padding: '20px 6%',
-            borderBottom: '1px solid rgba(99,102,241,0.2)',
-            background: 'rgba(99,102,241,0.06)',
+            borderBottom: '1px solid rgba(30,111,234,0.2)',
+            background: 'rgba(30,111,234,0.06)',
             flexShrink: 0,
           }}>
             <a href="#home" onClick={() => setIsMenuOpen(false)} style={{
               display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none',
             }}>
-              <img src="/webifypro-logo.png" alt="Webify Pro Logo" style={{ width: '32px', height: '32px', objectFit: 'contain', filter: 'drop-shadow(0 0 6px rgba(99,102,241,0.6))' }} />
-              <span className="outfit" style={{ fontSize: '1.4rem', fontWeight: '900', color: '#fff', letterSpacing: '-0.5px' }}>
-                WEBIFY <span style={{
-                  background: 'linear-gradient(135deg, #6366f1, #00d4ff)',
-                  backgroundClip: 'text', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-                }}>PRO</span>
-              </span>
+              <img src="/webifypro_new.png" alt="Webify Pro Logo" style={{ width: '48px', height: '48px', objectFit: 'contain', filter: 'drop-shadow(0 0 10px rgba(37,99,235,0.7))' }} />
+              <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+                <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                  <span className="outfit" style={{ fontSize: '1.4rem', fontWeight: '800', color: '#fff', letterSpacing: '-0.5px' }}>webify</span>
+                  <span className="outfit" style={{ fontSize: '1.4rem', fontWeight: '800', background: 'linear-gradient(135deg, #0B3D91 0%, #1E6FEA 50%, #00D4FF 100%)', backgroundClip: 'text', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-0.5px' }}>pro</span>
+                </div>
+                <span style={{ fontSize: '0.58rem', fontWeight: '600', letterSpacing: '0.16em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginTop: '2px' }}>Design • Develop • Grow</span>
+              </div>
             </a>
             <button
               onClick={() => setIsMenuOpen(false)}
@@ -304,7 +315,7 @@ const Navbar = () => {
                     display: 'flex', alignItems: 'center', gap: '16px',
                     fontSize: '1.25rem', fontWeight: '700',
                     fontFamily: 'Outfit, sans-serif',
-                    color: isActive ? '#00d4ff' : '#ffffff',
+                    color: isActive ? '#00D4FF' : '#ffffff',
                     textDecoration: 'none',
                     padding: '16px 20px', borderRadius: '14px',
                     background: isActive ? 'rgba(0,212,255,0.12)' : 'rgba(255,255,255,0.05)',
@@ -315,11 +326,11 @@ const Navbar = () => {
                 >
                   <span style={{
                     fontSize: '0.72rem', fontFamily: 'monospace',
-                    color: isActive ? '#00d4ff' : 'rgba(255,255,255,0.45)',
+                    color: isActive ? '#00D4FF' : 'rgba(255,255,255,0.45)',
                     fontWeight: '600', minWidth: '22px',
                   }}>{String(idx + 1).padStart(2, '0')}</span>
                   <span>{link.label}</span>
-                  {isActive && <span style={{ marginLeft: 'auto', color: '#00d4ff' }}>●</span>}
+                  {isActive && <span style={{ marginLeft: 'auto', color: '#00D4FF' }}>●</span>}
                 </a>
               );
             })}
@@ -363,14 +374,14 @@ const Navbar = () => {
         }
         .nav-link:hover {
           color: white !important;
-          background: rgba(99,102,241,0.1) !important;
+          background: rgba(30,111,234,0.1) !important;
         }
         .nav-cta:hover {
-          box-shadow: 0 8px 25px rgba(99,102,241,0.5) !important;
+          box-shadow: 0 8px 25px rgba(30,111,234,0.5) !important;
         }
         .mobile-nav-link:hover {
-          background: rgba(99,102,241,0.12) !important;
-          border-color: rgba(99,102,241,0.35) !important;
+          background: rgba(30,111,234,0.12) !important;
+          border-color: rgba(30,111,234,0.35) !important;
           color: #fff !important;
         }
         @media (max-width: 900px) {

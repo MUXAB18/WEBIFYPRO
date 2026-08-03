@@ -4,22 +4,22 @@ import { Code2, Megaphone, Cpu, Smartphone, MonitorSmartphone, Layers, Globe } f
 const servicesList = [
   {
     name: 'Web Development',
-    color: '#00d4ff',
+    color: '#00D4FF',
     icon: <Code2 size={24} />
   },
   {
     name: 'Digital Marketing',
-    color: '#ff006e',
+    color: '#1E6FEA',
     icon: <Megaphone size={24} />
   },
   {
     name: 'Mobile Application (Soon)',
-    color: '#a855f7',
+    color: '#00D4FF',
     icon: <Smartphone size={24} />
   },
   {
     name: 'Social Media Management',
-    color: '#06ffa5',
+    color: '#00D4FF',
     icon: <Cpu size={24} />
   },
   {

@@ -45,10 +45,10 @@ const Contact = () => {
   };
 
   const contactInfo = [
-    { icon: <Mail size={20} />, title: 'Email Us', value: 'WEBIFYPRO9@GMAIL.COM', href: 'mailto:WEBIFYPRO9@GMAIL.COM', color: '#00d4ff' },
-    { icon: <Phone size={20} />, title: 'Call Us', value: '+923708316591', href: 'tel:+923708316591', color: '#06ffa5' },
+    { icon: <Mail size={20} />, title: 'Email Us', value: 'WEBIFYPRO9@GMAIL.COM', href: 'mailto:WEBIFYPRO9@GMAIL.COM', color: '#00D4FF' },
+    { icon: <Phone size={20} />, title: 'Call Us', value: '+923708316591', href: 'tel:+923708316591', color: '#00D4FF' },
     { icon: <MessageCircle size={20} />, title: 'WhatsApp', value: '+923708316591', href: 'https://wa.me/923708316591', color: '#25d366' },
-    { icon: <MapPin size={20} />, title: 'Location', value: 'SIALKOT, PAKISTAN', href: null, color: '#a855f7' },
+    { icon: <MapPin size={20} />, title: 'Location', value: 'SIALKOT, PAKISTAN', href: null, color: '#00D4FF' },
   ];
 
   const inputStyle = {
@@ -75,7 +75,7 @@ const Contact = () => {
         <div style={{ textAlign: 'center', marginBottom: '60px' }}>
           <div style={{
             display: 'inline-block', padding: '6px 16px', borderRadius: '100px',
-            border: '1px solid rgba(0,212,255,0.3)', color: '#00d4ff',
+            border: '1px solid rgba(0,212,255,0.3)', color: '#00D4FF',
             fontSize: '0.78rem', fontWeight: '700', letterSpacing: '0.12em',
             textTransform: 'uppercase', marginBottom: '18px',
             background: 'rgba(0,212,255,0.06)',
@@ -84,12 +84,11 @@ const Contact = () => {
           <h2 className="outfit" style={{ fontSize: 'clamp(1.8rem, 5vw, 3rem)', fontWeight: '800', marginBottom: '14px', color: '#fff' }}>
             Get In{' '}
             <span style={{
-              background: 'linear-gradient(135deg, #00d4ff, #6366f1)',
-              backgroundClip: 'text', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+              color: '#00c8ff',
             }}>Touch</span>
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.5)', maxWidth: '520px', margin: '0 auto', lineHeight: '1.7', fontSize: '0.95rem' }}>
-            Send a message — we respond within 24 hours via <strong style={{ color: '#00d4ff' }}>email</strong> and <strong style={{ color: '#25d366' }}>WhatsApp</strong>.
+            Send a message — we respond within 24 hours via <strong style={{ color: '#00D4FF' }}>email</strong> and <strong style={{ color: '#25d366' }}>WhatsApp</strong>.
           </p>
         </div>
       </ScrollReveal>
@@ -150,16 +149,16 @@ const Contact = () => {
             <div style={{
               padding: '18px 20px',
               background: 'rgba(3,7,18,0.85)',
-              border: '1px solid rgba(99,102,241,0.16)',
+              border: '1px solid rgba(30,111,234,0.16)',
               borderRadius: '16px',
-              backgroundImage: 'linear-gradient(rgba(99,102,241,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,0.025) 1px,transparent 1px)',
+              backgroundImage: 'linear-gradient(rgba(30,111,234,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(30,111,234,0.025) 1px,transparent 1px)',
               backgroundSize: '24px 24px',
             }}>
-              <div style={{ fontSize: '0.68rem', fontFamily: 'monospace', color: 'rgba(99,102,241,0.5)', marginBottom: '12px', letterSpacing: '0.1em' }}>
+              <div style={{ fontSize: '0.68rem', fontFamily: 'monospace', color: 'rgba(30,111,234,0.5)', marginBottom: '12px', letterSpacing: '0.1em' }}>
                 // TRANSMISSION_STATUS
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#06ffa5', animation: 'pulse-dot 2s infinite', flexShrink: 0 }} />
+                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00D4FF', animation: 'pulse-dot 2s infinite', flexShrink: 0 }} />
                 <span style={{ fontSize: '0.78rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.5)' }}>Signal: ONLINE</span>
               </div>
               <div style={{ fontSize: '0.75rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.28)', lineHeight: '1.7' }}>
@@ -192,7 +191,7 @@ const Contact = () => {
                 borderBottom: '1px solid rgba(255,255,255,0.06)',
                 zIndex: 1,
               }}>
-                {['#00d4ff', '#6366f1', '#a855f7'].map((c, i) => (
+                {['#00D4FF', '#1E6FEA', '#00D4FF'].map((c, i) => (
                   <div key={i} style={{ width: '10px', height: '10px', borderRadius: '50%', background: c, opacity: 0.8 }} />
                 ))}
                 <span style={{ marginLeft: '6px', fontSize: '0.72rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.3)' }}>
@@ -231,8 +230,8 @@ const Contact = () => {
                 tiltStrength={5}
                 scaleHover={1.02}
                 zDepth={8}
-                glowColor="#00d4ff"
-                data-cursor-color="#00d4ff"
+                glowColor="#00D4FF"
+                data-cursor-color="#00D4FF"
                 style={{ gridColumn: 'span 2', display: 'block', zIndex: 1 }}
               >
                 <button
@@ -241,9 +240,9 @@ const Contact = () => {
               className="contact-submit-btn"
               style={{
                 width: '100%', padding: '16px',
-                background: isSubmitting ? 'rgba(255,255,255,0.05)' : 'linear-gradient(135deg, #00d4ff, #6366f1)',
+                background: isSubmitting ? 'rgba(255,255,255,0.05)' : 'linear-gradient(135deg, #00D4FF, #1E6FEA)',
                 border: isSubmitting ? '1px solid rgba(0,212,255,0.3)' : 'none',
-                borderRadius: '10px', color: isSubmitting ? '#00d4ff' : '#000',
+                borderRadius: '10px', color: isSubmitting ? '#00D4FF' : '#000',
                 fontWeight: '800', fontSize: '1.05rem', cursor: isSubmitting ? 'default' : 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
                 transition: 'all 0.3s ease', fontFamily: 'Outfit, sans-serif',

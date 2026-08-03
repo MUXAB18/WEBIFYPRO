@@ -25,7 +25,7 @@ const BackToTop = () => {
         id="back-to-top-btn"
         style={{
           position: 'fixed',
-          bottom: '96px',
+          bottom: '24px',
           left: '24px',
           zIndex: 998,
           width: '48px',
@@ -33,13 +33,13 @@ const BackToTop = () => {
 
           borderRadius: '50%',
           background: 'rgba(3,7,18,0.82)',
-          border: '1.5px solid rgba(99,102,241,0.5)',
-          color: '#6366f1',
+          border: '1.5px solid rgba(30,111,234,0.5)',
+          color: '#1E6FEA',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           cursor: 'pointer',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.5), 0 0 16px rgba(99,102,241,0.25)',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.5), 0 0 16px rgba(30,111,234,0.25)',
           backdropFilter: 'blur(10px)',
           transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
           transform: visible ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.8)',
@@ -53,9 +53,9 @@ const BackToTop = () => {
 
       <style>{`
         .back-to-top-btn:hover {
-          border-color: #6366f1 !important;
-          background: rgba(99,102,241,0.15) !important;
-          box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 24px rgba(99,102,241,0.45) !important;
+          border-color: #1E6FEA !important;
+          background: rgba(30,111,234,0.15) !important;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 24px rgba(30,111,234,0.45) !important;
           transform: translateY(-3px) scale(1.08) !important;
         }
       `}</style>

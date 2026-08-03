@@ -102,7 +102,7 @@ export default function AdminDashboard() {
           </button>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ width: '36px', height: '36px', background: 'linear-gradient(135deg, #6366f1, #a855f7)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 15px rgba(99,102,241,0.3)' }}>
+            <div style={{ width: '36px', height: '36px', background: 'linear-gradient(135deg, #1E6FEA, #00D4FF)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 15px rgba(30,111,234,0.3)' }}>
               <LayoutDashboard size={18} color="#fff" />
             </div>
             <h2 style={{ fontSize: '1.2rem', fontWeight: '800', margin: 0, background: 'linear-gradient(90deg, #fff, #a5b4fc)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
@@ -196,8 +196,8 @@ export default function AdminDashboard() {
                     }}
                     style={{
                       padding: '12px',
-                      background: selectedProject?._id === p._id ? 'rgba(99,102,241,0.15)' : 'transparent',
-                      border: `1px solid ${selectedProject?._id === p._id ? 'rgba(99,102,241,0.4)' : 'transparent'}`,
+                      background: selectedProject?._id === p._id ? 'rgba(30,111,234,0.15)' : 'transparent',
+                      border: `1px solid ${selectedProject?._id === p._id ? 'rgba(30,111,234,0.4)' : 'transparent'}`,
                       borderRadius: '10px',
                       color: selectedProject?._id === p._id ? '#fff' : 'rgba(255,255,255,0.6)',
                       textAlign: 'left',
@@ -252,7 +252,7 @@ export default function AdminDashboard() {
                 className="mobile-show-menu-btn"
                 onClick={() => setIsSidebarOpen(true)}
                 style={{
-                  padding: '12px 24px', background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.3)',
+                  padding: '12px 24px', background: 'rgba(30,111,234,0.1)', border: '1px solid rgba(30,111,234,0.3)',
                   color: '#a5b4fc', borderRadius: '8px', fontWeight: '600', cursor: 'pointer', display: 'none'
                 }}
               >
@@ -266,7 +266,7 @@ export default function AdminDashboard() {
       <style>{`
         /* Custom Scrollbar for Project List */
         .project-list::-webkit-scrollbar { width: 4px; }
-        .project-list::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.4); border-radius: 4px; }
+        .project-list::-webkit-scrollbar-thumb { background: rgba(30,111,234,0.4); border-radius: 4px; }
         
         .main-content {
           transform: translateX(0);
@@ -396,7 +396,7 @@ function ProjectDetail({ project, token, onUpdate, refreshProjects, onDelete }) 
               <div style={{ display: 'flex', gap: '8px' }}>
                 <input 
                   type="number" value={budgetVal} onChange={e => setBudgetVal(e.target.value)}
-                  style={{ width: '100px', padding: '6px 12px', borderRadius: '6px', border: '1px solid rgba(99,102,241,0.5)', background: 'rgba(0,0,0,0.3)', color: '#fff' }}
+                  style={{ width: '100px', padding: '6px 12px', borderRadius: '6px', border: '1px solid rgba(30,111,234,0.5)', background: 'rgba(0,0,0,0.3)', color: '#fff' }}
                 />
                 <button onClick={saveBudget} style={{ background: '#25d366', border: 'none', borderRadius: '6px', padding: '0 12px', color: '#fff', cursor: 'pointer' }}><Save size={16} /></button>
               </div>
@@ -441,13 +441,13 @@ function ProjectDetail({ project, token, onUpdate, refreshProjects, onDelete }) 
                 style={{
                   padding: '8px 16px',
                   borderRadius: '100px',
-                  border: `1px solid ${(project.developmentStage || 'Pending') === s ? 'rgba(99,102,241,1)' : 'rgba(255,255,255,0.1)'}`,
-                  background: (project.developmentStage || 'Pending') === s ? 'rgba(99,102,241,0.2)' : 'transparent',
+                  border: `1px solid ${(project.developmentStage || 'Pending') === s ? 'rgba(30,111,234,1)' : 'rgba(255,255,255,0.1)'}`,
+                  background: (project.developmentStage || 'Pending') === s ? 'rgba(30,111,234,0.2)' : 'transparent',
                   color: (project.developmentStage || 'Pending') === s ? '#a5b4fc' : 'rgba(255,255,255,0.6)',
                   cursor: 'pointer',
                   fontWeight: (project.developmentStage || 'Pending') === s ? '600' : '400',
                   transition: 'all 0.2s ease',
-                  boxShadow: (project.developmentStage || 'Pending') === s ? '0 0 12px rgba(99,102,241,0.3)' : 'none'
+                  boxShadow: (project.developmentStage || 'Pending') === s ? '0 0 12px rgba(30,111,234,0.3)' : 'none'
                 }}
                 onMouseOver={(e) => {
                   if ((project.developmentStage || 'Pending') !== s) e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
@@ -514,7 +514,7 @@ function ProjectDetail({ project, token, onUpdate, refreshProjects, onDelete }) 
               <div style={{ flex: 1, height: '8px', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
                 <div style={{ 
                   height: '100%', 
-                  background: 'linear-gradient(90deg, #6366f1, #a855f7)', 
+                  background: 'linear-gradient(90deg, #1E6FEA, #00D4FF)', 
                   width: '100%',
                   transformOrigin: 'left center',
                   transform: `scaleX(${(project.tasks.filter(t => t.completed).length / project.tasks.length)})`,
@@ -537,7 +537,7 @@ function ProjectDetail({ project, token, onUpdate, refreshProjects, onDelete }) 
             onChange={e => setNewTask(e.target.value)}
             style={{ flex: 1, padding: '12px 16px', background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#fff', outline: 'none' }}
           />
-          <button type="submit" style={{ padding: '0 20px', background: 'linear-gradient(135deg, #6366f1, #a855f7)', border: 'none', borderRadius: '10px', color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '600' }}>
+          <button type="submit" style={{ padding: '0 20px', background: 'linear-gradient(135deg, #1E6FEA, #00D4FF)', border: 'none', borderRadius: '10px', color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '600' }}>
             <Plus size={18} /> <span className="hide-mobile">Add</span>
           </button>
         </form>

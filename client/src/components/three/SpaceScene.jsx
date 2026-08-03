@@ -54,7 +54,7 @@ function LoadingFallback() {
   return (
     <mesh>
       <sphereGeometry args={[0.3, 8, 8]} />
-      <meshBasicMaterial color="#6366f1" wireframe />
+      <meshBasicMaterial color="#1E6FEA" wireframe />
     </mesh>
   );
 }
@@ -99,8 +99,8 @@ export default function SpaceScene() {
     >
       <ambientLight intensity={0.1} />
       <directionalLight position={[10, 10, 5]} intensity={0.5} color="#ffffff" />
-      <pointLight position={[-10, -5, -10]} color="#a855f7" intensity={2.0} />
-      <pointLight position={[10, 5, 5]} color="#00d4ff" intensity={1.5} />
+      <pointLight position={[-10, -5, -10]} color="#00D4FF" intensity={2.0} />
+      <pointLight position={[10, 5, 5]} color="#00D4FF" intensity={1.5} />
       {/* Removed 3rd point light — reduces draw calls */}
 
       <CinematicCamera />

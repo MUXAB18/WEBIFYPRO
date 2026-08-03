@@ -5,13 +5,13 @@ import { Float } from '@react-three/drei';
 const SERVICES = [
   {
     title: 'Web Development',
-    color: '#00d4ff',
+    color: '#00D4FF',
     emissive: '#004455',
     position: [-3.5, 1.2, -2],
   },
   {
     title: 'Digital Marketing',
-    color: '#ff006e',
+    color: '#1E6FEA',
     emissive: '#440015',
     position: [-1.5, -1.8, -3],
   },
@@ -23,7 +23,7 @@ const SERVICES = [
   },
   {
     title: 'Social Media Mgmt',
-    color: '#06ffa5',
+    color: '#00D4FF',
     emissive: '#003322',
     position: [-2.2, 1.8, -4],
   },

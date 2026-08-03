@@ -84,7 +84,7 @@ const ClientLogoMarquee = () => {
           >
             <span style={{
               fontSize: '1.1rem',
-              background: 'linear-gradient(135deg, #6366f1, #00d4ff)',
+              background: 'linear-gradient(135deg, #1E6FEA, #00D4FF)',
               backgroundClip: 'text',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',

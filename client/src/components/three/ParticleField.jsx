@@ -10,11 +10,11 @@ function NebulaDust({ count = 400 }) {
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
     const colorOptions = [
-      new THREE.Color('#6366f1'),
-      new THREE.Color('#a855f7'),
-      new THREE.Color('#00d4ff'),
-      new THREE.Color('#06ffa5'),
-      new THREE.Color('#ff006e'),
+      new THREE.Color('#1E6FEA'),
+      new THREE.Color('#00D4FF'),
+      new THREE.Color('#00D4FF'),
+      new THREE.Color('#00D4FF'),
+      new THREE.Color('#1E6FEA'),
     ];
     for (let i = 0; i < count; i++) {
       const r = Math.random() * 80 + 20;

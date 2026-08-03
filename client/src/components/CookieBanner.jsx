@@ -42,10 +42,10 @@ const CookieBanner = () => {
         background: 'rgba(6,6,20,0.95)',
         backdropFilter: 'blur(24px)',
         WebkitBackdropFilter: 'blur(24px)',
-        border: '1px solid rgba(99,102,241,0.3)',
+        border: '1px solid rgba(30,111,234,0.3)',
         borderRadius: '20px',
         padding: '20px 24px',
-        boxShadow: '0 24px 60px rgba(0,0,0,0.6), 0 0 40px rgba(99,102,241,0.1)',
+        boxShadow: '0 24px 60px rgba(0,0,0,0.6), 0 0 40px rgba(30,111,234,0.1)',
         display: 'flex',
         alignItems: 'center',
         gap: '16px',
@@ -58,12 +58,12 @@ const CookieBanner = () => {
         width: '38px',
         height: '38px',
         borderRadius: '10px',
-        background: 'rgba(99,102,241,0.15)',
-        border: '1px solid rgba(99,102,241,0.3)',
+        background: 'rgba(30,111,234,0.15)',
+        border: '1px solid rgba(30,111,234,0.3)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: '#6366f1',
+        color: '#1E6FEA',
         flexShrink: 0,
       }}>
         <Cookie size={18} />
@@ -81,7 +81,7 @@ const CookieBanner = () => {
         We use cookies to enhance your experience.{' '}
         <a
           href="#"
-          style={{ color: '#6366f1', textDecoration: 'underline', fontWeight: '600' }}
+          style={{ color: '#1E6FEA', textDecoration: 'underline', fontWeight: '600' }}
           onClick={e => e.preventDefault()}
         >
           Learn more
@@ -113,7 +113,7 @@ const CookieBanner = () => {
           style={{
             padding: '8px 18px',
             borderRadius: '100px',
-            background: 'linear-gradient(135deg, #6366f1, #a855f7)',
+            background: 'linear-gradient(135deg, #1E6FEA, #00D4FF)',
             border: 'none',
             color: '#fff',
             fontSize: '0.8rem',
@@ -124,7 +124,7 @@ const CookieBanner = () => {
             gap: '5px',
             transition: 'all 0.2s ease',
             fontFamily: 'Outfit, sans-serif',
-            boxShadow: '0 4px 14px rgba(99,102,241,0.35)',
+            boxShadow: '0 4px 14px rgba(30,111,234,0.35)',
           }}
           className="cookie-accept-btn"
         >
@@ -157,7 +157,7 @@ const CookieBanner = () => {
           to   { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
         .cookie-decline-btn:hover { border-color: rgba(255,255,255,0.3) !important; color: #fff !important; }
-        .cookie-accept-btn:hover { box-shadow: 0 6px 20px rgba(99,102,241,0.5) !important; transform: translateY(-1px); }
+        .cookie-accept-btn:hover { box-shadow: 0 6px 20px rgba(30,111,234,0.5) !important; transform: translateY(-1px); }
       `}</style>
     </div>
   );

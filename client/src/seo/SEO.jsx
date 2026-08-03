@@ -203,8 +203,8 @@ const SEO = ({
       <meta name="twitter:image:alt" content="Webify Pro — Best Web Designer in Sialkot" />
 
       {/* ── Mobile / Theme ────────────────────────────────────────────────── */}
-      <meta name="theme-color" content="#6366f1" />
-      <meta name="msapplication-TileColor" content="#6366f1" />
+      <meta name="theme-color" content="#1E6FEA" />
+      <meta name="msapplication-TileColor" content="#1E6FEA" />
       <meta name="apple-mobile-web-app-title" content="Webify Pro" />
       <meta name="application-name" content="Webify Pro" />
 

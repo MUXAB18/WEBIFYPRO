@@ -28,7 +28,7 @@ const SubmissionPopup = ({
       return;
     }
 
-    const colors = ['#00d4ff', '#6366f1', '#a855f7', '#06ffa5', '#f59e0b', '#ff006e'];
+    const colors = ['#00D4FF', '#1E6FEA', '#00D4FF', '#00D4FF', '#f59e0b', '#1E6FEA'];
     const newParticles = Array.from({ length: 30 }, (_, i) => ({
       id: i,
       color: colors[i % colors.length],
@@ -103,10 +103,10 @@ const SubmissionPopup = ({
           zIndex: 100000,
           width: 'min(520px, 92vw)',
           background: 'linear-gradient(135deg, rgba(8,8,24,0.98), rgba(12,12,35,0.98))',
-          border: '1px solid rgba(99,102,241,0.35)',
+          border: '1px solid rgba(30,111,234,0.35)',
           borderRadius: '28px',
           padding: '44px 36px 36px',
-          boxShadow: '0 40px 100px rgba(0,0,0,0.7), 0 0 60px rgba(99,102,241,0.15), inset 0 1px 0 rgba(255,255,255,0.07)',
+          boxShadow: '0 40px 100px rgba(0,0,0,0.7), 0 0 60px rgba(30,111,234,0.15), inset 0 1px 0 rgba(255,255,255,0.07)',
           textAlign: 'center',
           animation: 'popupSlideUp 0.4s cubic-bezier(0.16,1,0.3,1)',
           overflow: 'hidden',
@@ -117,14 +117,14 @@ const SubmissionPopup = ({
         <div style={{
           position: 'absolute', top: '-60px', left: '50%', transform: 'translateX(-50%)',
           width: '260px', height: '260px', borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(99,102,241,0.18) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(30,111,234,0.18) 0%, transparent 70%)',
           pointerEvents: 'none',
         }} />
 
         {/* Grid overlay */}
         <div style={{
           position: 'absolute', inset: 0, borderRadius: '28px', pointerEvents: 'none',
-          backgroundImage: 'linear-gradient(rgba(99,102,241,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,0.03) 1px,transparent 1px)',
+          backgroundImage: 'linear-gradient(rgba(30,111,234,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(30,111,234,0.03) 1px,transparent 1px)',
           backgroundSize: '28px 28px',
         }} />
 
@@ -152,26 +152,26 @@ const SubmissionPopup = ({
         }}>
           {/* Spinning ring */}
           <svg width="88" height="88" style={{ position: 'absolute', animation: 'spinRing 3s linear infinite' }}>
-            <circle cx="44" cy="44" r="40" fill="none" stroke="rgba(99,102,241,0.2)" strokeWidth="2" />
+            <circle cx="44" cy="44" r="40" fill="none" stroke="rgba(30,111,234,0.2)" strokeWidth="2" />
             <circle cx="44" cy="44" r="40" fill="none" stroke="url(#grad)" strokeWidth="2.5"
               strokeDasharray="60 200" strokeLinecap="round" />
             <defs>
               <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#6366f1" />
-                <stop offset="100%" stopColor="#00d4ff" />
+                <stop offset="0%" stopColor="#1E6FEA" />
+                <stop offset="100%" stopColor="#00D4FF" />
               </linearGradient>
             </defs>
           </svg>
           {/* Inner glow circle */}
           <div style={{
             width: '68px', height: '68px', borderRadius: '50%',
-            background: 'linear-gradient(135deg, rgba(6,255,165,0.15), rgba(99,102,241,0.15))',
+            background: 'linear-gradient(135deg, rgba(6,255,165,0.15), rgba(30,111,234,0.15))',
             border: '1px solid rgba(6,255,165,0.35)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             animation: 'checkPop 0.5s 0.1s cubic-bezier(0.16,1,0.3,1) both',
             boxShadow: '0 0 30px rgba(6,255,165,0.25)',
           }}>
-            <CheckCircle size={32} color="#06ffa5" />
+            <CheckCircle size={32} color="#00D4FF" />
           </div>
         </div>
 
@@ -197,8 +197,8 @@ const SubmissionPopup = ({
           marginBottom: '24px', flexWrap: 'wrap',
         }}>
           {[
-            { icon: '📧', label: 'Email sent', color: '#00d4ff' },
-            { icon: '⚡', label: 'Response < 2h', color: '#06ffa5' },
+            { icon: '📧', label: 'Email sent', color: '#00D4FF' },
+            { icon: '⚡', label: 'Response < 2h', color: '#00D4FF' },
           ].map(item => (
             <div key={item.label} className="popup-badge" style={{
               display: 'flex', alignItems: 'center', gap: '6px',

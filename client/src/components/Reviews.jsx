@@ -9,7 +9,7 @@ const reviewsData = [
     role: 'CEO, Awan Digital',
     review: "Webify Pro built our company website and the performance is incredible! The site loads in less than a second and the design is absolutely stunning. Strongly recommended!",
     avatar: 'ZA',
-    color: '#00d4ff',
+    color: '#00D4FF',
     glow: 'rgba(0,212,255,0.12)',
     border: 'rgba(0,212,255,0.25)',
     rating: 5,
@@ -22,7 +22,7 @@ const reviewsData = [
     role: 'E-commerce Brand Owner',
     review: "Our social media engagement grew by 150% under their management. Highly creative posts, perfect branding, and professional delivery. 10/10!",
     avatar: 'JT',
-    color: '#06ffa5',
+    color: '#00D4FF',
     glow: 'rgba(6,255,165,0.12)',
     border: 'rgba(6,255,165,0.25)',
     rating: 5,
@@ -35,7 +35,7 @@ const reviewsData = [
     role: 'E-commerce Store Owner',
     review: "Webify Pro built our complete e-commerce website with payment integration and product management. Sales doubled within the first month. Incredibly fast, beautiful design, and top-tier support!",
     avatar: 'AR',
-    color: '#a855f7',
+    color: '#00D4FF',
     glow: 'rgba(168,85,247,0.12)',
     border: 'rgba(168,85,247,0.25)',
     rating: 5,
@@ -48,7 +48,7 @@ const reviewsData = [
     role: 'Digital Marketing Manager',
     review: "Working with Webify Pro on our Google Ads campaigns was a game changer. Our CPC dropped by 40% while conversions doubled. They truly understand data-driven marketing.",
     avatar: 'SM',
-    color: '#ff006e',
+    color: '#1E6FEA',
     glow: 'rgba(255,0,110,0.12)',
     border: 'rgba(255,0,110,0.25)',
     rating: 5,
@@ -128,7 +128,7 @@ function ReviewCard({ item, onHelpful }) {
               {item.verified && (
                 <span style={{
                   display: 'inline-flex', alignItems: 'center', gap: '3px',
-                  fontSize: '0.64rem', color: '#06ffa5', fontWeight: '700',
+                  fontSize: '0.64rem', color: '#00D4FF', fontWeight: '700',
                   padding: '2px 7px', borderRadius: '100px',
                   background: 'rgba(6,255,165,0.08)', border: '1px solid rgba(6,255,165,0.2)',
                 }}>
@@ -269,7 +269,7 @@ const Reviews = () => {
     if (!customerName || !customerRole || !reviewText) return;
     setIsSubmitting(true);
 
-    const colors = ['#00d4ff', '#ff006e', '#a855f7', '#06ffa5'];
+    const colors = ['#00D4FF', '#1E6FEA', '#00D4FF', '#00D4FF'];
     const randomColor = colors[reviews.length % colors.length];
     const parts = customerName.trim().split(' ');
     const avatarInitials = parts.length > 1
@@ -321,8 +321,7 @@ const Reviews = () => {
           <h2 className="outfit" style={{ fontSize: 'clamp(1.8rem, 5vw, 2.8rem)', fontWeight: '800', marginBottom: '14px', color: '#fff' }}>
             What Our Clients{' '}
             <span style={{
-              background: 'linear-gradient(135deg, #f59e0b, #ff006e)',
-              backgroundClip: 'text', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+              color: '#00c8ff',
             }}>Say About Us</span>
           </h2>
 
@@ -476,7 +475,7 @@ const Reviews = () => {
             {submitSuccess ? (
               <div style={{ padding: '20px 0 10px' }}>
                 <div style={{ display: 'inline-flex', justifyContent: 'center', marginBottom: '20px' }}>
-                  <CheckCircle size={64} color="#06ffa5" style={{ filter: 'drop-shadow(0 0 12px rgba(6,255,165,0.4))' }} />
+                  <CheckCircle size={64} color="#00D4FF" style={{ filter: 'drop-shadow(0 0 12px rgba(6,255,165,0.4))' }} />
                 </div>
                 <h3 className="outfit" style={{ fontSize: '1.6rem', fontWeight: '800', color: '#fff', marginBottom: '12px' }}>
                   Review Published!
@@ -487,7 +486,7 @@ const Reviews = () => {
                 <button
                   onClick={() => setIsFormOpen(false)}
                   style={{
-                    background: 'linear-gradient(135deg, #f59e0b, #ff006e)', border: 'none',
+                    background: 'linear-gradient(135deg, #f59e0b, #1E6FEA)', border: 'none',
                     borderRadius: '12px', color: '#fff', padding: '14px 28px',
                     fontWeight: '700', fontSize: '0.92rem', cursor: 'pointer', width: '100%',
                     boxShadow: '0 8px 24px rgba(245,158,11,0.3)', transition: 'all 0.3s ease',
@@ -559,7 +558,7 @@ const Reviews = () => {
                 <button type="submit" disabled={isSubmitting}
                   style={{
                     width: '100%', padding: '15px',
-                    background: 'linear-gradient(135deg, #f59e0b, #ff006e)',
+                    background: 'linear-gradient(135deg, #f59e0b, #1E6FEA)',
                     border: 'none', borderRadius: '12px', color: '#fff',
                     fontWeight: '800', fontSize: '0.95rem', fontFamily: 'Outfit, sans-serif',
                     cursor: isSubmitting ? 'not-allowed' : 'pointer',

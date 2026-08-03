@@ -8,7 +8,7 @@ const services = [
     icon: <Code2 size={26} />,
     title: 'Web Development',
     desc: 'Custom high-performance websites built with React, Node.js, and the full MERN stack. Java-powered backends, blazing-fast frontends.',
-    color: '#00d4ff',
+    color: '#00D4FF',
     glow: 'rgba(0,212,255,0.12)',
     border: 'rgba(0,212,255,0.25)',
     tag: 'React · Node.js · MERN',
@@ -25,7 +25,7 @@ const services = [
     icon: <Megaphone size={26} />,
     title: 'Digital Marketing',
     desc: 'Meta Ads, Facebook Page growth, and comprehensive digital strategies to boost your online presence and ROI.',
-    color: '#ff006e',
+    color: '#1E6FEA',
     glow: 'rgba(255,0,110,0.12)',
     border: 'rgba(255,0,110,0.25)',
     tag: 'Meta Ads · Facebook · Growth',
@@ -42,7 +42,7 @@ const services = [
     icon: <Smartphone size={26} />,
     title: 'Mobile Application',
     desc: 'Performance-driven cross-platform mobile apps built with Flutter for both iOS and Android — concept to App Store.',
-    color: '#a855f7',
+    color: '#00D4FF',
     glow: 'rgba(168,85,247,0.12)',
     border: 'rgba(168,85,247,0.25)',
     tag: 'Flutter · Dart · Firebase',
@@ -60,7 +60,7 @@ const services = [
     icon: <Cpu size={26} />,
     title: 'Social Media Management',
     desc: 'Building and managing your brand presence across all major social media platforms with data-driven content strategies.',
-    color: '#06ffa5',
+    color: '#00D4FF',
     glow: 'rgba(6,255,165,0.12)',
     border: 'rgba(6,255,165,0.25)',
     tag: 'Instagram · TikTok · Strategy',
@@ -199,15 +199,14 @@ const Services = () => {
         <div style={{ textAlign: 'center', marginBottom: '64px' }}>
           <div style={{
             display: 'inline-block', padding: '6px 16px', borderRadius: '100px',
-            border: '1px solid rgba(99,102,241,0.3)', color: '#6366f1',
+            border: '1px solid rgba(30,111,234,0.3)', color: '#1E6FEA',
             fontSize: '0.76rem', fontWeight: '700', letterSpacing: '0.12em',
-            textTransform: 'uppercase', marginBottom: '18px', background: 'rgba(99,102,241,0.07)',
+            textTransform: 'uppercase', marginBottom: '18px', background: 'rgba(30,111,234,0.07)',
           }}>◈ What We Offer</div>
           <h2 className="outfit" style={{ fontSize: 'clamp(1.8rem, 5vw, 2.8rem)', fontWeight: '800', marginBottom: '14px', color: '#fff' }}>
             Our Professional{' '}
             <span style={{
-              background: 'linear-gradient(135deg, #6366f1, #00d4ff)',
-              backgroundClip: 'text', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+              color: '#00c8ff',
             }}>Services</span>
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.5)', maxWidth: '560px', margin: '0 auto', lineHeight: '1.7', fontSize: '0.95rem' }}>
@@ -262,7 +261,7 @@ const Services = () => {
               border: `1px solid ${selectedService.border}`,
               borderRadius: '28px',
               padding: '36px',
-              boxShadow: '0 40px 100px rgba(0,0,0,0.8), 0 0 60px rgba(99,102,241,0.15)',
+              boxShadow: '0 40px 100px rgba(0,0,0,0.8), 0 0 60px rgba(30,111,234,0.15)',
               animation: 'modalSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) both',
               boxSizing: 'border-box',
             }}
@@ -422,7 +421,7 @@ const Services = () => {
       <style>{`
         .scan-line {
           position: absolute; top: -100%; left: 0; width: 100%; height: 2px;
-          background: linear-gradient(90deg, transparent, var(--sc, #6366f1), transparent);
+          background: linear-gradient(90deg, transparent, var(--sc, #1E6FEA), transparent);
           opacity: 0; pointer-events: none;
         }
         .service-card-3d:hover .scan-line { animation: scan 3.5s ease-in-out; opacity: 1; }

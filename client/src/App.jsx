@@ -14,7 +14,6 @@ const Footer = lazy(() => import('./components/Footer'));
 const BackToTop = lazy(() => import('./components/BackToTop'));
 const CookieBanner = lazy(() => import('./components/CookieBanner'));
 const ChatBot = lazy(() => import('./components/ChatBot'));
-const WhatsAppWidget = lazy(() => import('./components/WhatsAppWidget'));
 
 // Lazy load heavy components to drastically reduce initial JS payload
 const Services = lazy(() => import('./components/Services'));
@@ -78,9 +77,6 @@ function MainPage({ lowEnd, isTouchDevice }) {
         )}
 
         <Suspense fallback={null}>
-          {/* New Popup WhatsApp Widget */}
-          <WhatsAppWidget isTouchDevice={isTouchDevice} />
-
           {/* Back to top (bottom-left) */}
           <BackToTop />
 

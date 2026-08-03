@@ -38,7 +38,7 @@ export default function CursorFX() {
     const tPos = Array.from({ length: TRAIL_COUNT }, () => ({ x: mX, y: mY }));
 
     // Cursor state
-    let color = '#6366f1';
+    let color = '#1E6FEA';
     let ringSize = 30;
     let isBtn = false;
 
@@ -55,7 +55,7 @@ export default function CursorFX() {
       const card = el.closest('[data-cursor-color]');
 
       isBtn = !!btn;
-      color = card?.dataset?.cursorColor || '#6366f1';
+      color = card?.dataset?.cursorColor || '#1E6FEA';
       ringSize = btn ? 48 : 30;
     };
 
@@ -158,7 +158,7 @@ export default function CursorFX() {
         style={{
           position: 'fixed', top: 0, left: 0, zIndex: 99998,
           width: '30px', height: '30px', borderRadius: '50%',
-          border: '1.5px solid #6366f1',
+          border: '1.5px solid #1E6FEA',
           transition: 'background 0.25s ease, border-color 0.2s ease',
           willChange: 'transform',
           pointerEvents: 'none',
@@ -171,7 +171,7 @@ export default function CursorFX() {
         style={{
           position: 'fixed', top: 0, left: 0, zIndex: 99999,
           width: '8px', height: '8px', borderRadius: '50%',
-          background: '#6366f1',
+          background: '#1E6FEA',
           pointerEvents: 'none', willChange: 'transform',
           mixBlendMode: 'screen',
           transition: 'background 0.2s ease',

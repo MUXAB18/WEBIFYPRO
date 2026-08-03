@@ -29,7 +29,7 @@ class ErrorBoundary extends React.Component {
           color: '#fff',
           fontFamily: 'Outfit, sans-serif'
         }}>
-          <AlertCircle size={48} color="#ff006e" style={{ marginBottom: '16px' }} />
+          <AlertCircle size={48} color="#1E6FEA" style={{ marginBottom: '16px' }} />
           <h2 style={{ fontSize: '1.4rem', fontWeight: '800', marginBottom: '12px' }}>
             Oops! Something went wrong.
           </h2>
@@ -39,7 +39,7 @@ class ErrorBoundary extends React.Component {
           <button
             onClick={() => window.location.reload()}
             style={{
-              background: 'linear-gradient(135deg, #ff006e, #6366f1)',
+              background: 'linear-gradient(135deg, #1E6FEA, #1E6FEA)',
               border: 'none',
               padding: '12px 24px',
               borderRadius: '8px',

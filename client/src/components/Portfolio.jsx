@@ -11,7 +11,7 @@ const projects = [
     link: '#',
     liveUrl: 'https://www.webifypro.live',
     tags: ['React', 'Node.js', 'MERN'],
-    color: '#00d4ff',
+    color: '#00D4FF',
     glow: 'rgba(0,212,255,0.18)',
     desc: 'Full-stack web solutions built with React, Node.js and the MERN stack. Blazing-fast performance and modern UI that converts visitors into customers.',
     tech: ['React.js', 'Node.js', 'MongoDB', 'Express', 'Tailwind'],
@@ -25,7 +25,7 @@ const projects = [
     link: '#',
     liveUrl: null,
     tags: ['Meta Ads', 'Facebook', 'Growth'],
-    color: '#ff006e',
+    color: '#1E6FEA',
     glow: 'rgba(255,0,110,0.18)',
     desc: 'Data-driven digital marketing campaigns that transform clicks into loyal customers. 150%+ social media growth for our clients.',
     tech: ['Meta Ads', 'Facebook', 'Google Ads', 'Analytics', 'Pixel'],
@@ -39,7 +39,7 @@ const projects = [
     link: '#',
     liveUrl: null,
     tags: ['Coming Soon'],
-    color: '#a855f7',
+    color: '#00D4FF',
     glow: 'rgba(168,85,247,0.18)',
     desc: 'Our mobile app development services are launching very soon. Stay tuned for premium cross-platform iOS and Android applications.',
     tech: ['iOS', 'Android', 'Cross-Platform'],
@@ -74,7 +74,7 @@ const Portfolio = () => {
         <div style={{ textAlign: 'center', marginBottom: '56px' }}>
           <div style={{
             display: 'inline-block', padding: '6px 16px', borderRadius: '100px',
-            border: '1px solid rgba(168,85,247,0.3)', color: '#a855f7',
+            border: '1px solid rgba(168,85,247,0.3)', color: '#00D4FF',
             fontSize: '0.76rem', fontWeight: '700', letterSpacing: '0.12em',
             textTransform: 'uppercase', marginBottom: '18px', background: 'rgba(168,85,247,0.07)',
           }}>◎ Our Services</div>
@@ -82,8 +82,7 @@ const Portfolio = () => {
           <h2 className="outfit" style={{ fontSize: 'clamp(1.8rem, 5vw, 2.8rem)', fontWeight: '800', marginBottom: '14px', color: '#fff' }}>
             Featured{' '}
             <span style={{
-              background: 'linear-gradient(135deg, #a855f7, #00d4ff)',
-              backgroundClip: 'text', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+              color: '#00c8ff',
             }}>Services</span>
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.5)', maxWidth: '560px', margin: '0 auto 36px', lineHeight: '1.7', fontSize: '0.95rem' }}>
@@ -99,15 +98,15 @@ const Portfolio = () => {
                 className={`portfolio-cat-btn ${activeCategory === cat ? 'active' : ''}`}
                 style={{
                   padding: '9px 20px', borderRadius: '100px',
-                  border: activeCategory === cat ? '1px solid rgba(99,102,241,0.55)' : '1px solid rgba(255,255,255,0.1)',
+                  border: activeCategory === cat ? '1px solid rgba(30,111,234,0.55)' : '1px solid rgba(255,255,255,0.1)',
                   background: activeCategory === cat
-                    ? 'linear-gradient(135deg, rgba(99,102,241,0.28), rgba(168,85,247,0.28))'
+                    ? 'linear-gradient(135deg, rgba(30,111,234,0.28), rgba(168,85,247,0.28))'
                     : 'rgba(255,255,255,0.03)',
                   backdropFilter: 'blur(10px)',
                   color: activeCategory === cat ? '#fff' : 'rgba(255,255,255,0.5)',
                   fontWeight: '600', fontSize: '0.85rem', cursor: 'pointer',
                   transition: 'all 0.3s ease',
-                  boxShadow: activeCategory === cat ? '0 0 18px rgba(99,102,241,0.3)' : 'none',
+                  boxShadow: activeCategory === cat ? '0 0 18px rgba(30,111,234,0.3)' : 'none',
                 }}
               >{cat}</button>
             ))}

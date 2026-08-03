@@ -12,7 +12,7 @@ const Footer = () => {
     background: 'rgba(3,7,18,0.92)',
     backdropFilter: 'blur(20px)',
     WebkitBackdropFilter: 'blur(20px)',
-    borderTop: '1px solid rgba(99,102,241,0.22)',
+    borderTop: '1px solid rgba(30,111,234,0.22)',
   }}>
     <div className="footer-grid" style={{
       display: 'grid',
@@ -22,14 +22,15 @@ const Footer = () => {
     }}>
       {/* Brand */}
       <div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '18px' }}>
-          <img src="/webifypro-logo.png" alt="Webify Pro Logo" style={{ width: '32px', height: '32px', objectFit: 'contain', filter: 'drop-shadow(0 0 6px rgba(99,102,241,0.5))' }} />
-          <span className="outfit" style={{ fontSize: '1.4rem', fontWeight: '900', letterSpacing: '-0.5px' }}>
-            WEBIFY <span style={{
-              background: 'linear-gradient(135deg, #6366f1, #00d4ff)',
-              backgroundClip: 'text', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-            }}>PRO</span>
-          </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '18px' }}>
+          <img src="/webifypro_new.png" alt="Webify Pro Logo" style={{ width: '54px', height: '54px', objectFit: 'contain', filter: 'drop-shadow(0 0 10px rgba(37,99,235,0.7))' }} />
+          <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'baseline' }}>
+              <span className="outfit" style={{ fontSize: '1.5rem', fontWeight: '800', color: '#ffffff', letterSpacing: '-0.5px' }}>webify</span>
+              <span className="outfit" style={{ fontSize: '1.5rem', fontWeight: '800', background: 'linear-gradient(135deg, #0B3D91 0%, #1E6FEA 50%, #00D4FF 100%)', backgroundClip: 'text', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-0.5px' }}>pro</span>
+            </div>
+            <span style={{ fontSize: '0.6rem', fontWeight: '600', letterSpacing: '0.18em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginTop: '3px' }}>Design • Develop • Grow</span>
+          </div>
         </div>
         <p style={{ color: 'rgba(255,255,255,0.65)', maxWidth: '340px', fontSize: '0.9rem', lineHeight: '1.7' }}>
           Empowering businesses with cutting-edge digital solutions.
@@ -84,7 +85,7 @@ const Footer = () => {
                 transition: 'color 0.2s ease', textDecoration: 'none',
                 display: 'flex', alignItems: 'center', gap: '4px',
               }}>
-                <ChevronRight className="footer-link-chevron" size={14} style={{ color: '#6366f1' }} />
+                <ChevronRight className="footer-link-chevron" size={14} style={{ color: '#1E6FEA' }} />
                 {link.label}
               </a>
             </li>
@@ -105,7 +106,7 @@ const Footer = () => {
                 transition: 'color 0.2s ease', textDecoration: 'none',
                 display: 'flex', alignItems: 'center', gap: '4px',
               }}>
-                <ChevronRight className="footer-link-chevron" size={14} style={{ color: '#00d4ff' }} />
+                <ChevronRight className="footer-link-chevron" size={14} style={{ color: '#00D4FF' }} />
                 {s}
               </a>
             </li>
@@ -124,8 +125,8 @@ const Footer = () => {
       flexWrap: 'wrap',
     }}>
       {[
-        { icon: <ShieldCheck size={14} />, label: 'SSL Secured', color: '#06ffa5' },
-        { icon: <Lock size={14} />,        label: 'GDPR Compliant', color: '#00d4ff' },
+        { icon: <ShieldCheck size={14} />, label: 'SSL Secured', color: '#00D4FF' },
+        { icon: <Lock size={14} />,        label: 'GDPR Compliant', color: '#00D4FF' },
         { icon: <Star size={14} />,        label: '5-Star Rated',   color: '#f59e0b' },
       ].map(badge => (
         <div key={badge.label} 
@@ -158,7 +159,7 @@ const Footer = () => {
       <p>
         Designed & Developed by{' '}
         <span style={{
-          background: 'linear-gradient(135deg, #6366f1, #00d4ff)',
+          background: 'linear-gradient(135deg, #1E6FEA, #00D4FF)',
           backgroundClip: 'text', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
           fontWeight: '600',
         }}>Musab Iftikhar</span>
@@ -167,12 +168,12 @@ const Footer = () => {
 
     <style>{`
       .social-link:hover {
-        color: #6366f1 !important;
-        border-color: rgba(99,102,241,0.4) !important;
-        background: rgba(99,102,241,0.1) !important;
+        color: #1E6FEA !important;
+        border-color: rgba(30,111,234,0.4) !important;
+        background: rgba(30,111,234,0.1) !important;
         transform: translateY(-3px);
       }
-      .footer-link:hover { color: #6366f1 !important; }
+      .footer-link:hover { color: #1E6FEA !important; }
       .footer-link-chevron {
         transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.2s ease;
         flex-shrink: 0;

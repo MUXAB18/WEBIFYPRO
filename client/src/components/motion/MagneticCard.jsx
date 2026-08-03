@@ -11,13 +11,13 @@ import gsap from 'gsap';
  *  - Mouse leave → spring return (elastic.out 1, 0.45)
  *
  * Usage:
- *   <MagneticCard glowColor="#00d4ff" data-cursor-color="#00d4ff">
+ *   <MagneticCard glowColor="#00D4FF" data-cursor-color="#00D4FF">
  *     {children}
  *   </MagneticCard>
  */
 export default function MagneticCard({
   children,
-  glowColor = '#6366f1',
+  glowColor = '#1E6FEA',
   tiltStrength = 18,
   scaleHover = 1.03,
   zDepth = 22,

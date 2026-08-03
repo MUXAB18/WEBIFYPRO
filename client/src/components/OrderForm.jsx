@@ -21,7 +21,7 @@ const OrderForm = () => {
             <div style={{
               display: 'inline-flex', alignItems: 'center', gap: '8px',
               padding: '6px 16px', borderRadius: '100px',
-              border: '1px solid rgba(6,255,165,0.3)', color: '#06ffa5',
+              border: '1px solid rgba(6,255,165,0.3)', color: '#00D4FF',
               fontSize: '0.78rem', fontWeight: '700', letterSpacing: '0.1em',
               textTransform: 'uppercase', marginBottom: '24px',
               background: 'rgba(6,255,165,0.06)',
@@ -36,22 +36,20 @@ const OrderForm = () => {
               Ready to{' '}
               <GlitchText interval={7}>
                 <span style={{
-                  background: 'linear-gradient(135deg, #6366f1, #06ffa5)',
-                  backgroundClip: 'text', WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
+                  color: '#00c8ff',
                 }}>Launch?</span>
               </GlitchText>
             </h2>
 
             <p style={{ color: 'rgba(255,255,255,0.55)', marginBottom: '32px', lineHeight: '1.75', fontSize: '0.93rem' }}>
-              Fill out our step-by-step order wizard. You'll get a <strong style={{ color: '#06ffa5' }}>confirmation email</strong> and your request will arrive via <strong style={{ color: '#25d366' }}>WhatsApp</strong> instantly — no delays.
+              Fill out our step-by-step order wizard. You'll get a <strong style={{ color: '#00D4FF' }}>confirmation email</strong> and your request will arrive via <strong style={{ color: '#25d366' }}>WhatsApp</strong> instantly — no delays.
             </p>
 
             <ul style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '36px' }}>
               {[
-                ['Full custom design & development', '#06ffa5'],
-                ['Modern & High Performance Stack', '#00d4ff'],
-                ['24/7 Dedicated support', '#a855f7'],
+                ['Full custom design & development', '#00D4FF'],
+                ['Modern & High Performance Stack', '#00D4FF'],
+                ['24/7 Dedicated support', '#00D4FF'],
               ].map(([item, color]) => (
                 <li key={item} style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                   <CheckCircle size={19} color={color} style={{ flexShrink: 0 }} />
@@ -65,22 +63,22 @@ const OrderForm = () => {
               tiltStrength={10}
               scaleHover={1.02}
               zDepth={12}
-              glowColor="#06ffa5"
-              data-cursor-color="#06ffa5"
+              glowColor="#00D4FF"
+              data-cursor-color="#00D4FF"
             >
               <div style={{
                 padding: '20px 22px',
                 background: 'rgba(3,7,18,0.8)',
-                border: '1px solid rgba(99,102,241,0.18)',
+                border: '1px solid rgba(30,111,234,0.18)',
                 borderRadius: '18px',
               }}>
-                <div style={{ fontSize: '0.7rem', fontFamily: 'monospace', color: 'rgba(99,102,241,0.55)', marginBottom: '14px', letterSpacing: '0.1em' }}>
+                <div style={{ fontSize: '0.7rem', fontFamily: 'monospace', color: 'rgba(30,111,234,0.55)', marginBottom: '14px', letterSpacing: '0.1em' }}>
                   // NOTIFICATION_CHANNELS
                 </div>
                 {[
-                  { icon: '📧', label: 'Email', value: 'WEBIFYPRO9@GMAIL.COM', color: '#00d4ff' },
+                  { icon: '📧', label: 'Email', value: 'WEBIFYPRO9@GMAIL.COM', color: '#00D4FF' },
                   { icon: '💬', label: 'WhatsApp', value: '+923708316591', color: '#25d366' },
-                  { icon: '⚡', label: 'Response', value: '< 2 hours', color: '#06ffa5' },
+                  { icon: '⚡', label: 'Response', value: '< 2 hours', color: '#00D4FF' },
                 ].map(s => (
                   <div key={s.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                     <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace' }}>

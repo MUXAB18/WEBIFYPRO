@@ -5,19 +5,19 @@ import { Float } from '@react-three/drei';
 const PROJECTS = [
   {
     title: 'WEB DEVELOPMENT',
-    color: '#00d4ff',
+    color: '#00D4FF',
     position: [3, 2.5, -8],
     rotOffset: 0,
   },
   {
     title: 'DIGITAL MARKETING',
-    color: '#ff006e',
+    color: '#1E6FEA',
     position: [-2, -1.5, -12],
     rotOffset: 1.2,
   },
   {
     title: 'SOCIAL MEDIA MGT',
-    color: '#06ffa5',
+    color: '#00D4FF',
     position: [5, -2, -16],
     rotOffset: 2.4,
   },

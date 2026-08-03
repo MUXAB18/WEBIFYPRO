@@ -44,7 +44,7 @@ function OrbitingParticles({ count = 40, radius = 2.8 }) {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial color="#00d4ff" size={0.05} transparent opacity={0.7} sizeAttenuation depthWrite={false} />
+      <pointsMaterial color="#00D4FF" size={0.05} transparent opacity={0.7} sizeAttenuation depthWrite={false} />
     </points>
   );
 }
@@ -114,7 +114,7 @@ export default function AIPlanet() {
         <icosahedronGeometry args={[1.6, 2]} />
         <meshStandardMaterial
           color="#1a0a3e"
-          emissive="#6366f1"
+          emissive="#1E6FEA"
           emissiveIntensity={0.7}
           roughness={0.2}
           metalness={0.7}
@@ -125,7 +125,7 @@ export default function AIPlanet() {
       <mesh ref={wireRef}>
         <icosahedronGeometry args={[1.65, 2]} />
         <meshBasicMaterial
-          color="#00d4ff"
+          color="#00D4FF"
           wireframe
           transparent
           opacity={0.12}
@@ -136,7 +136,7 @@ export default function AIPlanet() {
       <mesh ref={glowRef}>
         <sphereGeometry args={[2.2, 16, 16]} />
         <meshBasicMaterial
-          color="#6366f1"
+          color="#1E6FEA"
           transparent
           opacity={0.10}
           side={THREE.BackSide}
@@ -147,15 +147,15 @@ export default function AIPlanet() {
       {/* Pulse rings — controlled by parent useFrame above */}
       <mesh ref={ring1Ref} rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[2.0, 0.02, 6, 32]} />
-        <meshBasicMaterial color="#6366f1" transparent opacity={0.3} depthWrite={false} />
+        <meshBasicMaterial color="#1E6FEA" transparent opacity={0.3} depthWrite={false} />
       </mesh>
       <mesh ref={ring2Ref} rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[2.4, 0.02, 6, 32]} />
-        <meshBasicMaterial color="#00d4ff" transparent opacity={0.3} depthWrite={false} />
+        <meshBasicMaterial color="#00D4FF" transparent opacity={0.3} depthWrite={false} />
       </mesh>
       <mesh ref={ring3Ref} rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[2.8, 0.02, 6, 32]} />
-        <meshBasicMaterial color="#a855f7" transparent opacity={0.3} depthWrite={false} />
+        <meshBasicMaterial color="#00D4FF" transparent opacity={0.3} depthWrite={false} />
       </mesh>
 
       {/* Orbiting particles */}
@@ -171,14 +171,14 @@ export default function AIPlanet() {
           anchorY="middle"
           font="https://fonts.gstatic.com/s/outfit/v11/QGYyz_MVcBeNP4NjuGObqx1XmO1I4TC1C4G-EiAou6Y.woff2"
           outlineWidth={0.01}
-          outlineColor="#6366f1"
+          outlineColor="#1E6FEA"
         >
           WEBIFY PRO
         </Text>
       </Float>
 
       {/* Reduced to 1 local point light — was 2 */}
-      <pointLight color="#6366f1" intensity={6} distance={8} />
+      <pointLight color="#1E6FEA" intensity={6} distance={8} />
     </group>
   );
 }
