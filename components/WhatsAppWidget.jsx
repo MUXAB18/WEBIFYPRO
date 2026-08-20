@@ -14,6 +14,8 @@ const OPTIONS = [
 
 const WhatsAppWidget = memo(function WhatsAppWidget({ isTouchDevice }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [customMsg, setCustomMsg] = useState('');
+  const widgetRef = useRef(null);
   // Close when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
