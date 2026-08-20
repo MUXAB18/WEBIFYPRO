@@ -5,7 +5,11 @@ import ShareButtons from '../../../components/ShareButtons';
 
 import { blogPosts } from '../../../lib/blogData';
 
-export async function generateMetadata({ params }) {
+type Props = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const post = blogPosts.find(p => p.slug === slug);
   if (!post) return { title: 'Post Not Found | Webify Pro' };
@@ -16,7 +20,7 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function BlogPostPage({ params }) {
+export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
   const post = blogPosts.find(p => p.slug === slug);
 
