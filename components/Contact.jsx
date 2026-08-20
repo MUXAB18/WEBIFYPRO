@@ -50,7 +50,7 @@ const Contact = ({ hideHeader = false }) => {
 
   return (
     <>
-    <section id="contact" style={{ padding: hideHeader ? '60px 6% 120px' : '120px 6%', background: 'var(--color-surface)', borderTop: '1px solid var(--color-border)' }}>
+    <section id="contact" style={{ padding: hideHeader ? '60px var(--section-pad-x) var(--section-pad-y)' : 'var(--section-pad-y) var(--section-pad-x)', background: 'var(--color-bg)', borderTop: '1px solid var(--color-border)' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
         
         {!hideHeader && (
@@ -72,7 +72,7 @@ const Contact = ({ hideHeader = false }) => {
           </div>
         )}
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '60px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '60px' }}>
           
           {/* Left: Contact Info */}
           <div>

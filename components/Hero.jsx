@@ -237,7 +237,12 @@ const Hero = ({ lowEnd }) => {
             margin: 0 auto 32px !important;
           }
           .hero-right {
-            min-height: 400px !important;
+            min-height: 280px !important;
+          }
+          #home {
+            padding-top: 100px !important;
+            padding-bottom: 40px !important;
+            min-height: auto !important;
           }
         }
       `}</style>

@@ -58,6 +58,7 @@ const WhatsAppWidget = memo(function WhatsAppWidget({ isTouchDevice }) {
           right: '0',
           marginBottom: '16px',
           width: '280px',
+          maxWidth: 'calc(100vw - 48px)',
           background: 'var(--color-surface)',
           border: '1px solid var(--color-border)',
           borderRadius: '16px',

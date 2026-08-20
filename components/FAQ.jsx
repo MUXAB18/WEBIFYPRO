@@ -85,8 +85,8 @@ const FAQ = () => {
 
   return (
     <section id="faq" style={{
-      padding: '120px 6%',
-      background: 'var(--color-bg)',
+      padding: 'var(--section-pad-y) var(--section-pad-x)',
+      background: 'var(--color-surface)',
       borderTop: '1px solid var(--color-border)'
     }}>
       <div style={{ maxWidth: '800px', margin: '0 auto' }}>

@@ -23,7 +23,7 @@ const technologies = [
 
 const TechStack = () => {
   return (
-    <section style={{ padding: '60px 6%', background: 'var(--color-bg)', borderTop: '1px solid var(--color-border)' }}>
+    <section style={{ padding: 'var(--section-pad-y) var(--section-pad-x)', background: 'var(--color-surface)', borderTop: '1px solid var(--color-border)' }}>
       <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
         
         <p style={{ 
@@ -37,29 +37,9 @@ const TechStack = () => {
           Engineered with modern technologies
         </p>
         
-        <div style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          gap: '16px',
-        }}>
+        <div className="tech-grid">
           {technologies.map((tech, idx) => (
-            <div key={idx} style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              padding: '10px 20px',
-              borderRadius: '100px',
-              background: 'var(--color-surface)',
-              border: '1px solid var(--color-border)',
-              color: 'var(--color-primary)',
-              fontSize: '0.95rem',
-              fontWeight: '600',
-              transition: 'all 0.3s ease',
-              cursor: 'default',
-            }}
-            className="tech-pill"
-            >
+            <div key={idx} className="tech-pill">
               <span className="tech-icon">{tech.icon}</span>
               {tech.name}
             </div>
@@ -69,6 +49,26 @@ const TechStack = () => {
       </div>
 
       <style>{`
+        .tech-grid {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 16px;
+        }
+        .tech-pill {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 10px 20px;
+          border-radius: 100px;
+          background: var(--color-surface);
+          border: 1px solid var(--color-border);
+          color: var(--color-primary);
+          font-size: 0.95rem;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          cursor: default;
+        }
         .tech-pill:hover {
           border-color: var(--color-primary) !important;
           transform: translateY(-3px);
@@ -84,6 +84,18 @@ const TechStack = () => {
         }
         .tech-pill:hover .tech-icon {
           opacity: 1;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+          .tech-grid {
+            gap: 10px;
+          }
+          .tech-pill {
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            gap: 6px;
+          }
         }
       `}</style>
     </section>

@@ -31,7 +31,7 @@ const processSteps = [
 
 const Process = () => {
   return (
-    <section id="process" style={{ padding: '120px 6%', background: 'var(--color-bg)' }}>
+    <section id="process" style={{ padding: 'var(--section-pad-y) var(--section-pad-x)', background: 'var(--color-surface)' }}>
       <div style={{ maxWidth: '800px', margin: '0 auto' }}>
         
         <div style={{ textAlign: 'center', marginBottom: '80px' }}>

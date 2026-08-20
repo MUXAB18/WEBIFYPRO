@@ -47,7 +47,7 @@ const Reviews = () => {
   const currentReview = reviewsData[currentIndex];
 
   return (
-    <section id="reviews" style={{ padding: '120px 6%', background: 'var(--color-bg)', position: 'relative' }}>
+    <section id="reviews" style={{ padding: 'var(--section-pad-y) var(--section-pad-x)', background: 'var(--color-bg)', position: 'relative' }}>
       <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
         
         <div style={{

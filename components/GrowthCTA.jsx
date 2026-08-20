@@ -4,7 +4,7 @@ import { ArrowRight, MessageCircle } from 'lucide-react';
 
 const GrowthCTA = () => {
   return (
-    <section style={{ padding: '40px 6%', background: 'transparent', color: 'var(--color-primary)', textAlign: 'center' }}>
+    <section style={{ padding: '80px 6%', background: 'var(--color-bg)', color: 'var(--color-primary)', textAlign: 'center' }}>
       <div style={{ maxWidth: '800px', margin: '0 auto' }}>
         <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: '800', marginBottom: '16px', lineHeight: '1.1', letterSpacing: '-0.02em' }}>
           Ready to <span style={{ color: 'var(--color-accent)' }}>scale</span> your business?

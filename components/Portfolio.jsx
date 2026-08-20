@@ -52,7 +52,7 @@ const Portfolio = () => {
     : projects.filter(p => p.category === activeCategory);
 
   return (
-    <section id="portfolio" style={{ padding: '100px 6%', background: 'var(--color-bg)', borderTop: '1px solid var(--color-border)' }}>
+    <section id="portfolio" style={{ padding: 'var(--section-pad-y) var(--section-pad-x)', background: 'var(--color-bg)', borderTop: '1px solid var(--color-border)' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         
         {/* Header */}

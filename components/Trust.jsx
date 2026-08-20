@@ -27,31 +27,12 @@ function CountUpStat({ target, suffix, label }) {
   }, [target]);
 
   return (
-    <div ref={ref} style={{ flex: '1 1 200px', padding: '20px', textAlign: 'center' }}>
-      <div style={{
-        fontFamily: 'Inter, sans-serif',
-        fontSize: 'clamp(3rem, 5vw, 4rem)',
-        fontWeight: '800',
-        color: 'var(--color-primary)',
-        lineHeight: '1',
-        marginBottom: '12px',
-        position: 'relative',
-        display: 'inline-block',
-      }}>
+    <div ref={ref} className="stat-card">
+      <div className="stat-number">
         {count}{suffix}
-        <span style={{
-          position: 'absolute',
-          bottom: '10px', right: '-10px',
-          width: '8px', height: '8px',
-          background: 'var(--color-accent)',
-          borderRadius: '50%',
-        }} />
+        <span className="stat-dot" />
       </div>
-      <div style={{
-        fontSize: '1.1rem',
-        color: 'var(--color-text)',
-        fontWeight: '600',
-      }}>
+      <div className="stat-label">
         {label}
       </div>
     </div>
@@ -61,8 +42,8 @@ function CountUpStat({ target, suffix, label }) {
 const Trust = () => {
   return (
     <section id="trust" style={{
-      padding: '80px 6%',
-      background: 'var(--color-bg)',
+      padding: 'var(--section-pad-y) var(--section-pad-x)',
+      background: 'var(--color-surface)',
       borderBottom: '1px solid var(--color-border)',
     }}>
       <div style={{
@@ -80,18 +61,68 @@ const Trust = () => {
           </h2>
         </div>
 
-        <div style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          gap: '24px',
-        }}>
+        <div className="trust-grid">
           <CountUpStat target={20} suffix="+" label="Projects Completed" />
           <CountUpStat target={5} suffix="+" label="Businesses Helped" />
           <CountUpStat target={5} suffix="+" label="Years of Experience" />
           <CountUpStat target={95} suffix="%" label="Client Satisfaction" />
         </div>
       </div>
+
+      <style>{`
+        .trust-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 24px;
+        }
+        .stat-card {
+          padding: 20px;
+          text-align: center;
+        }
+        .stat-number {
+          font-family: 'Inter', sans-serif;
+          font-size: clamp(2.5rem, 5vw, 4rem);
+          font-weight: 800;
+          color: var(--color-primary);
+          line-height: 1;
+          margin-bottom: 12px;
+          position: relative;
+          display: inline-block;
+        }
+        .stat-dot {
+          position: absolute;
+          bottom: 8px;
+          right: -12px;
+          width: 8px;
+          height: 8px;
+          background: var(--color-accent);
+          border-radius: 50%;
+        }
+        .stat-label {
+          font-size: 1.1rem;
+          color: var(--color-text);
+          font-weight: 600;
+        }
+        @media (max-width: 768px) {
+          .trust-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+          }
+          .stat-card {
+            padding: 12px;
+          }
+          .stat-label {
+            font-size: 0.9rem;
+          }
+        }
+        @media (max-width: 480px) {
+          /* If they truly want 4 in a row, they can change this to repeat(4, 1fr), but 2x2 is best for readability */
+          .trust-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+          }
+        }
+      `}</style>
     </section>
   );
 };

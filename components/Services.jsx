@@ -184,7 +184,7 @@ const Services = () => {
   }, [selectedService]);
 
   return (
-    <section id="services" style={{ padding: '100px 6%', background: 'var(--color-bg)', position: 'relative' }}>
+    <section id="services" style={{ padding: 'var(--section-pad-y) var(--section-pad-x)', background: 'var(--color-bg)', position: 'relative' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         
         {/* Header */}

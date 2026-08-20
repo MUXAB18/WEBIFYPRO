@@ -153,8 +153,27 @@ const Footer = () => {
             ))}
           </div>
 
-          <div style={{ color: 'rgba(255, 255, 255, 0.4)', fontSize: '0.85rem' }}>
-            © {new Date().getFullYear()} Webify Pro. All rights reserved.
+          <div style={{ color: 'rgba(255, 255, 255, 0.4)', fontSize: '0.85rem', display: 'flex', flexWrap: 'wrap', gap: '8px 24px', alignItems: 'center' }}>
+            <span>© {new Date().getFullYear()} Webify Pro. All rights reserved.</span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              Designed & Developed by 
+              <a href="https://musabiftikhar.tech" target="_blank" rel="noopener noreferrer" 
+                 style={{ 
+                   color: 'var(--color-accent)', 
+                   textDecoration: 'underline', 
+                   textUnderlineOffset: '4px',
+                   fontWeight: '600', 
+                   display: 'inline-flex',
+                   alignItems: 'center',
+                   gap: '4px',
+                   transition: 'all 0.2s' 
+                 }} 
+                 onMouseOver={e => { e.currentTarget.style.opacity = '0.8'; e.currentTarget.style.textUnderlineOffset = '6px'; }} 
+                 onMouseOut={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.textUnderlineOffset = '4px'; }}>
+                Musab Iftikhar
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              </a>
+            </span>
           </div>
         </div>
       </div>
