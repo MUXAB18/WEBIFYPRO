@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: webify-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-webify}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-webify_local_dev}
+      POSTGRES_DB: ${POSTGRES_DB:-webify}
+    ports:
+      - "${POSTGRES_PORT:-5440}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

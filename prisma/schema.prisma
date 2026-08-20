@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String
+  subject   String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model Order {
+  id               String   @id @default(cuid())
+  service          String
+  customerName     String
+  customerEmail    String
+  customerPhone    String
+  details          String
+  status           String   @default("pending")
+  developmentStage String   @default("Pending")
+  assignedBudget   Float    @default(0)
+  createdAt        DateTime @default(now())
+  tasks            Task[]
+}
+
+model Task {
+  id        String  @id @default(cuid())
+  name      String
+  completed Boolean @default(false)
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  name      String
+  role      String
+  review    String
+  rating    Int      @default(5)
+  avatar    String   @default("??")
+  color     String   @default("#6366f1")
+  glow      String   @default("rgba(99,102,241,0.12)")
+  border    String   @default("rgba(99,102,241,0.25)")
+  verified  Boolean  @default(false)
+  helpful   Int      @default(0)
+  approved  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
