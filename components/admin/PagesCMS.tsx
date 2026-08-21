@@ -310,10 +310,17 @@ export default function PagesCMS({ token }: { token: string | null }) {
       const values = content.values || [];
       return (
         <div>
-          <label style={labelStyle}>Section Title</label>
-          <input style={inputStyle} value={content.title || ''} onChange={e => handleChange('title', e.target.value)} />
+          <label style={labelStyle}>Section Title (Use {'{text}'} to highlight words)</label>
+          <input style={inputStyle} value={content.title || ''} onChange={e => handleChange('title', e.target.value)} placeholder="Why partner with {Webify Pro?}" />
+
+          <label style={labelStyle}>Highlight Color</label>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '12px' }}>
+            <input type="color" value={content.titleAccentColor || '#ff6b35'} onChange={e => handleChange('titleAccentColor', e.target.value)} style={{ width: '40px', height: '40px', padding: 0, border: 'none', borderRadius: '4px', cursor: 'pointer', background: 'transparent' }} />
+            <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem' }}>{content.titleAccentColor || '#ff6b35'}</span>
+          </div>
+
           <label style={labelStyle}>Section Description</label>
-          <input style={inputStyle} value={content.description || ''} onChange={e => handleChange('description', e.target.value)} />
+          <textarea style={{ ...inputStyle, minHeight: '60px' }} value={content.description || ''} onChange={e => handleChange('description', e.target.value)} />
 
           <label style={labelStyle}>Core Values</label>
           {values.map((v: any, i: number) => (
@@ -345,8 +352,15 @@ export default function PagesCMS({ token }: { token: string | null }) {
         <div>
           <label style={labelStyle}>Section Subtitle</label>
           <input style={inputStyle} value={content.subtitle || ''} onChange={e => handleChange('subtitle', e.target.value)} />
-          <label style={labelStyle}>Section Title</label>
+          <label style={labelStyle}>Section Title (Use {'{text}'} to highlight words)</label>
           <input style={inputStyle} value={content.title || ''} onChange={e => handleChange('title', e.target.value)} />
+
+          <label style={labelStyle}>Highlight Color</label>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '12px' }}>
+            <input type="color" value={content.titleAccentColor || '#ff6b35'} onChange={e => handleChange('titleAccentColor', e.target.value)} style={{ width: '40px', height: '40px', padding: 0, border: 'none', borderRadius: '4px', cursor: 'pointer', background: 'transparent' }} />
+            <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem' }}>{content.titleAccentColor || '#ff6b35'}</span>
+          </div>
+
           <label style={labelStyle}>Section Description</label>
           <textarea style={{ ...inputStyle, minHeight: '60px' }} value={content.description || ''} onChange={e => handleChange('description', e.target.value)} />
 
