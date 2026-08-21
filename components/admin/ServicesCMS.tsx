@@ -7,7 +7,7 @@ export default function ServicesCMS({ token }: { token: string | null }) {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [formData, setFormData] = useState({ name: '', slug: '', shortDescription: '', content: '', icon: '', isPublished: false, order: 0 });
+  const [formData, setFormData] = useState({ name: '', slug: '', shortDescription: '', content: '', icon: '', seoTitle: '', seoDescription: '', isPublished: false, order: 0 });
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function ServicesCMS({ token }: { token: string | null }) {
   };
 
   const openAddModal = () => {
-    setFormData({ name: '', slug: '', shortDescription: '', content: '', icon: '', isPublished: false, order: 0 });
+    setFormData({ name: '', slug: '', shortDescription: '', content: '', icon: '', seoTitle: '', seoDescription: '', isPublished: false, order: 0 });
     setEditingId(null);
     setIsModalOpen(true);
   };
@@ -40,6 +40,8 @@ export default function ServicesCMS({ token }: { token: string | null }) {
       shortDescription: service.shortDescription || '',
       content: service.content || '',
       icon: service.icon || '',
+      seoTitle: service.seoTitle || '',
+      seoDescription: service.seoDescription || '',
       isPublished: service.isPublished || false,
       order: service.order || 0
     });
@@ -169,8 +171,16 @@ export default function ServicesCMS({ token }: { token: string | null }) {
                 <textarea required value={formData.shortDescription} onChange={e => setFormData({...formData, shortDescription: e.target.value})} style={{ width: '100%', padding: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff', minHeight: '80px' }} placeholder="Brief summary" />
               </div>
               <div>
-                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>Content (Markdown / Text)</label>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>Content (Modal Description)</label>
                 <textarea required value={formData.content} onChange={e => setFormData({...formData, content: e.target.value})} style={{ width: '100%', padding: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff', minHeight: '150px' }} placeholder="Full details" />
+              </div>
+              <div>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>Card Bullet Points (One per line)</label>
+                <textarea value={formData.seoTitle} onChange={e => setFormData({...formData, seoTitle: e.target.value})} style={{ width: '100%', padding: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff', minHeight: '80px' }} placeholder="- High ROI Campaigns..." />
+              </div>
+              <div>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)' }}>What's Included Points (One per line)</label>
+                <textarea value={formData.seoDescription} onChange={e => setFormData({...formData, seoDescription: e.target.value})} style={{ width: '100%', padding: '12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff', minHeight: '80px' }} placeholder="- Included Feature 1&#10;- Included Feature 2" />
               </div>
               
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '8px' }}>
