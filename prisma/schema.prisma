@@ -127,7 +127,7 @@ model NavigationItem {
   parentId   String?
   createdAt  DateTime         @default(now())
   updatedAt  DateTime         @updatedAt
-  parent     NavigationItem?  @relation("NavHierarchy", fields: [parentId], references: [id])
+  parent     NavigationItem?  @relation("NavHierarchy", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   children   NavigationItem[] @relation("NavHierarchy")
 }
 
