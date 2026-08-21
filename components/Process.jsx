@@ -60,7 +60,16 @@ const Process = ({ data = {} }) => {
             {data.subtitle || 'Our Methodology'}
           </div>
           <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: '800', color: 'var(--color-primary)', lineHeight: '1.1', letterSpacing: '-0.02em', marginBottom: '20px' }}>
-            {data.title || <>A proven process for <span style={{ color: 'var(--color-accent)' }}>predictable results.</span></>}
+            {data.title ? (
+                data.title.split(/(\{.*?\})/g).map((part, i) => {
+                  if (part.startsWith('{') && part.endsWith('}')) {
+                    return <span key={i} style={{ color: 'var(--color-accent)' }}>{part.slice(1, -1)}</span>;
+                  }
+                  return <span key={i} dangerouslySetInnerHTML={{ __html: part }} />;
+                })
+              ) : (
+                <>A proven process for <span style={{ color: 'var(--color-accent)' }}>predictable results.</span></>
+              )}
           </h2>
           <p style={{ color: 'var(--color-text)', fontSize: '1.1rem', lineHeight: '1.6' }}>
             {data.description || 'No guesswork. We follow a strict, data-driven framework to ensure your project is delivered on time and achieves its business objectives.'}

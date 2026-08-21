@@ -44,7 +44,16 @@ const WhyUs = ({ values = {} }) => {
               color: 'var(--color-primary)', lineHeight: '1.2', letterSpacing: '-0.02em',
               marginBottom: '12px'
             }}>
-              {values.title || <>Why partner with <span style={{ color: 'var(--color-accent)' }}>Webify Pro?</span></>}
+              {values.title ? (
+                values.title.split(/(\{.*?\})/g).map((part, i) => {
+                  if (part.startsWith('{') && part.endsWith('}')) {
+                    return <span key={i} style={{ color: 'var(--color-accent)' }}>{part.slice(1, -1)}</span>;
+                  }
+                  return <span key={i} dangerouslySetInnerHTML={{ __html: part }} />;
+                })
+              ) : (
+                <>Why partner with <span style={{ color: 'var(--color-accent)' }}>Webify Pro?</span></>
+              )}
             </h2>
             <p style={{ color: 'var(--color-text)', fontSize: '0.95rem', lineHeight: '1.5' }}>
               {values.description || 'We combine high-end software engineering with aggressive digital marketing strategies to build systems that scale your business.'}
