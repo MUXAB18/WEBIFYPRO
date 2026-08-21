@@ -7,9 +7,43 @@ export const metadata = {
   description: 'Read the latest insights on web development, digital marketing, and business growth from the experts at Webify Pro.',
 };
 
-import { blogPosts } from '../../lib/blogData';
+import prisma from '@/lib/prisma';
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const blogPosts = await prisma.post.findMany({
+    where: { published: true },
+    orderBy: { createdAt: 'desc' }
+  });
+
+  const pageData = await prisma.page.findUnique({ 
+    where: { slug: 'blog' },
+    include: { sections: { orderBy: { order: 'asc' } } }
+  });
+  let hero: any = {};
+  if (pageData && pageData.sections) {
+    const heroSection = (pageData.sections as any[]).find((s: any) => s.type === 'HERO');
+    if (heroSection) {
+      try {
+        hero = typeof heroSection.content === 'string' ? JSON.parse(heroSection.content) : heroSection.content;
+      } catch (e) { }
+    }
+  }
+
+  const renderTitle = (title: string, accentColor = 'var(--color-accent)') => {
+    if (!title) return null;
+    const parts = title.split(/(\{.*?\})/g);
+    return (
+      <>
+        {parts.map((part, i) => {
+          if (part.startsWith('{') && part.endsWith('}')) {
+            return <span key={i} style={{ color: accentColor }}>{part.slice(1, -1)}</span>;
+          }
+          return <span key={i} dangerouslySetInnerHTML={{ __html: part }} />;
+        })}
+      </>
+    );
+  };
+
   return (
     <div style={{ paddingTop: '80px', minHeight: '100vh', background: 'var(--color-bg)' }}>
       <section style={{ padding: '80px 6%', position: 'relative' }}>
@@ -21,17 +55,19 @@ export default function BlogPage() {
               color: 'var(--color-primary)', fontSize: '0.8rem', fontWeight: '600',
               textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '24px'
             }}>
-              Insights
+              {hero.subtitle || 'Insights'}
             </div>
             <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: '800', marginBottom: '20px', color: 'var(--color-primary)', lineHeight: '1.1', letterSpacing: '-0.02em' }}>
-              Thoughts on <span style={{ color: 'var(--color-accent)' }}>technology</span> & growth.
+              {hero.title ? renderTitle(hero.title, hero.titleAccentColor) : (
+                <>Thoughts on <span style={{ color: 'var(--color-accent)' }}>technology</span> & growth.</>
+              )}
             </h1>
             <p style={{ color: 'var(--color-text)', fontSize: '1.15rem', lineHeight: '1.6', marginBottom: '40px' }}>
-              Expert perspectives on software engineering, performance marketing, and digital strategy.
+              {hero.description || 'Expert perspectives on software engineering, performance marketing, and digital strategy.'}
             </p>
 
             {/* Newsletter Subscription */}
-            <div style={{ 
+            <div className="newsletter-form" style={{ 
               background: 'var(--color-surface)', padding: '24px', borderRadius: '16px', 
               border: '1px solid var(--color-border)', display: 'flex', gap: '12px', 
               boxShadow: '0 12px 24px rgba(11, 30, 57, 0.05)',
@@ -72,7 +108,7 @@ export default function BlogPage() {
                       {post.category}
                     </span>
                     <span style={{ color: 'var(--color-text)', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <Calendar size={14} /> {post.date}
+                      <Calendar size={14} /> {new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                     </span>
                   </div>
                   
@@ -109,6 +145,16 @@ export default function BlogPage() {
         }
         .blog-card:hover .read-more { color: var(--color-accent) !important; }
         .blog-card:hover .read-more-arrow { transform: translateX(4px); }
+
+        @media (max-width: 600px) {
+          .newsletter-form {
+            flex-direction: column !important;
+            padding: 16px !important;
+          }
+          .newsletter-form button {
+            width: 100%;
+          }
+        }
       `}</style>
     </div>
   );

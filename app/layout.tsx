@@ -7,29 +7,29 @@ export const metadata: Metadata = {
   keywords: ['web design Sialkot', 'web developer Pakistan', 'MERN stack developer', 'digital marketing Sialkot', 'Webify Pro']
 };
 
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import CookieBanner from '@/components/CookieBanner';
-import WhatsAppWidget from '@/components/WhatsAppWidget';
+import ClientLayout from '@/components/ClientLayout';
+import prisma from '@/lib/prisma';
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const navLinks = await prisma.navigationItem.findMany({
+    orderBy: { order: 'asc' }
+  });
+  
+  const dbServices = await prisma.service.findMany({
+    orderBy: { order: 'asc' }
+  });
+  
+  const settings = await prisma.websiteSettings.findFirst();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
         <div className="App">
-          <CookieBanner />
-          <WhatsAppWidget />
-          <div style={{ position: 'relative', zIndex: 1 }}>
-            <Navbar />
-            <main>
-              {children}
-            </main>
-            <Footer />
-          </div>
+          <ClientLayout navLinks={navLinks} dbServices={dbServices} settings={settings}>{children}</ClientLayout>
         </div>
       </body>
     </html>

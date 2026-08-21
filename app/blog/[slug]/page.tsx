@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowLeft, Calendar, User, Clock } from 'lucide-react';
 import ShareButtons from '../../../components/ShareButtons';
 
-import { blogPosts } from '../../../lib/blogData';
+import prisma from '@/lib/prisma';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -11,7 +11,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const post = blogPosts.find(p => p.slug === slug);
+  const post = await prisma.post.findUnique({ where: { slug } });
   if (!post) return { title: 'Post Not Found | Webify Pro' };
   
   return {
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
-  const post = blogPosts.find(p => p.slug === slug);
+  const post = await prisma.post.findUnique({ where: { slug } });
 
   if (!post) {
     return (
@@ -59,8 +59,8 @@ export default async function BlogPostPage({ params }: Props) {
               {post.category}
             </span>
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', color: 'var(--color-text)', fontSize: '0.9rem' }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Calendar size={16} /> {post.date}</span>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Clock size={16} /> {post.readTime}</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Calendar size={16} /> {new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Clock size={16} /> 5 min read</span>
             </div>
           </div>
           

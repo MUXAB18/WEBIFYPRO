@@ -57,10 +57,12 @@ const FAQItem = ({ question, answer, isOpen, onClick }) => {
   );
 };
 
-const FAQ = () => {
+const FAQ = ({ data = {} }) => {
   const [openId, setOpenId] = useState('q1');
 
-  const faqs = [
+  const faqsToUse = data?.faqs && data.faqs.length > 0 
+    ? data.faqs.map((f, i) => ({ id: `q${i+1}`, question: f.question, answer: f.answer }))
+    : [
     {
       id: 'q1',
       question: 'How much does a typical project cost?',
@@ -97,21 +99,21 @@ const FAQ = () => {
             color: 'var(--color-primary)', fontSize: '0.8rem', fontWeight: '600',
             textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '24px'
           }}>
-            FAQ
+            {data.subtitle || 'FAQ'}
           </div>
           <h2 style={{
             fontSize: 'clamp(2rem, 4vw, 3rem)',
             fontWeight: '800', color: 'var(--color-primary)', marginBottom: '16px',
             letterSpacing: '-0.02em'
           }}>
-            Common Questions
+            {data.title || 'Common Questions'}
           </h2>
         </div>
 
         <div className="premium-card" style={{
           background: 'var(--color-surface)', padding: '32px 40px', borderRadius: '16px',
         }}>
-          {faqs.map((faq) => (
+          {faqsToUse.map((faq) => (
             <FAQItem 
               key={faq.id}
               question={faq.question}

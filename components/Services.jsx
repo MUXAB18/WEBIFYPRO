@@ -3,84 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Code2, Megaphone, Cpu, Smartphone, X, Check, MessageCircle, ArrowRight } from 'lucide-react';
 
-const services = [
-  {
-    icon: <Code2 size={24} strokeWidth={1.5} />,
-    title: 'Web & App Development',
-    shortDesc: 'Custom websites and web applications engineered for speed, scalability, and conversions.',
-    desc: 'We build custom, high-performance web applications using modern tech stacks. From blazing-fast landing pages to complex corporate platforms, our code is optimized for SEO and engineered to turn traffic into paying clients.',
-    topPoints: [
-      'Pixel-Perfect UI that Converts',
-      'Lightning Fast Performance',
-      'Fully Scalable Architecture'
-    ],
-    bulletPoints: [
-      'Pixel-Perfect UI that Converts',
-      'Lightning Fast (LCP < 1.5s) for SEO',
-      'Fully Scalable Backend Architecture',
-      'Bank-Level Security & Data Protection',
-      'Automated Workflows & Integrations',
-      '1 Month Post-Launch Growth Support'
-    ]
-  },
-  {
-    icon: <Megaphone size={24} strokeWidth={1.5} />,
-    title: 'Digital Marketing & SEO',
-    shortDesc: 'Data-backed ad campaigns and search optimization designed to scale your revenue.',
-    desc: 'Stop wasting ad spend. We create conversion-optimized Meta Ads, Google Ads, and comprehensive digital strategies. By leveraging data-backed competitor targeting and advanced pixel tracking, we ensure maximum return on every dollar spent.',
-    topPoints: [
-      'Data-Backed Competitor Targeting',
-      'Guaranteed Lead Generation',
-      'Search Engine Dominance'
-    ],
-    bulletPoints: [
-      'Guaranteed Lead Generation Workflows',
-      'High-ROI Ad Campaigns (Google, Meta)',
-      'Data-Backed Competitor Targeting',
-      'Conversion-Optimized Ad Creatives',
-      'Advanced Pixel & Server-Side Tracking',
-      'Technical SEO & Content Strategy'
-    ]
-  },
-  {
-    icon: <Cpu size={24} strokeWidth={1.5} />,
-    title: 'Business Automation',
-    shortDesc: 'Streamline your operations with intelligent software and automated workflows.',
-    desc: 'We eliminate manual tasks and bottlenecks in your business. By integrating intelligent software and building custom automation workflows, we help you save time, reduce errors, and focus on scaling your business.',
-    topPoints: [
-      'Custom CRM & ERP Integrations',
-      'Automated Lead Nurturing',
-      'Operational Efficiency'
-    ],
-    bulletPoints: [
-      'Custom CRM & ERP Integrations',
-      'Automated Lead Nurturing Sequences',
-      'Payment Gateway Integrations',
-      'Inventory & Order Management Systems',
-      'Zapier & Custom API Connections',
-      'Ongoing Technical Support'
-    ]
-  },
-  {
-    icon: <Smartphone size={24} strokeWidth={1.5} />,
-    title: 'Mobile Applications',
-    shortDesc: 'Cross-platform iOS and Android apps built with modern frameworks.',
-    desc: 'From concept to App Store, we design and develop performance-driven mobile applications. We deliver premium native UI experiences with offline capabilities, push notifications, and secure in-app payments to drive massive user engagement.',
-    topPoints: [
-      'Premium Native iOS & Android UI',
-      'Push Notifications for Engagement',
-      'Secure In-App Payments'
-    ],
-    bulletPoints: [
-      'Premium Native iOS & Android UI',
-      'Offline Capabilities & Background Sync',
-      'Push Notifications to Drive Engagement',
-      'Secure In-App Payments & Subscriptions',
-      'Seamless App Store & Play Store Launch',
-      'Automated QA & Crash Analytics'
-    ]
-  }
-];
+import * as LucideIcons from 'lucide-react';
 
 function ServiceCard({ service, onSelect }) {
   return (
@@ -165,8 +88,39 @@ function ServiceCard({ service, onSelect }) {
   );
 }
 
-const Services = () => {
+const Services = ({ dbServices, hero = {} }) => {
   const [selectedService, setSelectedService] = useState(null);
+
+  const renderTitle = (title, accentColor = 'var(--color-accent)') => {
+    if (!title) return null;
+    const parts = title.split(/(\{.*?\})/g);
+    return (
+      <>
+        {parts.map((part, i) => {
+          if (part.startsWith('{') && part.endsWith('}')) {
+            return <span key={i} style={{ color: accentColor }}>{part.slice(1, -1)}</span>;
+          }
+          return <span key={i} dangerouslySetInnerHTML={{ __html: part }} />;
+        })}
+      </>
+    );
+  };
+  
+  const getIcon = (iconName) => {
+    if (!iconName) return <ArrowRight size={24} strokeWidth={1.5} />;
+    const IconComponent = LucideIcons[iconName];
+    return IconComponent ? <IconComponent size={24} strokeWidth={1.5} /> : <ArrowRight size={24} strokeWidth={1.5} />;
+  };
+
+  // Transform dbServices if provided to match expected format
+  const dataToUse = dbServices && dbServices.length > 0 ? dbServices.map(s => ({
+    icon: getIcon(s.icon),
+    title: s.name,
+    shortDesc: s.shortDescription || '',
+    desc: s.content || '',
+    topPoints: s.seoTitle ? s.seoTitle.split('\n').filter(Boolean) : [],
+    bulletPoints: s.seoDescription ? s.seoDescription.split('\n').filter(Boolean) : []
+  })) : [];
 
   // Close modal on escape key
   useEffect(() => {
@@ -189,19 +143,23 @@ const Services = () => {
         
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '64px', maxWidth: '700px', margin: '0 auto 64px' }}>
-          <div style={{
-            display: 'inline-block', padding: '6px 14px', borderRadius: '100px',
-            background: 'rgba(11, 30, 57, 0.05)', border: '1px solid var(--color-border)',
-            color: 'var(--color-primary)', fontSize: '0.8rem', fontWeight: '600',
-            textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '24px'
-          }}>
-            Services
-          </div>
+          {(hero.subtitle || 'Services') && (
+            <div style={{
+              display: 'inline-block', padding: '6px 14px', borderRadius: '100px',
+              background: 'rgba(11, 30, 57, 0.05)', border: '1px solid var(--color-border)',
+              color: 'var(--color-primary)', fontSize: '0.8rem', fontWeight: '600',
+              textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '24px'
+            }}>
+              {hero.subtitle || 'Services'}
+            </div>
+          )}
           <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: '800', marginBottom: '20px', color: 'var(--color-primary)', lineHeight: '1.1', letterSpacing: '-0.02em' }}>
-            Everything you need to <span style={{ color: 'var(--color-accent)' }}>grow online.</span>
+            {hero.title ? renderTitle(hero.title, hero.titleAccentColor) : (
+              <>Everything you need to <span style={{ color: 'var(--color-accent)' }}>grow online.</span></>
+            )}
           </h2>
           <p style={{ color: 'var(--color-text)', fontSize: '1.1rem', lineHeight: '1.6' }}>
-            We provide end-to-end digital solutions designed for performance, scalability, and measurable business growth.
+            {hero.description || 'We provide end-to-end digital solutions designed for performance, scalability, and measurable business growth.'}
           </p>
         </div>
 
@@ -211,7 +169,7 @@ const Services = () => {
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
           gap: '24px',
         }}>
-          {services.map((service) => (
+          {dataToUse.map((service) => (
             <ServiceCard key={service.title} service={service} onSelect={setSelectedService} />
           ))}
         </div>

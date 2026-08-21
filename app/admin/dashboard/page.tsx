@@ -1,20 +1,37 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { LogOut, LayoutDashboard, Plus, CheckCircle, Circle, Trash2, Edit3, Save, Menu, X } from 'lucide-react';
+import { 
+  LogOut, LayoutDashboard, Briefcase, Mail, FileText, Star, Settings, 
+  Menu, X, Trash2, Edit3, Plus, Save, ArrowLeft, CheckCircle, XCircle,
+  FileBox, Grid, Link, Image as ImageIcon
+} from 'lucide-react';
+
+import PagesCMS from '@/components/admin/PagesCMS';
+import ServicesCMS from '@/components/admin/ServicesCMS';
+import SolutionsCMS from '@/components/admin/SolutionsCMS';
+import NavigationCMS from '@/components/admin/NavigationCMS';
+import SettingsCMS from '@/components/admin/SettingsCMS';
+import MediaLibrary from '@/components/admin/MediaLibrary';
 
 export default function AdminDashboard() {
-  const [projects, setProjects] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [selectedProject, setSelectedProject] = useState<any>(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  
-  // Responsive sidebar state
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('overview');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Data states
+  const [stats, setStats] = useState<any>({});
+  const [projects, setProjects] = useState<any[]>([]);
+  const [messages, setMessages] = useState<any[]>([]);
+  const [reviews, setReviews] = useState<any[]>([]);
+  const [posts, setPosts] = useState<any[]>([]);
+
+  // Blog Form State
+  const [isEditingPost, setIsEditingPost] = useState(false);
+  const [currentPost, setCurrentPost] = useState<any>(null);
+
   const token = typeof window !== 'undefined' ? localStorage.getItem('admin_token') : null;
 
   useEffect(() => {
@@ -22,7 +39,30 @@ export default function AdminDashboard() {
       router.push('/admin/login');
       return;
     }
-    fetchProjects();
+    
+    // Fetch all initial data
+    Promise.all([
+      fetch('/api/admin/stats', { headers: { 'Authorization': `Bearer ${token}` } }).then(r => r.json()),
+      fetch('/api/admin/projects', { headers: { 'Authorization': `Bearer ${token}` } }).then(r => r.json()),
+      fetch('/api/admin/messages', { headers: { 'Authorization': `Bearer ${token}` } }).then(r => r.json()),
+      fetch('/api/admin/reviews', { headers: { 'Authorization': `Bearer ${token}` } }).then(r => r.json()),
+      fetch('/api/admin/blog', { headers: { 'Authorization': `Bearer ${token}` } }).then(r => r.json()),
+    ]).then(([statsData, projectsData, messagesData, reviewsData, blogData]) => {
+      if (statsData.error) {
+        localStorage.removeItem('admin_token');
+        router.push('/admin/login');
+        return;
+      }
+      setStats(statsData);
+      setProjects(projectsData);
+      setMessages(messagesData);
+      setReviews(reviewsData);
+      setPosts(blogData);
+      setLoading(false);
+    }).catch(err => {
+      console.error(err);
+      setLoading(false);
+    });
 
     const handleResize = () => {
       const mobile = window.innerWidth <= 768;
@@ -35,574 +75,469 @@ export default function AdminDashboard() {
     return () => window.removeEventListener('resize', handleResize);
   }, [token, router]);
 
-  const fetchProjects = async () => {
-    try {
-      const res = await fetch(`/api/admin/projects`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (res.status === 401 || res.status === 403) {
-        localStorage.removeItem('admin_token');
-        router.push('/admin/login');
-        return;
-      }
-      const data = await res.json();
-      setProjects(data);
-    } catch (err) {
-      setError('Failed to load projects');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const updateProject = async (id: string, updates: any) => {
-    try {
-      const res = await fetch(`/api/admin/projects/${id}`, {
-        method: 'PUT',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(updates)
-      });
-      const updated = await res.json();
-      setProjects(projects.map(p => p.id === id ? updated : p));
-      if (selectedProject?.id === id) setSelectedProject(updated);
-    } catch (err) {
-      alert('Failed to update project');
-    }
-  };
-
   const handleLogout = () => {
     localStorage.removeItem('admin_token');
     router.push('/admin/login');
   };
 
+  // ---- MESSAGES CMS ----
+  const deleteMessage = async (id: string) => {
+    if(!confirm("Delete this message?")) return;
+    await fetch(`/api/admin/messages?id=${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+    setMessages(messages.filter(m => m.id !== id));
+  };
+
+  // ---- PROJECTS CMS ----
+  const updateProjectStatus = async (id: string, newStatus: string) => {
+    await fetch(`/api/admin/projects`, { 
+      method: 'PUT', 
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify({ id, status: newStatus })
+    });
+    setProjects(projects.map(p => p.id === id ? { ...p, status: newStatus } : p));
+  };
+  const deleteProject = async (id: string) => {
+    if(!confirm("Delete this project order permanently?")) return;
+    await fetch(`/api/admin/projects?id=${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+    setProjects(projects.filter(p => p.id !== id));
+  };
+
+  // ---- REVIEWS CMS ----
+  const toggleReviewApproval = async (id: string, approved: boolean) => {
+    await fetch(`/api/admin/reviews`, { 
+      method: 'PUT', 
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify({ id, approved: !approved })
+    });
+    setReviews(reviews.map(r => r.id === id ? { ...r, approved: !approved } : r));
+  };
+  const deleteReview = async (id: string) => {
+    if(!confirm("Delete this review permanently?")) return;
+    await fetch(`/api/admin/reviews?id=${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+    setReviews(reviews.filter(r => r.id !== id));
+  };
+
+  // ---- BLOG CMS ----
+  const handleSavePost = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const isNew = !currentPost.id;
+    const method = isNew ? 'POST' : 'PUT';
+    
+    const res = await fetch(`/api/admin/blog`, {
+      method,
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify(currentPost)
+    });
+    const savedPost = await res.json();
+    
+    if (isNew) {
+      setPosts([savedPost, ...posts]);
+    } else {
+      setPosts(posts.map(p => p.id === savedPost.id ? savedPost : p));
+    }
+    setIsEditingPost(false);
+  };
+  const deletePost = async (id: string) => {
+    if(!confirm("Delete this post?")) return;
+    await fetch(`/api/admin/blog?id=${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+    setPosts(posts.filter(p => p.id !== id));
+  };
+
   if (loading) {
-    return <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#050714', color: '#fff' }}>Loading Data...</div>;
+    return <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#08172c', color: '#fff' }}>
+      <div style={{ padding: '40px', background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(20px)', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.1)' }}>
+        Loading Secure Environment...
+      </div>
+    </div>;
   }
 
+  const TABS = [
+    { id: 'overview', label: 'Overview', icon: LayoutDashboard },
+    { id: 'pages', label: 'Pages', icon: FileBox },
+    { id: 'blog', label: 'Blog', icon: FileText },
+    { id: 'services', label: 'Services', icon: Briefcase },
+    { id: 'solutions', label: 'Solutions', icon: Grid },
+    { id: 'media', label: 'Media Library', icon: ImageIcon },
+    { id: 'navigation', label: 'Navigation', icon: Link },
+    { id: 'projects', label: 'Projects', icon: Briefcase },
+    { id: 'messages', label: 'Messages', icon: Mail },
+    { id: 'reviews', label: 'Reviews', icon: Star },
+    { id: 'settings', label: 'Settings', icon: Settings },
+  ];
+
   return (
-    <div className="admin-layout" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: '#050714', color: '#f0f0ff', fontFamily: 'Outfit, sans-serif' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: '#08172c', color: '#FAFAF7', fontFamily: 'Outfit, sans-serif' }}>
       
       {/* Top Navbar */}
       <header style={{
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '16px 24px', background: 'rgba(5, 7, 20, 0.95)',
+        padding: '16px 24px', background: 'rgba(11, 30, 57, 0.7)',
         borderBottom: '1px solid rgba(255,255,255,0.05)',
         position: 'sticky', top: 0, zIndex: 100,
-        backdropFilter: 'blur(20px)'
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexShrink: 0 }}>
           <button 
-            className="menu-btn"
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '4px' }}
+            style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', padding: '4px' }}
           >
             {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ width: '36px', height: '36px', background: 'linear-gradient(135deg, #1E6FEA, #00D4FF)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 15px rgba(30,111,234,0.3)' }}>
-              <LayoutDashboard size={18} color="#fff" />
+            <div style={{ width: '36px', height: '36px', background: 'var(--color-accent)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 15px rgba(255,107,53,0.3)' }}>
+              <ShieldIcon />
             </div>
-            <h2 style={{ fontSize: '1.2rem', fontWeight: '800', margin: 0, background: 'linear-gradient(90deg, #fff, #a5b4fc)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              Webify Admin
-            </h2>
+            <h2 style={{ fontSize: '1.2rem', fontWeight: '800', margin: 0 }}>Webify Admin</h2>
           </div>
         </div>
 
-        <button
-          onClick={handleLogout}
-          style={{
-            padding: '8px 16px',
-            background: 'rgba(255,77,77,0.1)',
-            border: '1px solid rgba(255,77,77,0.2)',
-            color: '#ff4d4d',
-            borderRadius: '8px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px',
-            cursor: 'pointer',
-            fontWeight: '600',
-            transition: 'all 0.2s'
-          }}
-          onMouseOver={e => e.currentTarget.style.background = 'rgba(255,77,77,0.2)'}
-          onMouseOut={e => e.currentTarget.style.background = 'rgba(255,77,77,0.1)'}
-        >
-          <LogOut size={16} /> <span className="hide-mobile">Logout</span>
+        <button onClick={handleLogout} style={{
+          padding: '8px 16px', background: 'rgba(255,77,77,0.1)', border: '1px solid rgba(255,77,77,0.2)',
+          color: '#ff4d4d', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer',
+          transition: 'all 0.2s'
+        }}>
+          <LogOut size={16} /> <span style={{ display: isMobile ? 'none' : 'inline' }}>Logout</span>
         </button>
       </header>
 
-      <div style={{ display: 'flex', flex: 1, position: 'relative', overflow: 'hidden' }}>
+      <div style={{ display: 'flex', flex: 1, position: 'relative' }}>
         
-        {/* Sidebar Drawer */}
-        <div className={`sidebar-drawer ${isSidebarOpen ? 'open' : 'closed'}`} style={{
-          width: '280px',
-          background: '#0a0d1c',
+        {/* Sidebar */}
+        <div style={{
+          width: '280px', minWidth: '280px', flexShrink: 0,
+          background: 'rgba(11, 30, 57, 0.5)',
           borderRight: '1px solid rgba(255,255,255,0.05)',
-          padding: '24px',
+          padding: '24px 16px',
           display: 'flex',
           flexDirection: 'column',
-          position: 'absolute',
+          position: isMobile ? 'absolute' : 'relative',
           top: 0, bottom: 0, left: 0,
           zIndex: 90,
-          transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          boxShadow: isSidebarOpen && isMobile ? '4px 0 24px rgba(0,0,0,0.5)' : 'none'
+          backdropFilter: 'blur(30px)',
+          transform: isSidebarOpen ? 'translateX(0)' : 'translateX(-100%)',
+          transition: 'transform 0.3s ease',
+          visibility: (!isSidebarOpen && !isMobile) ? 'hidden' : 'visible',
+          marginLeft: (!isSidebarOpen && !isMobile) ? '-280px' : '0'
         }}>
-          {/* Quick Stats */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '24px' }}>
-            <div style={{ background: 'rgba(255,255,255,0.03)', padding: '12px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
-              <div style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: '4px' }}>Active</div>
-              <div style={{ fontSize: '1.2rem', fontWeight: '700', color: '#25d366' }}>{projects.filter(p => p.status === 'active').length}</div>
-            </div>
-            <div style={{ background: 'rgba(255,255,255,0.03)', padding: '12px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
-              <div style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: '4px' }}>Revenue</div>
-              <div style={{ fontSize: '1.2rem', fontWeight: '700', color: '#fff' }}>${projects.reduce((acc, p) => acc + (p.assignedBudget || 0), 0)}</div>
-            </div>
-          </div>
-
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-              <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '1px', margin: 0 }}>Projects ({projects.length})</p>
-            </div>
-            
-            <input 
-              type="text" 
-              placeholder="Search projects..." 
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ 
-                width: '100%', padding: '10px 12px', marginBottom: '16px', background: 'rgba(0,0,0,0.2)', 
-                border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff', outline: 'none',
-                fontSize: '0.9rem', flexShrink: 0
-              }}
-            />
-
-            <div className="project-list" style={{ display: 'flex', flexDirection: 'column', gap: '8px', overflowY: 'auto', flex: 1, paddingRight: '4px' }}>
-              {projects.filter(p => p.customerName?.toLowerCase().includes(searchTerm.toLowerCase()) || p.service?.toLowerCase().includes(searchTerm.toLowerCase())).map(p => {
-                let statusColor = 'rgba(255,255,255,0.3)';
-                if (p.status === 'active') statusColor = '#25d366';
-                if (p.status === 'completed') statusColor = '#3b82f6';
-                if (p.status === 'pending') statusColor = '#eab308';
-                if (p.status === 'cancelled') statusColor = '#ef4444';
-
-                return (
-                  <button
-                    key={p.id}
-                    onClick={() => {
-                      setSelectedProject(p);
-                      if (isMobile) setIsSidebarOpen(false); // Auto close on mobile
-                    }}
-                    style={{
-                      padding: '12px',
-                      background: selectedProject?.id === p.id ? 'rgba(30,111,234,0.15)' : 'transparent',
-                      border: `1px solid ${selectedProject?.id === p.id ? 'rgba(30,111,234,0.4)' : 'transparent'}`,
-                      borderRadius: '10px',
-                      color: selectedProject?.id === p.id ? '#fff' : 'rgba(255,255,255,0.6)',
-                      textAlign: 'left',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s',
-                      display: 'flex',
-                      alignItems: 'flex-start',
-                      justifyContent: 'space-between',
-                      gap: '4px',
-                      flexShrink: 0
-                    }}
-                  >
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', overflow: 'hidden' }}>
-                      <span style={{ fontWeight: '600', fontSize: '0.9rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.customerName}</span>
-                      <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)' }}>{p.service}</span>
-                    </div>
-                    <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: statusColor, marginTop: '4px', flexShrink: 0 }} title={`Status: ${p.status || 'pending'}`} />
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* Overlay for mobile */}
-        {isSidebarOpen && isMobile && (
-          <div 
-            className="sidebar-overlay"
-            onClick={() => setIsSidebarOpen(false)}
-            style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', zIndex: 80, backdropFilter: 'blur(4px)' }}
-          />
-        )}
-
-        {/* Main Content Area */}
-        <div className={`main-content ${isSidebarOpen && !isMobile ? 'expanded' : ''}`} style={{ flex: 1, padding: '30px', overflowY: 'auto', background: '#050714' }}>
-          {selectedProject ? (
-            <ProjectDetail 
-              project={selectedProject} 
-              token={token} 
-              onUpdate={(updates: any) => updateProject(selectedProject.id, updates)} 
-              refreshProjects={fetchProjects}
-              onDelete={() => {
-                setSelectedProject(null);
-                fetchProjects();
-              }}
-            />
-          ) : (
-            <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.3)', flexDirection: 'column', gap: '16px' }}>
-              <LayoutDashboard size={48} opacity={0.5} />
-              <h2 style={{ textAlign: 'center' }}>Select a project to manage</h2>
-              <button 
-                className="mobile-show-menu-btn"
-                onClick={() => setIsSidebarOpen(true)}
-                style={{
-                  padding: '12px 24px', background: 'rgba(30,111,234,0.1)', border: '1px solid rgba(30,111,234,0.3)',
-                  color: '#a5b4fc', borderRadius: '8px', fontWeight: '600', cursor: 'pointer', display: 'none'
-                }}
-              >
-                Open Project List
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-
-      <style>{`
-        /* Custom Scrollbar for Project List */
-        .project-list::-webkit-scrollbar { width: 4px; }
-        .project-list::-webkit-scrollbar-thumb { background: rgba(30,111,234,0.4); border-radius: 4px; }
-        
-        .main-content {
-          transform: translateX(0);
-          transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          will-change: transform;
-        }
-
-        .sidebar-drawer.closed { transform: translateX(-100%); }
-        .sidebar-drawer.open { transform: translateX(0); }
-
-        @media (min-width: 769px) {
-          .main-content.expanded { transform: translateX(280px); }
-        }
-
-        @media (max-width: 768px) {
-          .hide-mobile { display: none; }
-          .main-content { padding: 20px 16px !important; }
-          .mobile-show-menu-btn { display: block !important; }
-          .project-header-row { flex-direction: column; gap: 16px; align-items: stretch !important; }
-          .project-header-actions { text-align: left !important; }
-          .project-detail-grid { grid-template-columns: 1fr !important; }
-          .project-detail-span { grid-column: span 1 !important; }
-        }
-      `}</style>
-    </div>
-  );
-}
-
-function ProjectDetail({ project, token, onUpdate, refreshProjects, onDelete }: any) {
-  const [newTask, setNewTask] = useState('');
-  const [isEditingBudget, setIsEditingBudget] = useState(false);
-  const [budgetVal, setBudgetVal] = useState(project.assignedBudget || 0);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-
-  const stages = ['Pending', 'Planning', 'Design', 'Development', 'Testing', 'Completed'];
-
-  const saveBudget = () => {
-    onUpdate({ assignedBudget: Number(budgetVal) });
-    setIsEditingBudget(false);
-  };
-
-  const addTask = async (e: any) => {
-    e.preventDefault();
-    if (!newTask.trim()) return;
-    try {
-      await fetch(`/api/admin/projects/${project.id}/tasks`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify({ name: newTask })
-      });
-      setNewTask('');
-      refreshProjects();
-    } catch (err) { alert('Failed to add task'); }
-  };
-
-  const toggleTask = async (taskId: string, currentStatus: boolean) => {
-    try {
-      await fetch(`/api/admin/projects/${project.id}/tasks/${taskId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify({ completed: !currentStatus })
-      });
-      refreshProjects();
-    } catch (err) { alert('Failed to update task'); }
-  };
-
-  const deleteTask = async (taskId: string) => {
-    try {
-      await fetch(`/api/admin/projects/${project.id}/tasks/${taskId}`, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      refreshProjects();
-    } catch (err) { alert('Failed to delete task'); }
-  };
-
-  const deleteEntireProject = async () => {
-    try {
-      await fetch(`/api/admin/projects/${project.id}`, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      setShowDeleteModal(false);
-      onDelete(); 
-    } catch (err) { alert('Failed to delete project'); }
-  };
-
-  return (
-    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-      
-      {/* Header Card */}
-      <div style={{
-        background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)',
-        borderRadius: '20px', padding: '30px', marginBottom: '24px',
-        boxShadow: '0 12px 40px rgba(0,0,0,0.2)'
-      }}>
-        <div className="project-header-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '8px' }}>
-              <h1 style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', margin: 0, color: '#fff', wordBreak: 'break-word' }}>{project.customerName}</h1>
-              <button 
-                onClick={() => setShowDeleteModal(true)}
-                title="Delete Project"
-                style={{ 
-                  background: 'rgba(255,50,50,0.1)', border: '1px solid rgba(255,50,50,0.3)', color: '#ff4d4d', 
-                  borderRadius: '12px', padding: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', 
-                  justifyContent: 'center', transition: 'all 0.3s ease', boxShadow: '0 4px 12px rgba(255,50,50,0.1)' 
-                }}
-                onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255,50,50,0.2)'}
-                onMouseOut={(e) => e.currentTarget.style.background = 'rgba(255,50,50,0.1)'}
-              >
-                <Trash2 size={20} />
-              </button>
-            </div>
-            <p style={{ color: 'rgba(255,255,255,0.5)', margin: 0, fontSize: '0.9rem' }}>
-              <span style={{color: '#a5b4fc'}}>{project.service}</span> • {new Date(project.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-            </p>
-          </div>
-          
-          <div className="project-header-actions" style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.4)', marginBottom: '4px' }}>Assigned Budget</div>
-            {isEditingBudget ? (
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <input 
-                  type="number" value={budgetVal} onChange={e => setBudgetVal(e.target.value)}
-                  style={{ width: '100px', padding: '6px 12px', borderRadius: '6px', border: '1px solid rgba(30,111,234,0.5)', background: 'rgba(0,0,0,0.3)', color: '#fff' }}
-                />
-                <button onClick={saveBudget} style={{ background: '#25d366', border: 'none', borderRadius: '6px', padding: '0 12px', color: '#fff', cursor: 'pointer' }}><Save size={16} /></button>
-              </div>
-            ) : (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1.5rem', fontWeight: '700', color: '#25d366' }}>
-                ${project.assignedBudget || 0}
-                <button onClick={() => setIsEditingBudget(true)} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)', cursor: 'pointer' }}><Edit3 size={16} /></button>
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="project-detail-grid" style={{ marginTop: '24px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-          <div>
-            <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', marginBottom: '6px' }}>Email</div>
-            <div style={{ color: '#fff', wordBreak: 'break-all' }}>{project.customerEmail}</div>
-          </div>
-          <div>
-            <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', marginBottom: '6px' }}>Phone</div>
-            <div style={{ color: '#fff' }}>{project.customerPhone}</div>
-          </div>
-          <div className="project-detail-span" style={{ gridColumn: 'span 2' }}>
-            <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', marginBottom: '6px' }}>Order Details</div>
-            <div style={{ color: 'rgba(255,255,255,0.8)', background: 'rgba(0,0,0,0.2)', padding: '16px', borderRadius: '12px' }}>
-              {project.details}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Controls Grid */}
-      <div className="project-detail-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px', marginBottom: '24px' }}>
-        
-        {/* Stage Control */}
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '20px', padding: '24px' }}>
-          <h3 style={{ margin: '0 0 16px 0', fontSize: '1.1rem' }}>Development Stage</h3>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-            {stages.map(s => (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {TABS.map(tab => (
               <button
-                key={s}
-                onClick={() => onUpdate({ developmentStage: s })}
+                key={tab.id}
+                onClick={() => { setActiveTab(tab.id); if(isMobile) setIsSidebarOpen(false); setIsEditingPost(false); }}
                 style={{
-                  padding: '8px 16px',
-                  borderRadius: '100px',
-                  border: `1px solid ${(project.developmentStage || 'Pending') === s ? 'rgba(30,111,234,1)' : 'rgba(255,255,255,0.1)'}`,
-                  background: (project.developmentStage || 'Pending') === s ? 'rgba(30,111,234,0.2)' : 'transparent',
-                  color: (project.developmentStage || 'Pending') === s ? '#a5b4fc' : 'rgba(255,255,255,0.6)',
+                  display: 'flex', alignItems: 'center', gap: '12px',
+                  padding: '12px 16px',
+                  background: activeTab === tab.id && !isEditingPost ? 'var(--color-accent)' : 'transparent',
+                  color: activeTab === tab.id && !isEditingPost ? '#fff' : 'rgba(255,255,255,0.6)',
+                  border: 'none',
+                  borderRadius: '12px',
                   cursor: 'pointer',
-                  fontWeight: (project.developmentStage || 'Pending') === s ? '600' : '400',
-                  transition: 'all 0.2s ease',
-                  boxShadow: (project.developmentStage || 'Pending') === s ? '0 0 12px rgba(30,111,234,0.3)' : 'none'
-                }}
-                onMouseOver={(e) => {
-                  if ((project.developmentStage || 'Pending') !== s) e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
-                }}
-                onMouseOut={(e) => {
-                  if ((project.developmentStage || 'Pending') !== s) e.currentTarget.style.background = 'transparent';
+                  textAlign: 'left',
+                  fontSize: '0.95rem',
+                  fontWeight: '600',
+                  transition: 'all 0.2s',
+                  boxShadow: activeTab === tab.id && !isEditingPost ? '0 8px 24px rgba(255,107,53,0.3)' : 'none'
                 }}
               >
-                {s}
+                <tab.icon size={18} />
+                {tab.label}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Global Status */}
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '20px', padding: '24px' }}>
-          <h3 style={{ margin: '0 0 16px 0', fontSize: '1.1rem' }}>Global Status</h3>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-            {[
-              { id: 'pending', label: 'Pending', color: '234, 179, 8' },
-              { id: 'active', label: 'Active', color: '37, 211, 102' },
-              { id: 'completed', label: 'Completed', color: '59, 130, 246' },
-              { id: 'cancelled', label: 'Cancelled', color: '239, 68, 68' }
-            ].map(statusObj => {
-              const isSelected = (project.status || 'pending') === statusObj.id;
-              return (
-                <button
-                  key={statusObj.id}
-                  onClick={() => onUpdate({ status: statusObj.id })}
-                  style={{
-                    padding: '8px 16px',
-                    borderRadius: '100px',
-                    border: `1px solid ${isSelected ? `rgba(${statusObj.color}, 0.6)` : 'rgba(255,255,255,0.1)'}`,
-                    background: isSelected ? `rgba(${statusObj.color}, 0.15)` : 'transparent',
-                    color: isSelected ? `rgb(${statusObj.color})` : 'rgba(255,255,255,0.6)',
-                    cursor: 'pointer',
-                    fontWeight: isSelected ? '600' : '400',
-                    transition: 'all 0.2s ease',
-                    boxShadow: isSelected ? `0 0 12px rgba(${statusObj.color}, 0.2)` : 'none'
-                  }}
-                  onMouseOver={(e) => {
-                    if (!isSelected) e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
-                  }}
-                  onMouseOut={(e) => {
-                    if (!isSelected) e.currentTarget.style.background = 'transparent';
-                  }}
-                >
-                  {statusObj.label}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      {/* Task Manager */}
-      <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '20px', padding: '30px' }}>
-        <div className="project-header-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-          <h3 style={{ margin: 0, fontSize: '1.2rem' }}>Task Checklist</h3>
+        {/* Main Content Area */}
+        <div style={{ flex: 1, padding: isMobile ? '20px' : '40px', overflowY: 'auto' }}>
           
-          {/* Progress Bar */}
-          {project.tasks && project.tasks.length > 0 && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', width: '200px', maxWidth: '100%' }}>
-              <div style={{ flex: 1, height: '8px', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
-                <div style={{ 
-                  height: '100%', 
-                  background: 'linear-gradient(90deg, #1E6FEA, #00D4FF)', 
-                  width: '100%',
-                  transformOrigin: 'left center',
-                  transform: `scaleX(${(project.tasks.filter((t:any) => t.completed).length / project.tasks.length)})`,
-                  transition: 'transform 0.4s ease',
-                  willChange: 'transform'
-                }} />
+          {/* TAB: OVERVIEW */}
+          {activeTab === 'overview' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+              <h1 style={{ fontSize: '2rem', fontWeight: '800' }}>Dashboard Overview</h1>
+              
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
+                <StatCard title="Total Projects" value={stats.projects || 0} icon={<Briefcase />} color="#3b82f6" />
+                <StatCard title="New Messages" value={stats.messages || 0} icon={<Mail />} color="#f59e0b" />
+                <StatCard title="Total Reviews" value={stats.reviews || 0} icon={<Star />} color="#10b981" />
+                <StatCard title="Blog Posts" value={stats.posts || 0} icon={<FileText />} color="#8b5cf6" />
               </div>
-              <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.5)', fontWeight: '600' }}>
-                {Math.round((project.tasks.filter((t:any) => t.completed).length / project.tasks.length) * 100)}%
-              </span>
+
+              <div style={{ 
+                background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', 
+                borderRadius: '24px', padding: '30px', marginTop: '20px',
+                backdropFilter: 'blur(20px)'
+              }}>
+                <h3>System Status</h3>
+                <p style={{ color: 'rgba(255,255,255,0.5)', marginTop: '10px' }}>All systems operational. Content Management System is online.</p>
+              </div>
             </div>
           )}
-        </div>
-        
-        <form onSubmit={addTask} style={{ display: 'flex', gap: '12px', marginBottom: '24px' }}>
-          <input 
-            type="text" 
-            placeholder="Add new task..." 
-            value={newTask} 
-            onChange={e => setNewTask(e.target.value)}
-            style={{ flex: 1, padding: '12px 16px', background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#fff', outline: 'none' }}
-          />
-          <button type="submit" style={{ padding: '0 20px', background: 'linear-gradient(135deg, #1E6FEA, #00D4FF)', border: 'none', borderRadius: '10px', color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '600' }}>
-            <Plus size={18} /> <span className="hide-mobile">Add</span>
-          </button>
-        </form>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          {project.tasks?.length === 0 ? (
-            <div style={{ color: 'rgba(255,255,255,0.3)', textAlign: 'center', padding: '20px' }}>No tasks assigned yet.</div>
-          ) : (
-            project.tasks?.map((task: any) => (
-              <div key={task.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', background: 'rgba(255,255,255,0.02)', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', cursor: 'pointer', flex: 1 }} onClick={() => toggleTask(task.id, task.completed)}>
-                  <div style={{ marginTop: '2px' }}>
-                    {task.completed ? <CheckCircle size={20} color="#25d366" /> : <Circle size={20} color="rgba(255,255,255,0.3)" />}
+          {/* CMS Tabs */}
+          {activeTab === 'pages' && <PagesCMS token={token} />}
+          {activeTab === 'services' && <ServicesCMS token={token} />}
+          {activeTab === 'solutions' && <SolutionsCMS token={token} />}
+          {activeTab === 'navigation' && <NavigationCMS token={token} />}
+          {activeTab === 'media' && <MediaLibrary token={token} />}
+
+          {/* TAB: PROJECTS */}
+          {activeTab === 'projects' && (
+            <div>
+              <h1 style={{ fontSize: '2rem', fontWeight: '800', marginBottom: '24px' }}>Project Orders CMS</h1>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '20px' }}>
+                {projects.length === 0 && <p style={{ color: 'rgba(255,255,255,0.5)' }}>No projects found.</p>}
+                {projects.map(proj => (
+                  <div key={proj.id} style={{
+                    background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)',
+                    borderRadius: '20px', padding: '24px', backdropFilter: 'blur(20px)'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                      <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                        <select 
+                          value={proj.status} 
+                          onChange={(e) => updateProjectStatus(proj.id, e.target.value)}
+                          style={{
+                            padding: '6px 12px', background: 'rgba(255,107,53,0.1)', color: 'var(--color-accent)', 
+                            border: '1px solid rgba(255,107,53,0.3)', borderRadius: '20px', fontSize: '0.85rem', fontWeight: '700',
+                            outline: 'none', cursor: 'pointer'
+                          }}
+                        >
+                          <option value="pending" style={{ color: '#000' }}>Pending</option>
+                          <option value="in_progress" style={{ color: '#000' }}>In Progress</option>
+                          <option value="completed" style={{ color: '#000' }}>Completed</option>
+                          <option value="canceled" style={{ color: '#000' }}>Canceled</option>
+                        </select>
+                        <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.8rem' }}>
+                          {new Date(proj.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                      <button onClick={() => deleteProject(proj.id)} style={{ background: 'rgba(255,77,77,0.1)', border: 'none', color: '#ff4d4d', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}>
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                    
+                    <h3 style={{ fontSize: '1.2rem', marginBottom: '8px' }}>{proj.service}</h3>
+                    <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem', marginBottom: '16px' }}>Client: {proj.customerName} ({proj.customerEmail}) - {proj.customerPhone}</p>
+                    <div style={{ background: 'rgba(0,0,0,0.2)', padding: '16px', borderRadius: '12px', fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)' }}>
+                      {proj.details}
+                    </div>
                   </div>
-                  <span style={{ color: task.completed ? 'rgba(255,255,255,0.5)' : '#fff', textDecoration: task.completed ? 'line-through' : 'none', transition: 'all 0.2s', wordBreak: 'break-word' }}>
-                    {task.name}
-                  </span>
-                </div>
-                <button onClick={() => deleteTask(task.id)} style={{ background: 'none', border: 'none', color: 'rgba(255,77,77,0.5)', cursor: 'pointer', padding: '4px' }}>
-                  <Trash2 size={18} />
-                </button>
+                ))}
               </div>
-            ))
+            </div>
           )}
+
+          {/* TAB: MESSAGES */}
+          {activeTab === 'messages' && (
+            <div>
+              <h1 style={{ fontSize: '2rem', fontWeight: '800', marginBottom: '24px' }}>Inbox</h1>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {messages.length === 0 && <p style={{ color: 'rgba(255,255,255,0.5)' }}>No messages found.</p>}
+                {messages.map(msg => (
+                  <div key={msg.id} style={{
+                    background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)',
+                    borderRadius: '16px', padding: '24px', position: 'relative'
+                  }}>
+                    <button onClick={() => deleteMessage(msg.id)} style={{ position: 'absolute', top: '24px', right: '24px', background: 'none', border: 'none', color: '#ff4d4d', cursor: 'pointer' }}>
+                      <Trash2 size={18} />
+                    </button>
+                    <h3 style={{ fontSize: '1.1rem', marginBottom: '4px' }}>{msg.subject}</h3>
+                    <div style={{ color: 'var(--color-accent)', fontSize: '0.9rem', marginBottom: '16px' }}>
+                      From: {msg.name} ({msg.email}) • {msg.phone}
+                    </div>
+                    <p style={{ color: 'rgba(255,255,255,0.8)', lineHeight: '1.6' }}>{msg.message}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* TAB: BLOG CMS */}
+          {activeTab === 'blog' && (
+            <div>
+              {!isEditingPost ? (
+                // LIST VIEW
+                <>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+                    <h1 style={{ fontSize: '2rem', fontWeight: '800' }}>Blog CMS</h1>
+                    <button onClick={() => {
+                        setCurrentPost({ title: '', slug: '', excerpt: '', content: '', imageUrl: '', category: 'General', published: false, author: 'Admin' });
+                        setIsEditingPost(true);
+                      }} 
+                      style={{
+                        padding: '10px 20px', background: 'var(--color-accent)', color: '#fff', 
+                        border: 'none', borderRadius: '12px', fontWeight: '700', cursor: 'pointer',
+                        display: 'flex', alignItems: 'center', gap: '8px'
+                      }}>
+                      <Plus size={18} /> New Post
+                    </button>
+                  </div>
+                  
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                    {posts.length === 0 && <p style={{ color: 'rgba(255,255,255,0.5)' }}>No blog posts yet.</p>}
+                    {posts.map(post => (
+                      <div key={post.id} style={{
+                        background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)',
+                        borderRadius: '16px', padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center'
+                      }}>
+                        <div>
+                          <h3 style={{ fontSize: '1.1rem', marginBottom: '4px' }}>{post.title}</h3>
+                          <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', display: 'flex', gap: '8px', alignItems: 'center' }}>
+                            <span style={{ color: post.published ? '#10b981' : '#f59e0b', fontWeight: 'bold' }}>
+                              {post.published ? 'Published' : 'Draft'}
+                            </span> 
+                            • {post.category} • {new Date(post.createdAt).toLocaleDateString()}
+                          </p>
+                        </div>
+                        <div style={{ display: 'flex', gap: '12px' }}>
+                          <button onClick={() => { setCurrentPost(post); setIsEditingPost(true); }} style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}>
+                            <Edit3 size={16} />
+                          </button>
+                          <button onClick={() => deletePost(post.id)} style={{ background: 'rgba(255,77,77,0.1)', border: 'none', color: '#ff4d4d', padding: '8px', borderRadius: '8px', cursor: 'pointer' }}>
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                // EDIT VIEW
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
+                    <button onClick={() => setIsEditingPost(false)} style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', padding: '8px', borderRadius: '50%', cursor: 'pointer' }}>
+                      <ArrowLeft size={20} />
+                    </button>
+                    <h1 style={{ fontSize: '2rem', fontWeight: '800', margin: 0 }}>{currentPost.id ? 'Edit Post' : 'Create Post'}</h1>
+                  </div>
+
+                  <form onSubmit={handleSavePost} style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '800px' }}>
+                    <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+                      <div style={{ flex: '1 1 300px' }}>
+                        <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Title</label>
+                        <input required type="text" value={currentPost.title} onChange={e => {
+                          const title = e.target.value;
+                          const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                          setCurrentPost({...currentPost, title, slug: currentPost.id ? currentPost.slug : slug});
+                        }} style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#fff', outline: 'none' }} />
+                      </div>
+                      <div style={{ flex: '1 1 300px' }}>
+                        <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Slug (URL-friendly)</label>
+                        <input required type="text" value={currentPost.slug} onChange={e => setCurrentPost({...currentPost, slug: e.target.value})} style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#fff', outline: 'none' }} />
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+                      <div style={{ flex: '1 1 300px' }}>
+                        <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Category</label>
+                        <input type="text" value={currentPost.category} onChange={e => setCurrentPost({...currentPost, category: e.target.value})} style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#fff', outline: 'none' }} />
+                      </div>
+                      <div style={{ flex: '1 1 300px' }}>
+                        <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Cover Image URL</label>
+                        <input type="text" value={currentPost.imageUrl || ''} onChange={e => setCurrentPost({...currentPost, imageUrl: e.target.value})} style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#fff', outline: 'none' }} />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Excerpt (Short summary)</label>
+                      <textarea required value={currentPost.excerpt} onChange={e => setCurrentPost({...currentPost, excerpt: e.target.value})} rows={2} style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#fff', outline: 'none', resize: 'vertical' }} />
+                    </div>
+
+                    <div>
+                      <label style={{ display: 'block', marginBottom: '8px', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>Content (Markdown / Text)</label>
+                      <textarea required value={currentPost.content} onChange={e => setCurrentPost({...currentPost, content: e.target.value})} rows={12} style={{ width: '100%', padding: '12px', background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#fff', outline: 'none', resize: 'vertical', fontFamily: 'monospace' }} />
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <input type="checkbox" id="published" checked={currentPost.published} onChange={e => setCurrentPost({...currentPost, published: e.target.checked})} style={{ width: '20px', height: '20px', cursor: 'pointer' }} />
+                      <label htmlFor="published" style={{ cursor: 'pointer', color: '#fff', fontWeight: 'bold' }}>Publish this post immediately</label>
+                    </div>
+
+                    <button type="submit" style={{ padding: '14px 24px', background: 'var(--color-accent)', color: '#fff', border: 'none', borderRadius: '12px', fontWeight: '800', fontSize: '1.1rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginTop: '10px' }}>
+                      <Save size={20} /> Save Post
+                    </button>
+                  </form>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* TAB: REVIEWS */}
+          {activeTab === 'reviews' && (
+            <div>
+              <h1 style={{ fontSize: '2rem', fontWeight: '800', marginBottom: '24px' }}>Reviews Moderation</h1>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+                {reviews.length === 0 && <p style={{ color: 'rgba(255,255,255,0.5)' }}>No reviews found.</p>}
+                {reviews.map(rev => (
+                  <div key={rev.id} style={{
+                    background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)',
+                    borderRadius: '20px', padding: '24px', position: 'relative',
+                    opacity: rev.approved ? 1 : 0.6
+                  }}>
+                    <div style={{ position: 'absolute', top: '24px', right: '24px', display: 'flex', gap: '8px' }}>
+                      <button onClick={() => toggleReviewApproval(rev.id, rev.approved)} style={{ background: 'none', border: 'none', color: rev.approved ? '#10b981' : '#f59e0b', cursor: 'pointer' }} title={rev.approved ? "Approved" : "Hidden"}>
+                        {rev.approved ? <CheckCircle size={20} /> : <XCircle size={20} />}
+                      </button>
+                      <button onClick={() => deleteReview(rev.id)} style={{ background: 'none', border: 'none', color: '#ff4d4d', cursor: 'pointer' }}>
+                        <Trash2 size={20} />
+                      </button>
+                    </div>
+                    
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+                      <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: rev.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: '#fff' }}>
+                        {rev.avatar}
+                      </div>
+                      <div>
+                        <h4 style={{ margin: 0 }}>{rev.name}</h4>
+                        <p style={{ margin: 0, fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)' }}>{rev.role}</p>
+                      </div>
+                    </div>
+                    <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.9rem', fontStyle: 'italic' }}>"{rev.review}"</p>
+                    <div style={{ marginTop: '12px', fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)' }}>
+                      Rating: {rev.rating}/5 • {rev.approved ? 'Visible on site' : 'Hidden from site'}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* TAB: SETTINGS */}
+          {/* TAB: SETTINGS */}
+          {activeTab === 'settings' && <SettingsCMS token={token} />}
+
         </div>
       </div>
+    </div>
+  );
+}
 
-      {/* Beautiful Delete Modal Overlay */}
-      {showDeleteModal && (
-        <div style={{
-          position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
-          background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(10px)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000,
-          padding: '20px', boxSizing: 'border-box'
-        }}>
-          <div style={{
-            background: '#0a0d1c', border: '1px solid rgba(255,50,50,0.3)',
-            borderRadius: '24px', padding: '30px', width: '100%', maxWidth: '400px',
-            textAlign: 'center', boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(255,50,50,0.1)'
-          }}>
-            <div style={{ width: '64px', height: '64px', background: 'rgba(255,50,50,0.1)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px auto' }}>
-              <Trash2 size={32} color="#ff4d4d" />
-            </div>
-            <h2 style={{ fontSize: '1.5rem', margin: '0 0 12px 0', color: '#fff' }}>Delete Project?</h2>
-            <p style={{ color: 'rgba(255,255,255,0.6)', margin: '0 0 32px 0', lineHeight: 1.5 }}>
-              Are you sure you want to permanently delete the project for <strong style={{color:'#fff'}}>{project.customerName}</strong>? This action cannot be undone.
-            </p>
-            <div style={{ display: 'flex', gap: '16px', flexDirection: window.innerWidth <= 520 ? 'column' : 'row' }}>
-              <button 
-                onClick={() => setShowDeleteModal(false)}
-                style={{ flex: 1, padding: '14px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', color: '#fff', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s' }}
-                onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
-                onMouseOut={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
-              >
-                Cancel
-              </button>
-              <button 
-                onClick={deleteEntireProject}
-                style={{ flex: 1, padding: '14px', background: '#ff4d4d', border: 'none', borderRadius: '12px', color: '#fff', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 15px rgba(255,77,77,0.3)' }}
-                onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'}
-                onMouseOut={e => e.currentTarget.style.transform = 'none'}
-              >
-                Delete Permanently
-              </button>
-            </div>
-          </div>
+// Subcomponents for internal use
+function ShieldIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    </svg>
+  );
+}
+
+function StatCard({ title, value, icon, color }: any) {
+  return (
+    <div style={{
+      background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)',
+      borderRadius: '20px', padding: '24px', position: 'relative', overflow: 'hidden'
+    }}>
+      <div style={{ position: 'absolute', right: '-10px', top: '-10px', opacity: 0.1, transform: 'scale(2.5)', color: color }}>
+        {icon}
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+        <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: `${color}20`, color: color, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {icon}
         </div>
-      )}
-
+        <span style={{ color: 'rgba(255,255,255,0.6)', fontWeight: '600' }}>{title}</span>
+      </div>
+      <div style={{ fontSize: '2.5rem', fontWeight: '800' }}>{value}</div>
     </div>
   );
 }

@@ -54,3 +54,151 @@ model Review {
   approved  Boolean  @default(true)
   createdAt DateTime @default(now())
 }
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  excerpt   String
+  content   String
+  imageUrl  String?
+  author    String   @default("Admin")
+  category  String   @default("General")
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id        String     @id @default(cuid())
+  email     String     @unique
+  name      String
+  role      String     @default("ADMIN")
+  lastLogin DateTime?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  auditLogs AuditLog[]
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  action    String
+  resource  String
+  details   String?
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id])
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  url       String
+  name      String
+  altText   String?
+  mimeType  String
+  size      Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model WebsiteSettings {
+  id             String   @id @default(cuid())
+  websiteName    String   @default("Webify Pro")
+  logoUrl        String?
+  contactEmail   String?
+  contactPhone   String?
+  contactAddress String?
+  facebookUrl    String?
+  linkedinUrl    String?
+  xUrl           String?
+  instagramUrl   String?
+  githubUrl      String?
+  seoTitle       String?
+  seoDescription String?
+  updatedAt      DateTime @updatedAt
+}
+
+model NavigationItem {
+  id         String           @id @default(cuid())
+  label      String
+  url        String
+  order      Int              @default(0)
+  isExternal Boolean          @default(false)
+  parentId   String?
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+  parent     NavigationItem?  @relation("NavHierarchy", fields: [parentId], references: [id])
+  children   NavigationItem[] @relation("NavHierarchy")
+}
+
+model Page {
+  id              String        @id @default(cuid())
+  title           String
+  slug            String        @unique
+  metaTitle       String?
+  metaDescription String?
+  isPublished     Boolean       @default(false)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  content         String?
+  sections        PageSection[]
+}
+
+model PageSection {
+  id        String   @id @default(cuid())
+  pageId    String
+  type      String
+  order     Int      @default(0)
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  page      Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
+}
+
+model Service {
+  id               String   @id @default(cuid())
+  name             String
+  slug             String   @unique
+  shortDescription String
+  content          String
+  icon             String?
+  imageUrl         String?
+  order            Int      @default(0)
+  isPublished      Boolean  @default(false)
+  seoTitle         String?
+  seoDescription   String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Solution {
+  id               String   @id @default(cuid())
+  name             String
+  slug             String   @unique
+  shortDescription String
+  content          String
+  icon             String?
+  imageUrl         String?
+  order            Int      @default(0)
+  isPublished      Boolean  @default(false)
+  seoTitle         String?
+  seoDescription   String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model BlogCategory {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BlogTag {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

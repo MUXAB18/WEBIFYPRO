@@ -39,7 +39,23 @@ function CountUpStat({ target, suffix, label }) {
   );
 }
 
-const Trust = () => {
+const Trust = ({ stats = {} }) => {
+  
+  const parseNumber = (numStr) => {
+    if (!numStr) return { target: 0, suffix: '' };
+    const match = String(numStr).match(/^(\d+)(.*)$/);
+    if (match) {
+      return { target: parseInt(match[1], 10), suffix: match[2] };
+    }
+    return { target: parseInt(numStr, 10) || 0, suffix: '' };
+  };
+
+  const statsList = stats?.stats && stats.stats.length > 0 ? stats.stats : [
+    { number: '20+', label: 'Projects Completed' },
+    { number: '5+', label: 'Businesses Helped' },
+    { number: '5+', label: 'Years of Experience' },
+    { number: '95%', label: 'Client Satisfaction' }
+  ];
   return (
     <section id="trust" style={{
       padding: 'var(--section-pad-y) var(--section-pad-x)',
@@ -57,15 +73,15 @@ const Trust = () => {
             fontWeight: '700',
             fontFamily: 'Inter, sans-serif',
           }}>
-            Trusted digital solutions for ambitious businesses.
+            {stats.title || 'Trusted digital solutions for ambitious businesses.'}
           </h2>
         </div>
 
         <div className="trust-grid">
-          <CountUpStat target={20} suffix="+" label="Projects Completed" />
-          <CountUpStat target={5} suffix="+" label="Businesses Helped" />
-          <CountUpStat target={5} suffix="+" label="Years of Experience" />
-          <CountUpStat target={95} suffix="%" label="Client Satisfaction" />
+          {statsList.map((stat, idx) => {
+            const { target, suffix } = parseNumber(stat.number);
+            return <CountUpStat key={idx} target={target} suffix={suffix} label={stat.label} />;
+          })}
         </div>
       </div>
 

@@ -3,3 +3,12 @@ node_modules/
 .next/
 
 /lib/generated/prisma
+
+# Agent files
+.agent/
+.agents/
+.gemini/
+.gsd/
+GSD-STYLE.md
+PROJECT_RULES.md
+model_capabilities.yaml

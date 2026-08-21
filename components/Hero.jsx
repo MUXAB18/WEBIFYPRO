@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { ChevronRight, ArrowRight, ShieldCheck } from 'lucide-react';
 import gsap from 'gsap';
 
-const Hero = ({ lowEnd }) => {
+const Hero = ({ lowEnd, hero = {} }) => {
   const leftRef = useRef();
   const rightRef = useRef();
   const badgeRef = useRef();
@@ -34,6 +34,21 @@ const Hero = ({ lowEnd }) => {
       rotation: 5, duration: 5, yoyo: true, repeat: -1, ease: 'sine.inOut'
     });
   }, [lowEnd]);
+
+  const renderTitle = (title, accentColor = 'var(--color-accent)') => {
+    if (!title) return null;
+    const parts = title.split(/(\{.*?\})/g);
+    return (
+      <>
+        {parts.map((part, i) => {
+          if (part.startsWith('{') && part.endsWith('}')) {
+            return <span key={i} style={{ color: accentColor }}>{part.slice(1, -1)}</span>;
+          }
+          return <span key={i} dangerouslySetInnerHTML={{ __html: part }} />;
+        })}
+      </>
+    );
+  };
 
   return (
     <section id="home" style={{
@@ -72,22 +87,24 @@ const Hero = ({ lowEnd }) => {
         <div ref={leftRef} style={{ opacity: lowEnd ? 1 : 0 }} className="hero-left">
           
           {/* Trust Badge */}
-          <div ref={badgeRef} style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '6px 14px',
-            background: 'rgba(11, 30, 57, 0.05)',
-            border: '1px solid var(--color-border)',
-            borderRadius: '100px',
-            color: 'var(--color-primary)',
-            fontSize: '0.85rem',
-            fontWeight: '600',
-            marginBottom: '24px',
-          }}>
-            <ShieldCheck size={16} color="var(--color-accent)" />
-            <span>Trusted by 50+ ambitious businesses</span>
-          </div>
+          {hero.subtitle && (
+            <div ref={badgeRef} style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '6px 14px',
+              background: 'rgba(11, 30, 57, 0.05)',
+              border: '1px solid var(--color-border)',
+              borderRadius: '100px',
+              color: 'var(--color-primary)',
+              fontSize: '0.85rem',
+              fontWeight: '600',
+              marginBottom: '24px',
+            }}>
+              <ShieldCheck size={16} color="var(--color-accent)" />
+              <span>{hero.subtitle}</span>
+            </div>
+          )}
 
           <h1 style={{
             fontSize: 'clamp(2.8rem, 5vw, 4.5rem)',
@@ -97,7 +114,9 @@ const Hero = ({ lowEnd }) => {
             letterSpacing: '-0.03em',
             marginBottom: '24px',
           }}>
-            We build digital experiences that <span style={{ color: 'var(--color-accent)' }}>grow businesses.</span>
+            {hero.title ? renderTitle(hero.title, hero.titleAccentColor) : (
+              <>We build digital experiences that <span style={{ color: 'var(--color-accent)' }}>grow businesses.</span></>
+            )}
           </h1>
 
           <p style={{
@@ -107,7 +126,7 @@ const Hero = ({ lowEnd }) => {
             marginBottom: '40px',
             maxWidth: '540px',
           }}>
-            Web development, software solutions, digital marketing and SEO designed to turn your online presence into a growth engine.
+            {hero.description || 'Web development, software solutions, digital marketing and SEO designed to turn your online presence into a growth engine.'}
           </p>
 
           <div style={{
@@ -115,12 +134,27 @@ const Hero = ({ lowEnd }) => {
             gap: '16px',
             flexWrap: 'wrap',
           }}>
-            <Link href="/start-project" className="btn-primary" style={{ textDecoration: 'none', outline: 'none' }}>
-              Start Your Project
-            </Link>
-            <Link href="/services" className="btn-secondary" style={{ textDecoration: 'none', outline: 'none' }}>
-              View Services
-            </Link>
+            {hero.button1Text && (
+              <Link href={hero.button1Link || '#'} className="btn-primary" style={{ textDecoration: 'none', outline: 'none' }}>
+                {hero.button1Text}
+              </Link>
+            )}
+            {!hero.button1Text && (
+              <Link href="/start-project" className="btn-primary" style={{ textDecoration: 'none', outline: 'none' }}>
+                Start Your Project
+              </Link>
+            )}
+
+            {hero.button2Text && (
+              <Link href={hero.button2Link || '#'} className="btn-secondary" style={{ textDecoration: 'none', outline: 'none' }}>
+                {hero.button2Text}
+              </Link>
+            )}
+            {!hero.button2Text && !hero.button1Text && (
+              <Link href="/services" className="btn-secondary" style={{ textDecoration: 'none', outline: 'none' }}>
+                View Services
+              </Link>
+            )}
           </div>
         </div>
 

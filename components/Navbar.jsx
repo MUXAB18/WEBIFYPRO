@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { useScrollProgress } from '../hooks/useScrollProgress';
 
-const Navbar = () => {
+const Navbar = ({ navLinks: dbNavLinks, settings }) => {
   const { scrollProgress } = useScrollProgress();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,14 +25,12 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
-
-      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
+  const defaultNavLinks = [
     { href: '/', label: 'Home', id: 'home' },
     { href: '/services', label: 'Services', id: 'services' },
     { href: '/solutions', label: 'Solutions', id: 'solutions' },
@@ -40,6 +38,10 @@ const Navbar = () => {
     { href: '/blog', label: 'Blog', id: 'blog' },
     { href: '/contact', label: 'Contact', id: 'contact' },
   ];
+
+  const navLinks = dbNavLinks && dbNavLinks.length > 0 
+    ? dbNavLinks.map(link => ({ href: link.url, label: link.label, id: link.label.toLowerCase() }))
+    : defaultNavLinks;
 
   return (
     <>
@@ -79,9 +81,9 @@ const Navbar = () => {
           outline: 'none',
         }}>
           <img
-            src="/webifylogo-new-withname.png"
+            src={settings?.logoUrl || "/webifylogo-new-withname.png"}
             height="48"
-            alt="Webify Pro Logo"
+            alt={settings?.websiteName || "Webify Pro Logo"}
             style={{
               height: '48px',
               width: 'auto',

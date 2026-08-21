@@ -1,12 +1,49 @@
 import React from 'react';
 import OrderForm from '@/components/OrderForm';
+import prisma from '@/lib/prisma';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export const metadata = {
   title: 'Get a Quote | Webify Pro',
   description: 'Get a custom quote for your web development or digital marketing project.',
 };
 
-export default function QuotePage() {
+const renderTitle = (title: string, accentColor: string = 'var(--color-accent)') => {
+  if (!title) return null;
+  const parts = title.split(/(\{.*?\})/g);
+  return (
+    <>
+      {parts.map((part, i) => {
+        if (part.startsWith('{') && part.endsWith('}')) {
+          return <span key={i} style={{ color: accentColor }}>{part.slice(1, -1)}</span>;
+        }
+        return <span key={i} dangerouslySetInnerHTML={{ __html: part }} />;
+      })}
+    </>
+  );
+};
+
+export default async function QuotePage() {
+  const page = await prisma.page.findUnique({
+    where: { slug: 'start-project' },
+    include: { sections: { orderBy: { order: 'asc' } } }
+  });
+
+  const sections = page?.sections.map((s: any) => ({
+    ...s,
+    parsed: typeof s.content === 'string' ? JSON.parse(s.content) : s.content
+  })) || [];
+
+  const getSection = (type: string) => sections.find(s => s.type === type)?.parsed || {};
+  const hero = getSection('HERO');
+
+  const subtitle = hero.subtitle || 'Project Quote';
+  const title = hero.title || 'Start your {Project.}';
+  const titleAccentColor = hero.titleAccentColor || 'var(--color-accent)';
+  const description = hero.description || "Tell us about your requirements using our wizard, and we'll provide a comprehensive proposal and timeline.";
+
   return (
     <div style={{ paddingTop: '80px', minHeight: '100vh', background: 'var(--color-bg)' }}>
       {/* Intro Header */}
@@ -18,13 +55,13 @@ export default function QuotePage() {
             color: 'var(--color-primary)', fontSize: '0.8rem', fontWeight: '600',
             textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '24px'
           }}>
-            Project Quote
+            {subtitle}
           </div>
           <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: '800', color: 'var(--color-primary)', lineHeight: '1.1', letterSpacing: '-0.02em', marginBottom: '24px' }}>
-            Start your <span style={{ color: 'var(--color-accent)' }}>Project.</span>
+            {renderTitle(title, titleAccentColor)}
           </h1>
           <p style={{ color: 'var(--color-text)', fontSize: '1.15rem', lineHeight: '1.7' }}>
-            Tell us about your requirements using our wizard, and we'll provide a comprehensive proposal and timeline.
+            {description}
           </p>
         </div>
       </section>

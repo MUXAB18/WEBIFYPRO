@@ -3,8 +3,21 @@ import { Github, Linkedin, Facebook, Mail, ShieldCheck, Lock, Star, ArrowRight, 
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-const Footer = () => {
+const Footer = ({ navLinks, dbServices, settings }) => {
   const router = useRouter();
+
+  const footerLinks = navLinks && navLinks.length > 0 
+    ? navLinks.map(link => ({ href: link.url, label: link.label }))
+    : [
+        { href: '/', label: 'Home' },
+        { href: '/about', label: 'About Us' },
+        { href: '/solutions', label: 'Solutions' },
+        { href: '/blog', label: 'Insights & Blog' },
+      ];
+
+  const footerServices = dbServices && dbServices.length > 0
+    ? dbServices.map(service => service.name)
+    : ['Web Development', 'UI/UX Design', 'Digital Marketing', 'SEO Optimization', 'App Development'];
 
   return (
     <footer style={{
@@ -42,15 +55,15 @@ const Footer = () => {
               <img src="/webifylogowhite-name.png" alt="Webify Pro Logo" loading="lazy" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />
             </div>
             <p style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.95rem', lineHeight: '1.5', marginBottom: '20px' }}>
-              We design, develop, and scale premium digital products for ambitious brands. Your growth is our primary metric.
+              {settings?.seoDescription || "We design, develop, and scale premium digital products for ambitious brands. Your growth is our primary metric."}
             </p>
 
             <div style={{ display: 'flex', gap: '12px' }}>
               {[
-                { href: 'https://www.linkedin.com/in/musab-iftikhar-94668a330', icon: <Linkedin size={18} />, label: 'LinkedIn' },
-                { href: 'https://www.facebook.com/webify.pro/', icon: <Facebook size={18} />, label: 'Facebook' },
-                { href: 'https://github.com/musab-18', icon: <Github size={18} />, label: 'GitHub' },
-              ].map(s => (
+                { href: settings?.linkedinUrl || 'https://www.linkedin.com/in/musab-iftikhar-94668a330', icon: <Linkedin size={18} />, label: 'LinkedIn', show: !!(settings?.linkedinUrl || true) },
+                { href: settings?.facebookUrl || 'https://www.facebook.com/webify.pro/', icon: <Facebook size={18} />, label: 'Facebook', show: !!(settings?.facebookUrl || true) },
+                { href: settings?.githubUrl || 'https://github.com/musab-18', icon: <Github size={18} />, label: 'GitHub', show: !!(settings?.githubUrl || true) },
+              ].filter(s => s.show).map(s => (
                 <a
                   key={s.label}
                   href={s.href}
@@ -77,12 +90,7 @@ const Footer = () => {
             <div style={{ minWidth: '120px' }}>
               <h4 style={{ fontWeight: '700', marginBottom: '12px', fontSize: '1rem', color: '#fff' }}>Company</h4>
               <ul style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: 0, margin: 0, listStyle: 'none' }}>
-                {[
-                  { href: '/', label: 'Home' },
-                  { href: '/about', label: 'About Us' },
-                  { href: '/solutions', label: 'Solutions' },
-                  { href: '/blog', label: 'Insights & Blog' },
-                ].map(link => (
+                {footerLinks.map(link => (
                   <li key={link.label}>
                     <Link href={link.href} style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.95rem', textDecoration: 'none', display: 'inline-block' }} className="footer-link">
                       {link.label}
@@ -96,7 +104,7 @@ const Footer = () => {
             <div style={{ minWidth: '160px' }}>
               <h4 style={{ fontWeight: '700', marginBottom: '12px', fontSize: '1rem', color: '#fff' }}>Services</h4>
               <ul style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: 0, margin: 0, listStyle: 'none' }}>
-                {['Web Development', 'UI/UX Design', 'Digital Marketing', 'SEO Optimization', 'App Development'].map(s => (
+                {footerServices.map(s => (
                   <li key={s}>
                     <Link href="/services" style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.95rem', textDecoration: 'none', display: 'inline-block' }} className="footer-link">
                       {s}
@@ -112,15 +120,15 @@ const Footer = () => {
               <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', padding: 0, margin: 0, listStyle: 'none' }}>
                 <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', color: 'rgba(255,255,255,0.6)', fontSize: '0.95rem' }}>
                   <MapPin size={18} color="var(--color-accent)" style={{ flexShrink: 0, marginTop: '2px' }} />
-                  <span>Sialkot, Punjab<br/>Pakistan</span>
+                  <span dangerouslySetInnerHTML={{ __html: settings?.contactAddress?.replace(/\n/g, '<br/>') || 'Sialkot, Punjab<br/>Pakistan' }} />
                 </li>
                 <li style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'rgba(255,255,255,0.6)', fontSize: '0.95rem' }}>
                   <Phone size={18} color="var(--color-accent)" style={{ flexShrink: 0 }} />
-                  <a href="tel:+923708316591" className="footer-link" style={{ color: 'inherit', textDecoration: 'none' }}>+92 370 8316591</a>
+                  <a href={`tel:${settings?.contactPhone || '+923708316591'}`} className="footer-link" style={{ color: 'inherit', textDecoration: 'none' }}>{settings?.contactPhone || '+92 370 8316591'}</a>
                 </li>
                 <li style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'rgba(255,255,255,0.6)', fontSize: '0.95rem' }}>
                   <Mail size={18} color="var(--color-accent)" style={{ flexShrink: 0 }} />
-                  <a href="mailto:webifypro9@gmail.com" className="footer-link" style={{ color: 'inherit', textDecoration: 'none' }}>webifypro9@gmail.com</a>
+                  <a href={`mailto:${settings?.contactEmail || 'webifypro9@gmail.com'}`} className="footer-link" style={{ color: 'inherit', textDecoration: 'none' }}>{settings?.contactEmail || 'webifypro9@gmail.com'}</a>
                 </li>
               </ul>
             </div>

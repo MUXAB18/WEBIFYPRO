@@ -2,25 +2,42 @@
 import React from 'react';
 import { ArrowRight, MessageCircle } from 'lucide-react';
 
-const GrowthCTA = () => {
+const GrowthCTA = ({ cta = {} }) => {
+  const renderTitle = (title, accentColor = 'var(--color-accent)') => {
+    if (!title) return null;
+    const parts = title.split(/(\{.*?\})/g);
+    return (
+      <>
+        {parts.map((part, i) => {
+          if (part.startsWith('{') && part.endsWith('}')) {
+            return <span key={i} style={{ color: accentColor }}>{part.slice(1, -1)}</span>;
+          }
+          return <span key={i} dangerouslySetInnerHTML={{ __html: part }} />;
+        })}
+      </>
+    );
+  };
+
   return (
     <section style={{ padding: '80px 6%', background: 'var(--color-bg)', color: 'var(--color-primary)', textAlign: 'center' }}>
       <div style={{ maxWidth: '800px', margin: '0 auto' }}>
         <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: '800', marginBottom: '16px', lineHeight: '1.1', letterSpacing: '-0.02em' }}>
-          Ready to <span style={{ color: 'var(--color-accent)' }}>scale</span> your business?
+          {cta.title ? renderTitle(cta.title, cta.titleAccentColor) : (
+            <>Ready to <span style={{ color: 'var(--color-accent)' }}>scale</span> your business?</>
+          )}
         </h2>
         <p style={{ fontSize: '1.1rem', color: 'var(--color-text)', marginBottom: '32px', lineHeight: '1.6' }}>
-          Stop losing customers to your competitors. Let's build a digital presence that actually drives revenue.
+          {cta.description || "Stop losing customers to your competitors. Let's build a digital presence that actually drives revenue."}
         </p>
         <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <a href="/start-project" style={{
+          <a href={cta.buttonLink || "/start-project"} style={{
             display: 'inline-flex', alignItems: 'center', gap: '8px',
             padding: '12px 24px', borderRadius: '100px',
             background: 'var(--color-accent)', color: '#fff',
             fontWeight: '700', fontSize: '0.95rem', textDecoration: 'none',
             transition: 'transform 0.3s ease',
           }}>
-            Start Your Project <ArrowRight size={18} />
+            {cta.buttonText || 'Start Your Project'} <ArrowRight size={18} />
           </a>
           <a href="https://wa.me/923708316591" target="_blank" rel="noopener noreferrer" style={{
             display: 'inline-flex', alignItems: 'center', gap: '8px',

@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
-import { MessageSquare, Palette, Code, Rocket } from 'lucide-react';
+import { MessageSquare, Palette, Code, Rocket, Circle as CircleIcon } from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
 
 const processSteps = [
   {
@@ -29,7 +30,22 @@ const processSteps = [
   }
 ];
 
-const Process = () => {
+const Process = ({ data = {} }) => {
+  const getIcon = (iconName) => {
+    if (!iconName) return <CircleIcon size={24} />;
+    const IconComponent = LucideIcons[iconName];
+    return IconComponent ? <IconComponent size={24} /> : <CircleIcon size={24} />;
+  };
+
+  const stepsToUse = data?.steps && data.steps.length > 0 
+    ? data.steps.map((s, i) => ({ 
+        number: s.number || String(i+1).padStart(2, '0'), 
+        icon: getIcon(s.icon), 
+        title: s.title, 
+        description: s.description 
+      }))
+    : processSteps;
+
   return (
     <section id="process" style={{ padding: 'var(--section-pad-y) var(--section-pad-x)', background: 'var(--color-surface)' }}>
       <div style={{ maxWidth: '800px', margin: '0 auto' }}>
@@ -41,13 +57,13 @@ const Process = () => {
             color: 'var(--color-primary)', fontSize: '0.8rem', fontWeight: '600',
             textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '24px'
           }}>
-            Our Methodology
+            {data.subtitle || 'Our Methodology'}
           </div>
           <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: '800', color: 'var(--color-primary)', lineHeight: '1.1', letterSpacing: '-0.02em', marginBottom: '20px' }}>
-            A proven process for <span style={{ color: 'var(--color-accent)' }}>predictable results.</span>
+            {data.title || <>A proven process for <span style={{ color: 'var(--color-accent)' }}>predictable results.</span></>}
           </h2>
           <p style={{ color: 'var(--color-text)', fontSize: '1.1rem', lineHeight: '1.6' }}>
-            No guesswork. We follow a strict, data-driven framework to ensure your project is delivered on time and achieves its business objectives.
+            {data.description || 'No guesswork. We follow a strict, data-driven framework to ensure your project is delivered on time and achieves its business objectives.'}
           </p>
         </div>
 
@@ -60,7 +76,7 @@ const Process = () => {
           }} className="timeline-line" />
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '60px', position: 'relative', zIndex: 1 }}>
-            {processSteps.map((step, index) => (
+            {stepsToUse.map((step, index) => (
               <div key={index} style={{ display: 'flex', gap: '40px', alignItems: 'flex-start' }} className="timeline-item">
                 
                 {/* Icon/Number */}

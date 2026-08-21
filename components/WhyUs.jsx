@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
-import { Target, Zap, MessageSquare } from 'lucide-react';
+import { Target, Zap, MessageSquare, Target as TargetIcon } from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
 
 const reasons = [
   {
@@ -20,7 +21,18 @@ const reasons = [
   }
 ];
 
-const WhyUs = () => {
+const WhyUs = ({ values = {} }) => {
+
+  const getIcon = (iconName) => {
+    if (!iconName) return <TargetIcon size={20} strokeWidth={1.5} />;
+    const IconComponent = LucideIcons[iconName];
+    return IconComponent ? <IconComponent size={20} strokeWidth={1.5} /> : <TargetIcon size={20} strokeWidth={1.5} />;
+  };
+
+  const dataToUse = values?.values && values.values.length > 0 
+    ? values.values.map(v => ({ icon: getIcon(v.icon), title: v.title, desc: v.description }))
+    : reasons;
+
   return (
     <section id="why-us" style={{ padding: '60px 6%', background: 'var(--color-bg)', borderTop: '1px solid var(--color-border)' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
@@ -32,10 +44,10 @@ const WhyUs = () => {
               color: 'var(--color-primary)', lineHeight: '1.2', letterSpacing: '-0.02em',
               marginBottom: '12px'
             }}>
-              Why partner with <span style={{ color: 'var(--color-accent)' }}>Webify Pro?</span>
+              {values.title || <>Why partner with <span style={{ color: 'var(--color-accent)' }}>Webify Pro?</span></>}
             </h2>
             <p style={{ color: 'var(--color-text)', fontSize: '0.95rem', lineHeight: '1.5' }}>
-              We combine high-end software engineering with aggressive digital marketing strategies to build systems that scale your business.
+              {values.description || 'We combine high-end software engineering with aggressive digital marketing strategies to build systems that scale your business.'}
             </p>
           </div>
           <a href="#contact" className="btn-primary" style={{ padding: '10px 24px', fontSize: '0.9rem', textDecoration: 'none', height: 'fit-content' }}>
@@ -48,7 +60,7 @@ const WhyUs = () => {
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
           gap: '20px'
         }}>
-          {reasons.map((reason, index) => (
+          {dataToUse.map((reason, index) => (
             <div key={index} className="premium-card" style={{
               padding: '24px',
               borderRadius: '16px',

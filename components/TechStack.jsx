@@ -1,51 +1,79 @@
 "use client";
 import React from 'react';
-import { 
-  SiNextdotjs, SiReact, SiTypescript, SiNodedotjs, SiTailwindcss, 
-  SiPostgresql, SiFramer, SiFigma, SiMongodb, SiShopify, SiFlutter, SiFirebase 
+import {
+  SiNextdotjs, SiReact, SiTypescript, SiNodedotjs, SiTailwindcss,
+  SiPostgresql, SiFramer, SiFigma, SiMongodb, SiShopify, SiFlutter, SiFirebase
 } from 'react-icons/si';
+import * as LucideIcons from 'lucide-react';
 
 const technologies = [
-  { name: "Next.js", icon: <SiNextdotjs size={18} /> },
-  { name: "React", icon: <SiReact size={18} /> },
-  { name: "React Native", icon: <SiReact size={18} /> },
-  { name: "Flutter", icon: <SiFlutter size={18} /> },
-  { name: "TypeScript", icon: <SiTypescript size={18} /> },
-  { name: "Node.js", icon: <SiNodedotjs size={18} /> },
-  { name: "Tailwind CSS", icon: <SiTailwindcss size={18} /> },
-  { name: "Firebase", icon: <SiFirebase size={18} /> },
-  { name: "PostgreSQL", icon: <SiPostgresql size={18} /> },
-  { name: "MongoDB", icon: <SiMongodb size={18} /> },
-  { name: "Framer Motion", icon: <SiFramer size={18} /> },
-  { name: "Figma", icon: <SiFigma size={18} /> },
-  { name: "Shopify Plus", icon: <SiShopify size={18} /> },
+  { name: "Next.js", icon: <SiNextdotjs size={18} color="#000000" /> },
+  { name: "React", icon: <SiReact size={18} color="#61DAFB" /> },
+  { name: "React Native", icon: <SiReact size={18} color="#61DAFB" /> },
+  { name: "Flutter", icon: <SiFlutter size={18} color="#02569B" /> },
+  { name: "TypeScript", icon: <SiTypescript size={18} color="#3178C6" /> },
+  { name: "Node.js", icon: <SiNodedotjs size={18} color="#339933" /> },
+  { name: "Tailwind CSS", icon: <SiTailwindcss size={18} color="#06B6D4" /> },
+  { name: "Firebase", icon: <SiFirebase size={18} color="#FFCA28" /> },
+  { name: "PostgreSQL", icon: <SiPostgresql size={18} color="#4169E1" /> },
+  { name: "MongoDB", icon: <SiMongodb size={18} color="#47A248" /> },
+  { name: "Framer Motion", icon: <SiFramer size={18} color="#0055FF" /> },
+  { name: "Figma", icon: <SiFigma size={18} color="#F24E1E" /> },
+  { name: "Shopify Plus", icon: <SiShopify size={18} color="#95BF47" /> },
 ];
 
-const TechStack = () => {
+const TechStack = ({ techStack = {} }) => {
+
+  const renderTitle = (title, accentColor = 'var(--color-accent)') => {
+    if (!title) return null;
+    const parts = title.split(/(\{.*?\})/g);
+    return (
+      <>
+        {parts.map((part, i) => {
+          if (part.startsWith('{') && part.endsWith('}')) {
+            return <span key={i} style={{ color: accentColor }}>{part.slice(1, -1)}</span>;
+          }
+          return <span key={i} dangerouslySetInnerHTML={{ __html: part }} />;
+        })}
+      </>
+    );
+  };
+
+  const getIcon = (iconName) => {
+    if (!iconName) return <LucideIcons.Code size={18} color="var(--color-primary)" />;
+    const IconComponent = LucideIcons[iconName];
+    return IconComponent ? <IconComponent size={18} color="var(--color-primary)" /> : <LucideIcons.Code size={18} color="var(--color-primary)" />;
+  };
+
+  const hasCmsTechs = techStack?.technologies && techStack.technologies.length > 0;
+  const dataToUse = hasCmsTechs ? techStack.technologies.map(t => ({
+    name: t.name,
+    icon: getIcon(t.icon)
+  })) : technologies;
+
   return (
     <section style={{ padding: 'var(--section-pad-y) var(--section-pad-x)', background: 'var(--color-surface)', borderTop: '1px solid var(--color-border)' }}>
       <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
-        
-        <p style={{ 
-          fontSize: '0.85rem', 
-          fontWeight: '600', 
-          textTransform: 'uppercase', 
-          letterSpacing: '0.05em', 
-          color: 'var(--color-text)', 
-          marginBottom: '32px' 
+
+        <p style={{
+          fontSize: '0.85rem',
+          fontWeight: '600',
+          textTransform: 'uppercase',
+          letterSpacing: '0.05em',
+          color: 'var(--color-text)',
+          marginBottom: '32px'
         }}>
-          Engineered with modern technologies
+          {techStack?.subtitle ? renderTitle(techStack.subtitle, techStack.titleAccentColor) : 'Engineered with modern technologies'}
         </p>
-        
+
         <div className="tech-grid">
-          {technologies.map((tech, idx) => (
+          {dataToUse.map((tech, idx) => (
             <div key={idx} className="tech-pill">
               <span className="tech-icon">{tech.icon}</span>
               {tech.name}
             </div>
           ))}
         </div>
-
       </div>
 
       <style>{`
