@@ -3,12 +3,12 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model Message {
-  id        String   @id @default(cuid())
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   email     String
   phone     String
@@ -18,7 +18,7 @@ model Message {
 }
 
 model Order {
-  id               String   @id @default(cuid())
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   service          String
   customerName     String
   customerEmail    String
@@ -32,15 +32,15 @@ model Order {
 }
 
 model Task {
-  id        String  @id @default(cuid())
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   completed Boolean @default(false)
-  orderId   String
+  orderId String @db.ObjectId
   order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }
 
 model Review {
-  id        String   @id @default(cuid())
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   role      String
   review    String
@@ -56,7 +56,7 @@ model Review {
 }
 
 model Post {
-  id        String   @id @default(cuid())
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   title     String
   slug      String   @unique
   excerpt   String
@@ -70,7 +70,7 @@ model Post {
 }
 
 model User {
-  id        String     @id @default(cuid())
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   email     String     @unique
   name      String
   role      String     @default("ADMIN")
@@ -81,8 +81,8 @@ model User {
 }
 
 model AuditLog {
-  id        String   @id @default(cuid())
-  userId    String?
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String? @db.ObjectId
   action    String
   resource  String
   details   String?
@@ -91,7 +91,7 @@ model AuditLog {
 }
 
 model Media {
-  id        String   @id @default(cuid())
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   url       String
   name      String
   altText   String?
@@ -102,7 +102,7 @@ model Media {
 }
 
 model WebsiteSettings {
-  id             String   @id @default(cuid())
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   websiteName    String   @default("Webify Pro")
   logoUrl        String?
   contactEmail   String?
@@ -119,20 +119,20 @@ model WebsiteSettings {
 }
 
 model NavigationItem {
-  id         String           @id @default(cuid())
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   label      String
   url        String
   order      Int              @default(0)
   isExternal Boolean          @default(false)
-  parentId   String?
+  parentId String? @db.ObjectId
   createdAt  DateTime         @default(now())
   updatedAt  DateTime         @updatedAt
-  parent     NavigationItem?  @relation("NavHierarchy", fields: [parentId], references: [id])
+  parent     NavigationItem?  @relation("NavHierarchy", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   children   NavigationItem[] @relation("NavHierarchy")
 }
 
 model Page {
-  id              String        @id @default(cuid())
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   title           String
   slug            String        @unique
   metaTitle       String?
@@ -145,8 +145,8 @@ model Page {
 }
 
 model PageSection {
-  id        String   @id @default(cuid())
-  pageId    String
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  pageId String @db.ObjectId
   type      String
   order     Int      @default(0)
   content   String
@@ -156,7 +156,7 @@ model PageSection {
 }
 
 model Service {
-  id               String   @id @default(cuid())
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   name             String
   slug             String   @unique
   shortDescription String
@@ -172,7 +172,7 @@ model Service {
 }
 
 model Solution {
-  id               String   @id @default(cuid())
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   name             String
   slug             String   @unique
   shortDescription String
@@ -188,7 +188,7 @@ model Solution {
 }
 
 model BlogCategory {
-  id        String   @id @default(cuid())
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   slug      String   @unique
   createdAt DateTime @default(now())
@@ -196,7 +196,7 @@ model BlogCategory {
 }
 
 model BlogTag {
-  id        String   @id @default(cuid())
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   slug      String   @unique
   createdAt DateTime @default(now())
