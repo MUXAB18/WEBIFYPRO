@@ -10,20 +10,30 @@ export const metadata: Metadata = {
 import ClientLayout from '@/components/ClientLayout';
 import prisma from '@/lib/prisma';
 
+export const dynamic = 'force-dynamic';
+
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const navLinks = await prisma.navigationItem.findMany({
-    orderBy: { order: 'asc' }
-  });
-  
-  const dbServices = await prisma.service.findMany({
-    orderBy: { order: 'asc' }
-  });
-  
-  const settings = await prisma.websiteSettings.findFirst();
+  let navLinks: any[] = [];
+  let dbServices: any[] = [];
+  let settings: any = null;
+
+  try {
+    navLinks = await prisma.navigationItem.findMany({
+      orderBy: { order: 'asc' }
+    });
+    
+    dbServices = await prisma.service.findMany({
+      orderBy: { order: 'asc' }
+    });
+    
+    settings = await prisma.websiteSettings.findFirst();
+  } catch (error: any) {
+    console.warn("Prisma connection failed (expected during build without DB):", error.message);
+  }
 
   return (
     <html lang="en" suppressHydrationWarning>
